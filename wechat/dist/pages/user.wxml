@@ -1,0 +1,86 @@
+
+ <view class="page-user">
+    <view class="weui-panel">
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd userinfo clearfix">
+            <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
+            <view class="userinfo-info">
+              <view class="userinfo-nickname color-pink">{{ nickName }}</view>
+              <view class="userinfo-status">{{identity.type}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+  <view class="animelist">
+    <view  wx:if="{{$animeList$title}}" class="animelist-name color-gray">
+      {{$animeList$title}}
+      <text wx:if="{{$animeList$star}}" class="weui-badge weui-badge_dot">{{$animeList$star}}</text>
+    </view>
+    <block  wx:if="{{$animeList$list.length > 0}}">
+      <block wx:for="{{$animeList$list}}" wx:key="index">
+        <navigator url="/pages/detail" class="animelist-item">
+          <view class="animelist-item-image">
+            <image src="{{item.image[0]}}" mode="aspectFill"/>
+          </view>
+          <view class="animelist-item-content">
+            <view class="animeList-item-main">
+              <view class="animeList-item-right">
+                <text class="animeList-item-name color-gray">{{item.name}}</text>
+                
+  <view class="stars">
+    <image src="{{$animeList$Stars$star >= 1 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon" mode="aspectFit"/>
+    <image src="{{$animeList$Stars$star >= 2 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon" mode="aspectFit"/>
+    <image src="{{$animeList$Stars$star >= 3 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon" mode="aspectFit"/>
+    <image src="{{$animeList$Stars$star >= 4 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon" mode="aspectFit"/>
+    <image src="{{$animeList$Stars$star >= 5 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon" mode="aspectFit"/>
+  </view>
+
+              </view>
+                <text class="animeList-item-time">{{item.createTime}}</text>
+            </view>
+            <view class="animeList-item-description">{{item.description}}</view>
+            <view class="animeList-item-bottom">
+              <view>
+                <block wx:for="{{item.tag}}" wx:key="index" wx:if="{{index<'3'}}">
+                  <text class="anime-item-tags">{{item}}</text>
+              </block>
+              </view>
+              <block wx:if="{{item.flag == '1'}}">
+                <view class="animeList-item-right">
+                  <image src="{{$animeList$icon_eye_active}}" class="imgicon" mode="aspectFit"/>
+                  <text class="animeList-item-flag color-pink">已追番</text>
+                </view>
+              </block>
+              <block wx:else>
+                <view class="animeList-item-right">
+                  <image src="{{$animeList$icon_eye}}" class="imgicon" mode="aspectFit"/>
+                  <text class="animeList-item-flag color-yellow">追番</text>
+                </view>
+              </block>
+            </view>
+          </view>
+        </navigator>
+      </block>
+      <block wx:if="{{$animeList$loading}}">
+        <view class="weui-loadmore">
+          <view class="weui-loading"/>
+          <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+      </block>
+      <block wx:elif="{{$animeList$noMore}}">
+        <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"/>
+        </view>
+      </block>
+    </block>
+    <block wx:else>
+      <view class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无推荐</view>
+      </view>
+    </block>
+  </view>
+
+  </view>

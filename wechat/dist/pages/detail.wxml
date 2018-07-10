@@ -1,0 +1,68 @@
+
+  <view class="detail-main">
+    <view class="weui-panel">
+      <block  wx:if="{{swipers && swipers.length}}">
+        <view class="detail-cover">
+          
+  <swiper class="swiper" style="height:{{$Swiper$style_height}}" autoplay="{{$Swiper$autoplay}}" indicator-dots="{{$Swiper$indicatorDots}}" indicator-color="{{$Swiper$indicatorColor}}" indicator-active-color="{{$Swiper$indicatorActiveColor}}">
+    <block  wx:for="{{$Swiper$list}}" wx:key="index">
+      <swiper-item>
+        <navigator wx:if="{{item.url}}" url="{{item.url}}">
+          <image src="{{item.image}}" style="height:{{$Swiper$style_height}}" class="swiper-image" mode="widthFix"/>
+        </navigator>
+        <view wx:else style="height:{{$Swiper$style_height}}">
+          <image src="{{item.image}}" style="height:{{$Swiper$style_height}}" class="swiper-image" mode="widthFix"/>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+
+        </view>
+      </block>
+      <block  wx:else>
+        <image src="{{anime.image || img_banner}}" class="detail-cover" mode="aspectFit"/>
+      </block>
+      <view class="weui-media-box weui-media-box_text weui-cells_in-small-appmsg">
+        <view class="h3 color-333">{{anime.name}}</view>
+        <view class="detail-info">
+          <view>更新时间：{{anime.pubtime}}</view>
+          <view>作者：{{anime.author}}</view>
+          <view>制作公司：{{anime.pubcompany}}</view>
+          <view>主要cv：{{anime.cvs}}</view>
+        </view>
+        <view class="detail-tags">
+          <text wx:for="{{anime.tag}}" wx:key="index" wx:for-item="tag" class="tag">{{tag}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="weui-panel">
+      <view class="weui-media-box weui-media-box_text">
+          <view class="detail-desc-title">简介：</view>
+          <view class="detail-desc">
+            <view wx:if="{{anime.download}}" class="detail-text">
+              查看资源
+            </view>
+            <block wx:for="{{anime.content}}" wx:key="index" wx:for-item="desc">
+              <view class="detail-text" wx:if="{{desc.type === 'text'}}">{{desc.value}}</view>
+              <image wx:elif="{{desc.type === 'image'}}" class="detail-image" src="{{desc.value || img_banner}}" mode="widthFix"/>
+            </block>
+          </view>
+      </view>
+    </view>
+    
+  <view class="screen-placeholder clearfix fixed-bottom">
+    <button class="weui-btn btn-block" type="primary">借阅</button>
+  </view>
+  <view class="screen-wrapper" style="{{$Screen$style_position}}:0;">
+    
+      <view style="display: flex;">
+        <button bindtap="addAnime" class="weui-btn btn-block btn-flex-full" type="{{isEnabled?'primary':'warn'}}">
+          <text wx:if="{{!isEnabled}}">弃番</text>
+          <text wx:else>追番</text>
+        </button>
+      </view>
+      
+    
+  </view>
+
+  </view>

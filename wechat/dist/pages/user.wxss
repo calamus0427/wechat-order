@@ -1,0 +1,24 @@
+@import "./../components/animeList.wxss";
+.page-user .userinfo {
+  padding: 20rpx 0;
+}
+.page-user .userinfo-avatar {
+  float: left;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+.page-user .userinfo-info {
+  float: left;
+  line-height: 1;
+  padding: 8rpx 0;
+  margin-left: 24rpx;
+}
+.page-user .userinfo-nickname {
+  font-size: 36.26666667rpx;
+  margin-bottom: 16rpx;
+}
+.page-user .userinfo-status {
+  color: #999;
+  font-size: 31.73333333rpx;
+}

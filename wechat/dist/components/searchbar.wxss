@@ -1,0 +1,7 @@
+.weui-search-bar {
+  border: none;
+}
+.weui-search-bar__cancel-btn {
+  color: #FF5577;
+  font-size: 28rpx;
+}

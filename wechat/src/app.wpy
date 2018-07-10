@@ -1,0 +1,152 @@
+<style lang="less">
+@import "./style/weui.wxss";
+  page{
+    background-color: #efeff4;
+  }
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.imgicon{
+  height: 1em;
+  width:1em;
+}
+
+// 颜色
+.color-red{
+  color: red !important;
+}
+.color-yellow{
+  color: orange !important;
+}
+.color-blue{
+  color: #049BFF !important;
+}
+.color-green{
+  color: green !important;
+}
+.color-333{
+  color: #333 !important;
+}
+.color-666{
+  color: #666 !important;
+}
+.color-gray{
+  color:#626E7A !important;
+}
+.color-999{
+  color: #999 !important;
+}
+.color-ccc{
+  color: #ccc !important;
+}
+.color-bbb{
+  color: #bbb !important;
+}
+.color-ddd{
+  color: #ddd !important;
+}
+
+.color-pink{
+  color:#FF5577 !important;
+}
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+import { setStore } from 'wepy-redux'
+import configStore from './store'
+
+const store = configStore()
+setStore(store)
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/top',
+      'pages/img',
+      'pages/index',
+      'pages/old',
+      'pages/user',
+      'pages/detail',
+      'pages/search',
+      'pages/searchTag'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#FF5577',
+      navigationBarTitleText: '233次元',
+      navigationBarTextStyle: '#fff'
+    },
+    tabBar: {
+      color: '#AEADAD',
+      selectedColor: '#FF5577',
+      backgroundColor: '#fff',
+      borderStyle: 'black',
+        "list": [{
+        pagePath: 'pages/top',
+        selectedIconPath: './images/tabbars/active.jpg',
+        iconPath: './images/tabbars/icon-mark@2x.png',
+        text: '追番推荐'
+      },{
+        pagePath: 'pages/old',
+        selectedIconPath: './images/tabbars/active.jpg',
+        iconPath: './images/tabbars/icon-shelf@2x.png',
+        text: '类型索引'
+      }, {
+        pagePath: 'pages/user',
+        selectedIconPath: './images/tabbars/active.jpg',
+        iconPath: './images/tabbars/icon-smile@2x.png',
+        text: '我的追番'
+      }
+        ]
+    }
+  }
+
+  globalData = {
+    userInfo: null
+  }
+
+  constructor () {
+    super()
+    this.use('requestfix')
+  }
+
+  onLaunch() {
+    this.testAsync()
+  }
+
+  sleep (s) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('promise resolved')
+      }, s * 1000)
+    })
+  }
+
+  async testAsync () {
+    const data = await this.sleep(3)
+    console.log(data)
+  }
+
+  getUserInfo(cb) {
+    const that = this
+    if (this.globalData.userInfo) {
+      return this.globalData.userInfo
+    }
+    wepy.getUserInfo({
+      success (res) {
+        that.globalData.userInfo = res.userInfo
+        cb && cb(res.userInfo)
+      }
+    })
+  }
+}
+</script>
+

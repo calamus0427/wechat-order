@@ -1,0 +1,8 @@
+@import "./../components/pannelTag.wxss";
+@import "./../components/animeList.wxss";
+@import "./../components/searchbar.wxss";
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

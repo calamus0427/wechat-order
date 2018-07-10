@@ -1,0 +1,25 @@
+@import "./stars.wxss";
+.imageList {
+  background-color: #fff;
+}
+.animelist {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #fff;
+}
+.animelist-item {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.animelist-item-image image {
+  padding: 8px;
+  height: 100px;
+  width: 100px;
+}
+.animeList-item-name {
+  color: #626E7A;
+  font-size: 28rpx;
+}

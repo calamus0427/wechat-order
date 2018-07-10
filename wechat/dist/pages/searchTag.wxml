@@ -1,0 +1,58 @@
+
+  <view>
+    
+<block>
+<block  wx:if="{{$SearchBar$type=='tag'}}">
+  <view class="weui-search-bar" bindtap="$SearchBar$search">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"/>
+        <input type="text" class="weui-search-bar__input" placeholder="{{$SearchBar$placeholder}}" value="{{$SearchBar$inputVal}}" focus="{{$SearchBar$inputShowed}}" bindinput="$SearchBar$inputTyping" bindblur="$SearchBar$showInput" confirm-type="search" bindconfirm="$SearchBar$search" data-wpyshowinput-a="false"/>
+        <block wx:if="{{$SearchBar$inputVal.length > 0}}">
+          <view class="weui-icon-clear" bindtap="$SearchBar$clearInput">
+            <icon type="clear" size="14"/>
+          </view>
+        </block>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{$SearchBar$inputShowed}}" bindtap="$SearchBar$showInput" data-wpyshowinput-a="true">
+        <icon class="weui-icon-search" type="search" size="14"/>
+        <view class="weui-search-bar__text">{{$SearchBar$computedPlaceholder}}</view>
+      </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn">
+      <image style="width:20.7px;height:20px;padding-top:4px" src="../images/icon/search.png" mode="aspectFill"/>
+    </view>
+  </view>
+</block>
+<block  wx:if="{{$SearchBar$type=='result'}}">
+  <view class="weui-search-bar">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"/>
+        <input type="text" class="weui-search-bar__input" placeholder="{{$SearchBar$placeholder}}" value="{{$SearchBar$inputVal}}" focus="{{$SearchBar$inputShowed}}" bindinput="$SearchBar$inputTyping" bindblur="$SearchBar$showInput" confirm-type="search" bindconfirm="$SearchBar$search" data-wpyshowinput-a="false"/>
+        <block wx:if="{{$SearchBar$inputVal.length > 0}}">
+          <view class="weui-icon-clear" bindtap="$SearchBar$clearInput">
+            <icon type="clear" size="14"/>
+          </view>
+        </block>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{$SearchBar$inputShowed}}" bindtap="$SearchBar$showInput" data-wpyshowinput-a="true">
+        <icon class="weui-icon-search" type="search" size="14"/>
+        <view class="weui-search-bar__text">{{$SearchBar$computedPlaceholder}}</view>
+      </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" bindtap="$SearchBar$searchResult">
+      <image style="width:20.7px;height:20px;padding-top:4px" src="../images/icon/search.png" mode="aspectFill"/>
+    </view>
+  </view>
+</block>
+</block>
+
+
+
+    
+  <view class="pannel">
+    paanel
+  </view>
+
+  </view>

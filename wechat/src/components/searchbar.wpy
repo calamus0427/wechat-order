@@ -1,0 +1,118 @@
+<template>
+<block>
+<block wx:if="{{type=='tag'}}">
+  <view class="weui-search-bar" @tap="search">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+        <input type="text" class="weui-search-bar__input" placeholder="{{placeholder}}" value="{{inputVal}}" focus="{{inputShowed}}" @input="inputTyping" @blur="showInput(false)" confirm-type="search" @confirm="search"/>
+        <block wx:if="{{inputVal.length > 0}}">
+          <view class="weui-icon-clear" @tap="clearInput">
+            <icon type="clear" size="14"></icon>
+          </view>
+        </block>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{inputShowed}}" @tap="showInput(true)">
+        <icon class="weui-icon-search" type="search" size="14"></icon>
+        <view class="weui-search-bar__text">{{computedPlaceholder}}</view>
+      </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" >
+      <image style="width:20.7px;height:20px;padding-top:4px" src="../images/icon/search.png" mode="aspectFill"/>
+    </view>
+  </view>
+</block>
+<block wx:if="{{type=='result'}}">
+  <view class="weui-search-bar">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+        <input type="text" class="weui-search-bar__input" placeholder="{{placeholder}}" value="{{inputVal}}" focus="{{inputShowed}}" @input="inputTyping" @blur="showInput(false)" confirm-type="search" @confirm="search"/>
+        <block wx:if="{{inputVal.length > 0}}">
+          <view class="weui-icon-clear" @tap="clearInput">
+            <icon type="clear" size="14"></icon>
+          </view>
+        </block>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{inputShowed}}" @tap="showInput(true)">
+        <icon class="weui-icon-search" type="search" size="14"></icon>
+        <view class="weui-search-bar__text">{{computedPlaceholder}}</view>
+      </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" @tap="searchResult">
+      <image style="width:20.7px;height:20px;padding-top:4px" src="../images/icon/search.png" mode="aspectFill"/>
+    </view>
+  </view>
+</block>
+</block>
+
+
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class SearchBar extends wepy.component {
+    props = {
+      placeholder: {
+        type: String,
+        default: '搜索'
+      },
+      inputVal:{
+        type: String,
+        default:''
+      },
+      type:{
+        type:String,
+        default:'tag'
+      }
+    }
+
+    data = {
+      inputShowed: false
+    }
+
+    computed = {
+      computedPlaceholder() {
+        return this.inputVal || this.placeholder
+      }
+    }
+
+    methods = {
+      showInput (isShow) {
+        this.inputShowed = isShow === 'true'
+        this.$apply()
+      },
+      search () {
+            wx.navigateTo({
+              url: '/pages/searchTag?inputVal='+this.inputVal
+            })
+      },
+      searchResult () {
+            wx.navigateTo({
+              url: '/pages/search?inputVal='+this.inputVal
+            })
+      },
+      clearInput (cb) {
+        setTimeout(() => {
+          this.inputVal = ''
+          this.$apply()
+        })
+      },
+      inputTyping (e) {
+        this.inputVal = e.detail.value
+      }
+    }
+  }
+</script>
+<style lang="less">
+.weui-search-bar{
+  border:none;
+}
+.weui-search-bar__cancel-btn{
+  color: #FF5577;
+  font-size:28rpx;
+}
+</style>
+
+

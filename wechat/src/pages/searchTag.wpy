@@ -1,0 +1,59 @@
+<style lang="less">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+</style>
+<template>
+  <view>
+    <SearchBar  type="result" placeholder="搜索"></SearchBar>
+    <pannelTag></pannelTag>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import SearchBar from '../components/searchbar'
+  import animeList from '../components/animeList'
+  import pannelTag from '../components/pannelTag'
+
+
+
+  export default class Search extends wepy.page {
+    config = {
+      navigationBarTitleText: '搜索'
+    }
+    components = {
+      SearchBar:SearchBar,
+      animeList:animeList,
+      pannelTag:pannelTag
+    }
+
+    mixins = []
+
+    data = {
+      // inputVal:'111',
+      title:'搜索结果',
+      search:''
+    }
+
+    computed = {
+    }
+
+    methods = {
+    }
+
+    events = {
+
+    }
+    onReady(){
+    }
+    onLoad(query) {
+      const inputVal = query.inputVal;
+      console.log("query",query)
+      this.search = query ;
+    }
+  }
+</script>

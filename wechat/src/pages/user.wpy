@@ -1,0 +1,133 @@
+<style lang="less">
+.page-user{
+
+  @userinfoHeight: 100rpx;
+  @userinfoSpace: 8rpx;
+
+  .userinfo{
+    padding: 20rpx 0;
+  }
+
+  .userinfo-avatar {
+    float: left;
+    width: @userinfoHeight;
+    height: @userinfoHeight;
+    border-radius: 50%;
+  }
+
+  // space + space
+  .userinfo-info {
+    float: left;
+    line-height: 1;
+    padding: @userinfoSpace 0;
+    margin-left: 3 * @userinfoSpace;
+  }
+
+  // text + space + text
+  .userinfo-nickname {
+    font-size: (@userinfoHeight - 4 * @userinfoSpace) * (16 / 30);
+    margin-bottom: 2 * @userinfoSpace;
+  }
+  .userinfo-status {
+    color: #999;
+    font-size: (@userinfoHeight - 4 * @userinfoSpace) * (14 / 30);
+
+  }
+}
+</style>
+<template>
+ <view class="page-user">
+    <view class="weui-panel">
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd userinfo clearfix">
+            <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
+            <view class="userinfo-info">
+              <view class="userinfo-nickname color-pink">{{ nickName }}</view>
+              <view class="userinfo-status">{{identity.type}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <animeList  title="我的追番" :star.sync="star"
+     :loading.sync="loading" :noMore.sync="noMoreList"></animeList>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import http from '../mixins/http'
+  import base from '../mixins/base'
+  import user from '../mixins/user'
+  import animeList from '../components/animeList'
+
+
+
+
+  export default class User extends wepy.page {
+    config = {
+      navigationBarTitleText: '朕的寝宫'
+    }
+    components = {
+      animeList:animeList
+    }
+
+    mixins = [base, http, user]
+
+    data = {
+      userInfo: {
+        nickName: '侍奉无上至尊之人',
+        // 头像占位图
+        avatarUrl: 'http://p3i10hjs7.bkt.clouddn.com/user.jpg',
+
+        identity: {
+          type: '罪域之骨终成王',
+          collection: 1
+        }
+      }
+    }
+
+    computed = {
+      star(){
+        console.log("1",this.getObject(this.getObject(this.userInfo).identity).collection)
+        const title = this.getObject(this.getObject(this.userInfo).identity).collection
+        return title;
+      },
+      identity() {
+        return this.getObject(this.getObject(this.userInfo).identity)
+      },
+      nickName() {
+        const info = this.getObject(this.userInfo)
+        // 名称或头像不为空的，才认为是授权用户
+        return (info.nickName || info.avatarUrl) ? info.nickName : '未授权用户'
+      }
+    }
+
+    methods = {
+
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+    onShow(){
+       // 初始化页面数据
+      this.$getUserInfo((info) => {
+        const uinfo = this.getObject(info)
+        const userInfo = this.getObject(this.userInfo)
+        this.userInfo = Object.assign({}, userInfo, uinfo)
+        this.initPageData()
+      })
+    }
+    onPullDownRefresh() {
+      this.initPageData()
+    }
+    onLoad() {
+
+    }
+  }
+</script>

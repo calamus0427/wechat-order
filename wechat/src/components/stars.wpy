@@ -1,0 +1,31 @@
+<style lang="less">
+.staricon{
+  width:10px;
+  height:10px;
+}
+</style>
+<template>
+  <view class="stars">
+    <image src="{{star >= 1 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+    <image src="{{star >= 2 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+    <image src="{{star >= 3 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+    <image src="{{star >= 4 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+    <image src="{{star >= 5 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Stars extends wepy.component {
+    props = {
+      star:{
+        type: String,
+        default:'5'
+      }
+    }
+    data = {
+      icon_star: '/images/icon/icon-star@2x.png',
+      icon_star_active: '/images/icon/icon-star-active@2x.png'
+    }
+  }
+</script>

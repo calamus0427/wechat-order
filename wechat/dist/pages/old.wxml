@@ -1,0 +1,120 @@
+
+    <view>
+          
+<block>
+<block  wx:if="{{$SearchBar$type=='tag'}}">
+  <view class="weui-search-bar" bindtap="$SearchBar$search">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"/>
+        <input type="text" class="weui-search-bar__input" placeholder="{{$SearchBar$placeholder}}" value="{{$SearchBar$inputVal}}" focus="{{$SearchBar$inputShowed}}" bindinput="$SearchBar$inputTyping" bindblur="$SearchBar$showInput" confirm-type="search" bindconfirm="$SearchBar$search" data-wpyshowinput-a="false"/>
+        <block wx:if="{{$SearchBar$inputVal.length > 0}}">
+          <view class="weui-icon-clear" bindtap="$SearchBar$clearInput">
+            <icon type="clear" size="14"/>
+          </view>
+        </block>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{$SearchBar$inputShowed}}" bindtap="$SearchBar$showInput" data-wpyshowinput-a="true">
+        <icon class="weui-icon-search" type="search" size="14"/>
+        <view class="weui-search-bar__text">{{$SearchBar$computedPlaceholder}}</view>
+      </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn">
+      <image style="width:20.7px;height:20px;padding-top:4px" src="../images/icon/search.png" mode="aspectFill"/>
+    </view>
+  </view>
+</block>
+<block  wx:if="{{$SearchBar$type=='result'}}">
+  <view class="weui-search-bar">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"/>
+        <input type="text" class="weui-search-bar__input" placeholder="{{$SearchBar$placeholder}}" value="{{$SearchBar$inputVal}}" focus="{{$SearchBar$inputShowed}}" bindinput="$SearchBar$inputTyping" bindblur="$SearchBar$showInput" confirm-type="search" bindconfirm="$SearchBar$search" data-wpyshowinput-a="false"/>
+        <block wx:if="{{$SearchBar$inputVal.length > 0}}">
+          <view class="weui-icon-clear" bindtap="$SearchBar$clearInput">
+            <icon type="clear" size="14"/>
+          </view>
+        </block>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{$SearchBar$inputShowed}}" bindtap="$SearchBar$showInput" data-wpyshowinput-a="true">
+        <icon class="weui-icon-search" type="search" size="14"/>
+        <view class="weui-search-bar__text">{{$SearchBar$computedPlaceholder}}</view>
+      </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" bindtap="$SearchBar$searchResult">
+      <image style="width:20.7px;height:20px;padding-top:4px" src="../images/icon/search.png" mode="aspectFill"/>
+    </view>
+  </view>
+</block>
+</block>
+
+
+
+    
+  <view class="ads-body">
+    <scroll-view class="scroll-view_H" scroll-x style="width: 100%">
+          <text selectable="true" class="scroll-view-item_H color-pink">{{$Ads$ads}}</text>
+    </scroll-view>
+  </view>
+
+
+    <!--主内容区域-->
+      <view  wx:if="{{init}}" class="main-box row">
+        
+  <scroll-view class="side-tab" scroll-y>
+    <block  wx:for="{{$SideTab$tab.list}}" wx:key="id">
+      <view class="tab-item {{item.id == $SideTab$tab.selectedId ? 'tab-item-seleted' : ''}}" bindtap="$SideTab$switchTab" data-wpyswitchtab-a="{{item.id}}">
+        <text class="inline">{{item.title}}</text>
+        <view class="weui-badge tab-num" wx:if="{{item.count > 0}}">{{item.count}}</view>
+      </view>
+    </block>
+    <block  wx:if="{{$SideTab$tab.list.length < 1}}">
+      <view class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无信息</view>
+      </view>
+    </block>
+  </scroll-view>
+
+        <scroll-view scroll-y class="goods-box">
+          
+
+<view class="imageList">
+  <view class="animelist">
+    <block  wx:if="{{$imageList$list.length > 0}}">
+      <block wx:for="{{$imageList$list}}" wx:key="index">
+        <navigator url="/pages/detail" class="animelist-item">
+          <view class="animelist-item-image">
+            <image src="{{item.image[0]}}" mode="aspectFill"/>
+          </view>
+          <text class="animeList-item-name">{{item.name}}</text>
+        </navigator>
+      </block>
+    </block>
+    <block  wx:else>
+      <view class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无推荐</view>
+      </view>
+    </block>
+  </view>
+  <view>
+      <block wx:if="{{$imageList$loading}}">
+        <view class="weui-loadmore">
+          <view class="weui-loading"/>
+          <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+      </block>
+      <block wx:elif="{{$imageList$noMore}}">
+        <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"/>
+        </view>
+      </block>
+  </view>
+</view>
+
+        </scroll-view>
+      </view>
+
+      <view wx:else>
+        敬请期待
+      </view>
+    </view>

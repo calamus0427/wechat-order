@@ -1,0 +1,171 @@
+<style lang="less">
+.detail-cover{
+    display: block;
+    margin: 40rpx auto 0;
+  }
+    .detail-info,
+  .detail-desc{
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0.5em 0;
+    overflow: hidden;
+    text-align: center;
+  }
+  .detail-info,
+  .detail-text{
+    text-align: left;
+    line-height: 1.5;
+  }
+  .tag {
+    display:inline-block;
+    padding:0 .6em;
+    border-radius:1em;
+    margin-right:.5em;
+    font-size:60%;
+    color:#9B9B9B;
+    background:#F1F1F1;
+}
+.screen-wrapper {
+  position:fixed;
+  left:0;
+  right:0;
+}
+    .btn-flex-1{
+    padding: 0;
+    width: 3.5em;
+    line-height: 1.6;
+    overflow: hidden;
+  }
+  .btn-flex-full{
+    flex: 1 1 auto;
+  }
+  .btn-text-bottom{
+    line-height: 1;
+    color: #777;
+  }
+</style>
+<template>
+  <view class="detail-main">
+    <view class="weui-panel">
+      <block wx:if="{{swipers && swipers.length}}">
+        <view class="detail-cover">
+          <Swiper :list.sync="swipers" height="280"></Swiper>
+        </view>
+      </block>
+      <block wx:else>
+        <image src="{{anime.image || img_banner}}" class="detail-cover" mode="aspectFit"/>
+      </block>
+      <view class="weui-media-box weui-media-box_text weui-cells_in-small-appmsg">
+        <view class="h3 color-333">{{anime.name}}</view>
+        <view class="detail-info">
+          <view>更新时间：{{anime.pubtime}}</view>
+          <view>作者：{{anime.author}}</view>
+          <view>制作公司：{{anime.pubcompany}}</view>
+          <view>主要cv：{{anime.cvs}}</view>
+        </view>
+        <view class="detail-tags">
+          <text wx:for="{{anime.tag}}" wx:key="index" wx:for-item="tag" class="tag">{{tag}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="weui-panel">
+      <view class="weui-media-box weui-media-box_text">
+          <view class="detail-desc-title">简介：</view>
+          <view class="detail-desc">
+            <view wx:if="{{anime.download}}" class="detail-text">
+              查看资源
+            </view>
+            <block wx:for="{{anime.content}}" wx:key="index" wx:for-item="desc">
+              <view class="detail-text" wx:if="{{desc.type === 'text'}}">{{desc.value}}</view>
+              <image wx:elif="{{desc.type === 'image'}}" class="detail-image"
+               src="{{desc.value || img_banner}}" mode="widthFix"/>
+            </block>
+          </view>
+      </view>
+    </view>
+    <Screen class="fixed-bottom">
+      <view style="display: flex;">
+        <button @tap="addAnime" class="weui-btn btn-block btn-flex-full" type="{{isEnabled?'primary':'warn'}}">
+          <text wx:if="{{!isEnabled}}">弃番</text>
+          <text wx:else>追番</text>
+        </button>
+      </view>
+      <button slot="placeholder" class="weui-btn btn-block" type="primary">借阅</button>
+    </Screen>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import http from '../mixins/http'
+  import base from '../mixins/base'
+  import cart from '../mixins/cart'
+  import user from '../mixins/user'
+  import Swiper from '../components/swiper'
+  import Screen from '../components/screen'
+
+
+  export default class Detail extends wepy.page {
+    config = {
+      navigationBarTitleText: '详情'
+    }
+    components = {
+      Swiper:Swiper,
+      Screen:Screen
+    }
+
+    mixins = [base, http, cart, user]
+
+    data = {
+      isEnabled:true,
+      img_banner: '/images/swiper.png',
+      icon_star: '/images/icon/icon-star@2x.png',
+      icon_star_active: '/images/icon/icon-star-active@2x.png',
+      icon_shelf: '/images/tabbars/icon-shelf@2x.png',
+      swipers: [
+              {image: 'http://p79mwfmry.bkt.clouddn.com/2.jpg', url: ''},
+              {image: 'http://p79mwfmry.bkt.clouddn.com/3.jpg', url: ''}
+            ],
+      anime:{
+            'name':'命运石之门',
+            'image':['http://p79mwfmry.bkt.clouddn.com/%E7%9F%B3%E5%A4%B4%E9%97%A8.jpg','',''],
+            'description':'一切都是命运石之门的选择,石头门，一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门',
+            'content':[
+              {'type':'text','value':''},
+            {'type':'text','value':''},
+            {'type':'image','value':'http://p79mwfmry.bkt.clouddn.com/%E7%9F%B3%E5%A4%B4%E9%97%A8.jpg'}
+            ],
+            'tag':['致郁','时间穿越','神作'],
+            'stars':'5',
+            'createTime':'2013-04-20',
+            'flag':'1',
+            'author':'',
+            'type':'game',
+            'company':'',
+            'cvs':'宫野真守，花泽香菜',
+            'id':'',
+            'download':''
+          }
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      addAnime(){
+        console.log("isEnabled",this.isEnabled)
+        this.isEnabled = this.isEnabled == false ? true :false ;
+      }
+    }
+
+    events = {
+
+    }
+
+    onLoad() {
+
+    }
+  }
+</script>

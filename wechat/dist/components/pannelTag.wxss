@@ -1,0 +1,9 @@
+.pannel {
+  margin: 20rpx;
+  text-align: left;
+  font-size: 12px;
+  padding-top: 20rpx;
+  padding-left: 50rpx;
+  padding-bottom: 20rpx;
+  border: 1px solid #ccc;
+}

@@ -1,0 +1,8 @@
+.animelist {
+  margin-top: 10px;
+  background-color: #fff;
+}
+.animelist-name {
+  padding-left: 10px;
+  border-left: 3px solid green;
+}

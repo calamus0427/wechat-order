@@ -1,0 +1,83 @@
+<template>
+  <scroll-view class="side-tab" scroll-y>
+    <block wx:for="{{tab.list}}" wx:key="id">
+      <view class="tab-item {{item.id == tab.selectedId ? 'tab-item-seleted' : ''}}" @tap="switchTab({{item.id}})" >
+        <text class="inline">{{item.title}}</text>
+        <view class="weui-badge tab-num" wx:if="{{item.count > 0}}">{{item.count}}</view>
+      </view>
+    </block>
+    <block wx:if="{{tab.list.length < 1}}">
+      <view class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无信息</view>
+      </view>
+    </block>
+  </scroll-view>
+</template>
+
+
+<script>
+  import wepy from 'wepy'
+  export default class SideTab extends wepy.component {
+    props = {
+      tab: {
+        twoWay: true
+      }
+    };
+    data = {};
+    methods = {
+      switchTab(selectedId) {
+        this.tab.selectedId = selectedId;
+        this.$emit('change', selectedId);
+      }
+    };
+    events = {};
+    onLoad() {
+    }
+  }
+</script>
+
+<style lang="less">
+.inline {
+  text-overflow:ellipsis;
+  word-break:keep-all;
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+  .side-tab{
+    border-right: 5px;
+    width: 180rpx;
+    min-width: 180rpx;
+    height: 100%;
+
+    .tab-item {
+      position: relative;
+      height: 110rpx;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: #F5F7F9;
+      border-top:1px solid #EDEDED;
+      padding-left: 20rpx;
+      text{
+        color: #626E7A;
+        font-size:28rpx;
+        }
+      .tab-num{
+        position: absolute;
+        right: 5px;
+        top: 5px;
+      }
+    }
+
+    .tab-item-seleted{
+      border-right: 4px solid #FF5577;
+      background-color: #FFF;
+      text{
+        color: #FF5577;
+        font-weight: bold;
+      }
+    }
+  }
+
+</style>

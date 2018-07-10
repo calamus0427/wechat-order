@@ -1,0 +1,175 @@
+<style type="less">
+.imageList{
+  background-color: #fff;
+}
+.animelist{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #fff;
+}
+
+.animelist-item{
+  margin-left:10px;
+  display:flex;
+  align-items:center;
+  flex-direction: column;
+}
+.animelist-item-image image{
+  padding:8px;
+  height:100px;
+  width:100px;
+}
+.animeList-item-name{
+  color: #626E7A;
+  font-size:28rpx;
+}
+</style>
+<template>
+
+<view class="imageList">
+  <view class="animelist">
+    <block wx:if="{{list.length > 0}}">
+      <block wx:for="{{list}}" wx:key="index">
+        <navigator url="/pages/detail" class="animelist-item">
+          <view class="animelist-item-image">
+            <image src="{{item.image[0]}}" mode="aspectFill"/>
+          </view>
+          <text class="animeList-item-name">{{item.name}}</text>
+        </navigator>
+      </block>
+    </block>
+    <block wx:else>
+      <view class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无推荐</view>
+      </view>
+    </block>
+  </view>
+  <view>
+      <block wx:if="{{loading}}">
+        <view class="weui-loadmore">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+      </block>
+      <block wx:elif="{{noMore}}">
+        <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"></view>
+        </view>
+      </block>
+  </view>
+</view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import http from '../mixins/http'
+  import base from '../mixins/base'
+  import Stars from './stars'
+
+  export default class ImageList extends wepy.component {
+    components = {
+      Stars: Stars
+    }
+    mixins = [base, http]
+    props = {
+      list: {
+        type: Object,
+        default: [
+          {
+            'name':'命运石之门',
+            'image':['http://p79mwfmry.bkt.clouddn.com/%E7%9F%B3%E5%A4%B4%E9%97%A8.jpg','',''],
+            'description':'一切都是命运石之门的选择,石头门，一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门一切都是命运石之门的选择,石头门',
+            'content':'',
+            'tag':['致郁','时间穿越','神作'],
+            'stars':'5',
+            'createTime':'2013-04-20',
+            'flag':'1',
+            'author':'',
+            'type':'game',
+            'company':'',
+            'id':''
+          }
+          ]
+      },
+      title: {
+        type: String,
+        default: '推荐追番表'
+      },
+      star:{
+        default:''
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      },
+      noMore: {
+        type: Boolean,
+        default: true
+      },
+      /**
+       * [type 列表类型：常规列表/收藏列表]
+       * @type {list/collect}
+       */
+      type: {
+        type: String,
+        default: 'list'
+      }
+    }
+
+    data = {
+      icon_eye: '/images/icon/icon-eye@2x.png',
+      icon_eye_active: '/images/icon/icon-eye-active@2x.png',
+      icon_star: '/images/icon/icon-star@2x.png',
+      icon_star_active: '/images/icon/icon-star-active@2x.png'
+    }
+
+    computed = {
+      isCollectList() {
+        return this.type === 'collect'
+      }
+    }
+
+    methods = {
+      toStar(book, index) {
+        // 将要发生的收藏动作
+        const isCollect = Boolean(book && +book.collected)
+        const newType = isCollect ? 0 : 1
+        const newTypeText = newType ? '添加' : '取消'
+        // 收藏本书
+        this.$post({
+          url: '',
+          data: {
+            book_ids: [book.id],
+            type: newType
+          }
+        }, {
+          success: ({code, data}) => {
+            // 重置本书收藏状态
+            if (this.isObject(this.list[index])) {
+              this.list[index].collected = newType
+            }
+            wx.showToast({
+              title: `${newTypeText}收藏！`,
+              icon: 'success',
+              duration: 1000
+            })
+          },
+          fail: ({code, data}) => {
+            // =============================== 调试代码 ===============================
+            // this.book.collected = newType
+            // =============================== 调试代码 ===============================
+            wx.showToast({
+              title: `${newTypeText}收藏失败！`,
+              icon: 'loading',
+              image: '/images/icon/icon-cancel.png',
+              duration: 1000
+            })
+          }
+        })
+      }
+    }
+  }
+</script>
+
+
