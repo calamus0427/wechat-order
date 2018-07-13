@@ -1,7 +1,7 @@
 <template>
 
     <div>
-          <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索推送" style="width: 200px"></Input>
+          <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索" style="width: 200px"></Input>
           <br/>
           <br/>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
@@ -56,8 +56,9 @@
     </div>
 </template>
 <script>
-
+import foodDetail from './components/foodDetail.vue';
 export default {
+  components: { foodDetail },
   data () {
     return {
       search:'',
@@ -72,15 +73,28 @@ export default {
       },
       columns8: [
                     {
-                        "title": "消息Id",
+                        "title": "菜品Id",
                         "key": "id",
                         "fixed": "left",
                         "width": 80
                     },
                     {
-                        "title": "任务名称",
+                        "title": "参考图片",
+                        "key": "img",
+                        "width": 100,
+                        render: (h, params) => {
+                            return h('img', {
+                                attrs: {
+                                    src: params.row.img,
+                                    style:'max-width: 70px;height: 50px;margin:5px;border-radius: 2px;'
+                                }
+                            },params.row.img)
+                        }
+                    },
+                    {
+                        "title": "菜品名称",
                         "key": "title",
-                        "width": 150,
+                        "width": 100,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -98,56 +112,46 @@ export default {
                         }
                     },
                     {
-                        "title": "内容",
-                        "key": "content",
-                        "width": 150,
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Tooltip', {
-                                    props: {
-                                        content: params.row.content,
-                                        placement: "right"
-                                    }
-                                }, params.row.content.slice(0,8)+'...')
-                            ]);
-                        }
+                        "title": "菜品分类",
+                        "key": "cat",
+                        "width": 150
                     },
                     {
-                        "title": "点击事件类型",
-                        "key": "actionTypeId",
-                        "width": 150,
+                        "title": "菜品价格",
+                        "key": "price",
+                        "width": 120,
+                        "sortable": true
+                    },
+                    {
+                        "title": "菜品评价",
+                        "key": "status",
+                        "width": 120,
+                        "sortable": true
+                    },
+                    {
+                        "title": "创建时间",
+                        "key": "createTime",
+                        "width": 180,
                         "sortable": true
                     },
                     {
                         "title": "状态",
                         "key": "status",
-                        "width": 150,
-                        "sortable": true
-                    },
-                    {
-                        "title": "推送时间",
-                        "key": "pushTime",
-                        "width": 180,
-                        "sortable": true
-                    },
-                    {
-                        "title": "创建时间",
-                        "key": "auditTime",
-                        "width": 180,
-                        "sortable": true
-                    },
-                    {
-                        "title": "更新时间",
-                        "key": "updateTime",
-                        "width": 180,
-                        "sortable": true
+                        "width": 120,
+                        render: (h, params) => {
+                            return h('Tag', {
+                                props: {
+                                    color: params.row.status== 1 ? 'green' :'red'
+                                }
+                            },params.row.status == 1 ? '已上线' : '仓库中')
+                        }
                     },
                       {
                         title: "统计数据",
                         type: 'expand',
                         width: 150,
                         render: (h, params) => {
-                            return h(expandRow, {
+                            return h(foodDetail, {
                                 props: {
                                     row: params.row
                                 }
@@ -171,7 +175,18 @@ export default {
                                            console.log("查看详情")
                                         }
                                     }
-                                }, '重发'),
+                                }, '上架'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                           console.log("查看详情")
+                                        }
+                                    }
+                                }, '下架'),
                                 h('Button', {
                                     props: {
                                         type: 'text',
@@ -188,20 +203,16 @@ export default {
                     }
                 ],
       data: [
-          {
-              "name": "推送1",
-              "fav": 0,
-              "show": 7302,
-              "weak": 5627,
-              "signin": '推送中',
-              "click": 4254,
-              "active": 1438,
-              "day7": 274,
-              "day30": 285,
-              "tomorrow": 1727,
-              "day": 558,
-              "week": 4440,
-              "month": 5610
+      {
+              "title": "泡馍",
+              "id": 1,
+              'des':'我最爱吃的',
+              'cat':'主食',
+              'price':25,
+              'star':'5',
+              'img':'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1899144149,2796372996&fm=27&gp=0.jpg',
+              'createTime':'2018-07-06',
+              'status':1
           }
       ]
     }

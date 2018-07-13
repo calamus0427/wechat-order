@@ -33,7 +33,9 @@ export default {
     return {
       foodList:[
         {
+
             "updateDate": new Date().getTime(),
+          "img":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3899577625,4026885041&fm=27&gp=0.jpg',
             "name": "汤",
             "id": 3,
             "createDate": new Date().getTime(),
@@ -41,6 +43,7 @@ export default {
         },
         {
           "updateDate": new Date().getTime(),
+          "img":'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2117009090,2227444365&fm=27&gp=0.jpg',
             "name": "主食",
             "id": 2,
             "createDate": new Date().getTime(),
@@ -48,6 +51,7 @@ export default {
         },
         {
           "updateDate": new Date().getTime(),
+          "img":'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1232354665,3213159192&fm=200&gp=0.jpg',
             "name": "菜品",
             "id": 1,
             "createDate": new Date().getTime(),

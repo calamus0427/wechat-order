@@ -1,7 +1,7 @@
 <template>
 
     <div>
-          <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索推送" style="width: 200px"></Input>
+          <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索" style="width: 200px"></Input>
           <br/>
           <br/>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
@@ -86,7 +86,7 @@ export default {
                             return h('img', {
                                 attrs: {
                                     src: params.row.img,
-                                    style:'max-width: 90px;height: 50px;margin:5px;border-radius: 2px;'
+                                    style:'max-width: 70px;height: 50px;margin:5px;border-radius: 2px;'
                                 }
                             },params.row.img)
                         }
@@ -210,7 +210,7 @@ export default {
               'cat':'主食',
               'price':25,
               'star':'5',
-              'img':'http://p3i10hjs7.bkt.clouddn.com/user.jpg',
+              'img':'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1899144149,2796372996&fm=27&gp=0.jpg',
               'createTime':'2018-07-06',
               'status':1
           }

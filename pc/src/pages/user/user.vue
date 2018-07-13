@@ -1,7 +1,7 @@
 <template>
 
     <div>
-          <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索推送" style="width: 200px"></Input>
+          <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索" style="width: 200px"></Input>
           <br/>
           <br/>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
@@ -29,30 +29,6 @@
               show-sizer>
             </Page>
     </Tabs>
-    <!-- 详情 -->
-          <Modal
-            v-model="showDetailFlag"
-            :title="detailTitle">
-            <div class="cl-push-detail">
-              <ul class="left">
-                <li class="cl-binding"><span >消息名称：</span>消息1</li>
-                <li class="cl-binding"><span>消息Id：</span>1</li>
-                <li class="cl-binding"><span>消息名称：</span>消息1</li>
-                <li class="cl-binding"><span>消息名称：</span>消息1</li>
-              </ul>
-              <ul class="right">
-                <li class="cl-binding"><span >DMP总数：</span>1</li>
-                <li class="cl-binding"><span>事实接收数：</span>1</li>
-                <li class="cl-binding"><span>触达接受数：</span>1</li>
-                <li class="cl-binding"><span>消息下发总数：</span>1</li>
-                <li class="cl-binding"><span>客户端收到总量：</span>1</li>
-                <li class="cl-binding"><span>消息弹出量：</span>1</li>
-                <li class="cl-binding"><span>弹窗点击量：</span>1</li>
-                <li class="cl-binding"><span>快捷-消息点击：</span>1</li>
-                <li class="cl-binding"><span>消息-消息点击：</span>1</li>
-              </ul>
-            </div>
-          </Modal>
     </div>
 </template>
 <script>
@@ -72,15 +48,28 @@ export default {
       },
       columns8: [
                     {
-                        "title": "消息Id",
+                        "title": "Id",
                         "key": "id",
                         "fixed": "left",
                         "width": 80
                     },
                     {
-                        "title": "任务名称",
+                        "title": "照片",
+                        "key": "img",
+                        "width": 100,
+                        render: (h, params) => {
+                            return h('img', {
+                                attrs: {
+                                    src: params.row.img,
+                                    style:'max-width: 70px;height: 50px;margin:5px;border-radius: 2px;'
+                                }
+                            },params.row.img)
+                        }
+                    },
+                    {
+                        "title": "姓名",
                         "key": "title",
-                        "width": 150,
+                        "width": 100,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -98,80 +87,39 @@ export default {
                         }
                     },
                     {
-                        "title": "内容",
-                        "key": "content",
-                        "width": 150,
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Tooltip', {
-                                    props: {
-                                        content: params.row.content,
-                                        placement: "right"
-                                    }
-                                }, params.row.content.slice(0,8)+'...')
-                            ]);
-                        }
+                        "title": "身份",
+                        "key": "cat",
+                        "width": 150
                     },
                     {
-                        "title": "点击事件类型",
-                        "key": "actionTypeId",
-                        "width": 150,
+                        "title": "联系电话",
+                        "key": "tel",
+                        "width": 120,
                         "sortable": true
                     },
                     {
-                        "title": "状态",
-                        "key": "status",
-                        "width": 150,
-                        "sortable": true
-                    },
-                    {
-                        "title": "推送时间",
-                        "key": "pushTime",
-                        "width": 180,
+                        "title": "联系邮箱",
+                        "key": "email",
+                        "width": 120,
                         "sortable": true
                     },
                     {
                         "title": "创建时间",
-                        "key": "auditTime",
+                        "key": "createTime",
                         "width": 180,
                         "sortable": true
                     },
                     {
-                        "title": "更新时间",
-                        "key": "updateTime",
-                        "width": 180,
-                        "sortable": true
-                    },
-                      {
-                        title: "统计数据",
-                        type: 'expand',
-                        width: 150,
-                        render: (h, params) => {
-                            return h(expandRow, {
-                                props: {
-                                    row: params.row
-                                }
-                            })
-                        }
+                        "title": "备注",
+                        "key": "remarks"
                     },
                     {
                         "title": "操作",
                         "key": "action",
                         'fixed': 'right',
-                        "width": 180,
+                        "width": 100,
                         render: (h, params) => {
                             return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                           console.log("查看详情")
-                                        }
-                                    }
-                                }, '重发'),
                                 h('Button', {
                                     props: {
                                         type: 'text',
@@ -188,20 +136,33 @@ export default {
                     }
                 ],
       data: [
-          {
-              "name": "推送1",
-              "fav": 0,
-              "show": 7302,
-              "weak": 5627,
-              "signin": '推送中',
-              "click": 4254,
-              "active": 1438,
-              "day7": 274,
-              "day30": 285,
-              "tomorrow": 1727,
-              "day": 558,
-              "week": 4440,
-              "month": 5610
+      {
+              "title": "小可爱1号",
+              "id": 1,
+              'remarks':'管理员',
+              'cat':'管理人员',
+              'tel':'11111111111',
+              'email':'1@qq.com',
+              'img':'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2970637416,2521829339&fm=27&gp=0.jpg',
+              'createTime':'2018-07-13'
+          },{
+              "title": "小可爱2号",
+              "id": 2,
+              'remarks':'窗口人员',
+              'cat':'窗口人员',
+              'tel':'11111111111',
+              'email':'2@qq.com',
+              'img':'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1637349115,3472182484&fm=27&gp=0.jpg',
+              'createTime':'2018-07-13'
+          },{
+              "title": "小可爱3号",
+              "id": 3,
+              'remarks':'配送人员',
+              'cat':'配送人员',
+              'tel':'11111111111',
+              'email':'3@qq.com',
+              'img':'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2346318586,2948873667&fm=11&gp=0.jpg',
+              'createTime':'2018-07-13'
           }
       ]
     }
