@@ -1,0 +1,20 @@
+<template>
+  <view class="column-center loading-wrap" wx:if="{{!init}}">
+    <image class="loading-icon" src="/images/svg/audio.svg"></image>
+    <text class="muted mt20 lg">加载中</text>
+  </view>
+
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Loading extends wepy.component {
+    props = {
+      init: {}
+    };
+  }
+</script>
+
+<style lang="scss">
+  @import "../../styles/variable";
+</style>

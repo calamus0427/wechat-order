@@ -1,0 +1,171 @@
+<template>
+  <view class="coupon-item-container row" data-coupon-id="{{coupon.id}}">
+    <!--左侧区域-->
+    <view class="coupon-main-container column-center">
+      <view class="coupon-value-container">
+        <text class="coupon-value-unit">￥</text>
+        <text class="coupon-value-text">{{coupon.price}}</text>
+      </view>
+      <text class="coupon-limit-text">满{{coupon.limitPrice}}元可用</text>
+    </view>
+
+    <!--右侧区域-->
+    <view class="coupon-info-container">
+      <view class="coupon-title-container">
+        <view class="label primary small">现金</view>
+        <text class="coupon-title-text">{{coupon.name}}</text>
+      </view>
+      <view class="coupon-time-pick-container column">
+        <text class="coupon-time-text">开始时间：{{coupon.beginTime}}</text>
+        <text class="coupon-time-text">截止时间：{{coupon.beginTime}}</text>
+      </view>
+    </view>
+
+    <view class="coupon-pick-button column-center" @tap="pick({{coupon}})">
+      <text>点击</text>
+      <text>领取</text>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import Tips from '../../utils/Tips';
+  import coupon from '../../api/coupon';
+  import store from '../../store/utils';
+  export default class CouponPickItem extends wepy.component {
+    props = {
+      coupon: {}
+    };
+    data = {};
+    methods = {
+      async pick(item) {
+        try {
+          Tips.loading();
+          await coupon.pick(item.id);
+          await Tips.success('领取成功');
+          await store.refresh('coupon');
+          this.$root.$apply();
+        } catch (e) {
+          await Tips.alert('已达领取上限');
+        }
+      }
+    };
+    events = {};
+    onLoad() {
+    }
+  }
+</script>
+
+<style lang="scss">
+  @import "../../styles/variable";
+
+  /*父容器*/
+  .coupon-item-container{
+    position: relative;
+    margin:20rpx 20rpx 0 20rpx;
+    background-color: #FFF;
+    height: 200rpx;
+    border: $border;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  /*左侧容器*/
+  .coupon-main-container{
+    width: 255rpx;
+    height: 100%;
+    background: linear-gradient(to right, #2F80ED, #1296db);
+  }
+
+  /*单位*/
+  .coupon-value-unit{
+    color: #FFF;
+    font-size: 30rpx;
+  }
+
+  /*金额*/
+  .coupon-value-text{
+    color:#FFF;
+    font-size: 75rpx;
+  }
+
+  /*限制条件*/
+  .coupon-limit-text{
+    color: #FFF;
+    font-size: 28rpx;
+    margin-top: 10rpx;
+  }
+
+  /*右侧容器*/
+  .coupon-info-container{
+    flex: 1;
+    padding: 32rpx 20rpx 32rpx 20rpx;
+    height: 135rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+  }
+  /*标题容器*/
+
+  /*标题*/
+  .coupon-title-text{
+    color: #000311;
+    z-index: 100;
+    font-size: 26rpx;
+  }
+  /*时间限制*/
+  .coupon-time-text{
+    color: #9e9e9e;
+    font-size: 24rpx;
+  }
+  /*分隔符*/
+  .coupon-desc-gap{
+    margin-top: 5rpx;
+    border-top: 1px dotted #EFF0F2;
+  }
+  /*详情栏*/
+  .coupon-detial-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    height: 50rpx;
+  }
+  .coupon-detial-text{
+    font-size: 24rpx;
+  }
+  .coupon-detial-icon{
+    width: 26rpx;
+    height: 26rpx;
+  }
+
+  .coupon-pick-button{
+    width: 130rpx;
+    height: 160rpx;
+    border-left: 1px dashed $color-muted;
+    text{
+      font-size: $text-xxl;
+      color: $color-primary;
+    }
+  }
+
+  /*领取*/
+  .coupon-item-pick{
+    border: 1px solid $color-primary;
+    border-radius: 10px;
+    color: $color-primary;
+    font-size: 26rpx;
+    display: inline-block;
+    padding: 10rpx;
+  }
+
+  .coupon-picked-icon{
+    position: absolute;
+    right: 0;
+    top: -10px;
+    height: 128rpx;
+    width: 128rpx;
+    z-index: 10;
+  }
+</style>

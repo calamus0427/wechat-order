@@ -18,14 +18,14 @@
               <view class="animeList-item-right">
                 <text class="animeList-item-name color-gray">{{item.name}}</text>
                 
-  <view class="stars">
-    <image src="{{$animeList$Stars$star >= 1 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon" mode="aspectFit"/>
-    <image src="{{$animeList$Stars$star >= 2 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon" mode="aspectFit"/>
-    <image src="{{$animeList$Stars$star >= 3 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon" mode="aspectFit"/>
-    <image src="{{$animeList$Stars$star >= 4 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon" mode="aspectFit"/>
-    <image src="{{$animeList$Stars$star >= 5 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon" mode="aspectFit"/>
+  <view class="stars _fd05b0c">
+    <image src="{{$animeList$Stars$star >= 1 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon _fd05b0c" mode="aspectFit"/>
+    <image src="{{$animeList$Stars$star >= 2 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon _fd05b0c" mode="aspectFit"/>
+    <image src="{{$animeList$Stars$star >= 3 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon _fd05b0c" mode="aspectFit"/>
+    <image src="{{$animeList$Stars$star >= 4 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon _fd05b0c" mode="aspectFit"/>
+    <image src="{{$animeList$Stars$star >= 5 ? $animeList$Stars$icon_star_active:$animeList$Stars$icon_star}}" class="staricon _fd05b0c" mode="aspectFit"/>
+    <text class="_fd05b0c">   {{$animeList$Stars$star}}.0分</text>
   </view>
-
               </view>
                 <text class="animeList-item-time">{{item.createTime}}</text>
             </view>

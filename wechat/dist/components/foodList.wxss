@@ -1,0 +1,71 @@
+@import "./stars.wxss";
+.weui-badge._1f3c072 {
+  background-color: #FF5577;
+}
+.foodList._1f3c072 {
+  margin-top: 10px;
+  background-color: #fff;
+}
+.foodList-des._1f3c072 {
+  display: flex;
+}
+text._1f3c072 {
+  font-size: 14px;
+}
+.foodList-item-name._1f3c072 {
+  font-size: 32rpx !important;
+  color: #000;
+}
+.foodList-item._1f3c072 {
+  display: flex;
+  align-items: center;
+}
+.foodList-item-main._1f3c072 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.foodList-item-bottom._1f3c072 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.foodList-item-right._1f3c072 {
+  display: flex;
+  align-items: center;
+}
+.foodList-item-image image._1f3c072 {
+  margin: 8px;
+  height: 100px;
+  width: 100px;
+  border: 1px solid #ccc;
+}
+.foodList-item-description._1f3c072 {
+  color: #999;
+  font-size: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+}
+.money._1f3c072,
+.cart._1f3c072 {
+  display: inline-block;
+  line-height: 30px;
+}
+.cart._1f3c072 {
+  float: right;
+  margin-right: 5px;
+}
+.money._1f3c072 {
+  color: red;
+  font-size: 25px !important;
+}
+.cart .iconfont._1f3c072 {
+  background-color: red;
+  color: #fff;
+  border-radius: 50%;
+  margin: 0 5px;
+}

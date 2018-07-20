@@ -1,0 +1,213 @@
+<template>
+  <view class="top_search">
+    <view class="search_read_only">
+      <navigator class="search_content" url="/pages/search">
+        <i class="iconfont icon-search"></i>
+        <view class="search_input">搜索商品</view>
+      </navigator>
+    </view>
+  </view>
+  <view class="classify" style="height:{{windowHeight-50}}px">
+    <scroll-view class="classify_catetory" scroll-y scroll-with-animation="true" style="height:{{windowHeight-50}}px">
+      <view class="name {{item.active? 'active':''}}" wx:for="{{rootcateList}}" wx:key="item" @tap="changeCate" data-code="{{item.code}}">
+        {{item.name}}
+      </view>
+    </scroll-view>
+    <scroll-view class="classify_detail" scroll-y scroll-with-animation="true" style="height:{{windowHeight-50}}px">
+        <view class="children">
+          <navigator hover-class="none" class="children_item" wx:for="{{childcateList}}" wx:for-item="item" wx:key="index" url="/pages/search?cateCode={{item.secondCategory.code}}&title={{item.secondCategory.name}}">
+            <image class="child_image" src="{{item.secondCategory.thumLogo}}"></image>
+            <view class="child_name">{{item.secondCategory.name}}</view>
+          </navigator>
+        </view>
+    </scroll-view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+import api from '@/api/api';
+import {
+  SYSTEM_INFO,
+  SEL_CLASS_CODE
+} from '@/utils/constant';
+
+import tip from '@/utils/tip'
+
+export default class Classify extends wepy.page {
+  config = {
+    navigationBarTitleText: '分类',
+  }
+  components = {
+
+  }
+
+  data = {
+    scrollTop: 100,
+    windowHeight: 0,
+    list: {},
+    //一级分类数据
+    rootcateList: {},
+    //二级三级分类数据
+    childcateList: {}
+  }
+
+  async getChildCate(rootCateCode) {
+    const json = await api.childGoodsCatetoryList({
+      query: {
+        rootCategoryCode: rootCateCode
+      }
+    });
+    if (json.data.code == 0) {
+      this.childcateList = json.data.list;
+    } else {
+      tip.error(json.data.msg);
+    }
+    this.$apply();
+  }
+
+  async getRootCateTopLevel() {
+    const json = await api.rootCtegoryList({
+      query: {}
+    });
+    if (json.data.code == 0) {
+      this.rootcateList = json.data.list;
+      if (this.rootcateList.length > 0) {
+        let selCode = wx.getStorageSync(SEL_CLASS_CODE);
+        var selRottCateCode = this.rootcateList[0].code;
+        if (selCode.length==0) {
+          this.rootcateList[0].active = true;
+        } else {
+          for (var i = 0; i < this.rootcateList.length; i++) {
+            if (selCode == this.rootcateList[i].code) {
+              selRottCateCode = this.rootcateList[i].code;
+              this.rootcateList[i].active = true;
+            }
+          }
+        }
+
+        this.getChildCate(selRottCateCode);
+      }
+    } else {
+      tip.error(json.data.msg);
+    }
+    this.$apply();
+  }
+
+  onLoad() {
+    let that = this;
+    let systemInfo = wx.getStorageSync(SYSTEM_INFO);
+    this.windowHeight = systemInfo.windowHeight;
+    this.$apply();
+
+  }
+
+  onShow() {
+    this.getRootCateTopLevel();
+  }
+
+  computed = {
+
+  }
+  methods = {
+    changeCate(e) {
+      let code = e.currentTarget.dataset.code;
+      this.getChildCate(code);
+      wepy.setStorageSync(SEL_CLASS_CODE, code);
+      //设置一级分类的选中状态
+      for (var i = 0; i < this.rootcateList.length; i++) {
+        var rootCate = this.rootcateList[i];
+        rootCate.active = false;
+        if (rootCate.code == code) {
+          rootCate.active = true;
+        }
+      }
+    },
+    onShareAppMessage: function (res) {
+      if (res.from === 'button') {
+        // 来自页面内转发按钮
+        console.log(res.target)
+      }
+      return {
+        title: this.detail.name,
+        path: '/pages/classify',
+        success: function(res) {
+          // 转发成功
+        },
+        fail: function(res) {
+          // 转发失败
+        }
+      }
+    }
+  }
+  events = {
+
+  }
+}
+
+</script>
+<style lang="less">
+.search_read_only .search_content {
+  width: 100%;
+}
+
+.classify {
+  display: flex;
+  position: relative;
+  .classify_catetory {
+    width: 200rpx;
+    position: relative;
+    z-index: 1;
+    .name {
+      text-align: center;
+      height: 100rpx;
+      line-height: 100rpx;
+      font-size: 28rpx;
+      color: #666;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .active {
+      border-left: 6rpx solid #ff6a3c;
+      background: #fff;
+      color: #ff6a3c;
+    }
+  }
+  .classify_detail {
+    position: relative;
+    z-index: 999;
+    // margin-left: -15rpx;
+    background: #fff;
+    padding: 15px 10px 10px 30px;
+    .classify_item {}
+    .title {
+      font-size: 30rpx;
+      color: #333;
+      margin-left: 25rpx;
+    }
+    .children {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 20rpx 0rpx;
+    }
+    .child_image {
+      width: 60px;
+      height: 60px;
+    }
+    .child_name {
+      font-size: 26rpx;
+      color: #666;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 170rpx;
+    }
+    .children_item {
+      height: 200rpx;
+      width: 170rpx;
+      text-align: center;
+    }
+  }
+}
+
+</style>

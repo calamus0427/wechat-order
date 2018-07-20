@@ -1,0 +1,51 @@
+<template>
+  <view class="container" wx:if="{{init}}">
+
+    <!--列表展现-->
+    <repeat for="{{coupons}}" key="index" index="index" item="item">
+      <CouponItem :coupon.sync="item" @select.user="select"/>
+    </repeat>
+
+    <view class="btn-panel">
+      <button class="weui-btn" type="primary" plain @tap="select({{null}})">不使用优惠券</button>
+    </view>
+
+  </view>
+
+  <!--占位符-->
+  <Placeholder :show.sync="isPageEmpty" message="您还没有可用优惠券"/>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import base from '../../mixins/base';
+  import Placeholder from '../../components/common/placeholder';
+  import CouponItem from '../../components/coupons/display_item';
+  import Event from '../../utils/Event';
+
+  export default class CouponUse extends wepy.page {
+    data = {
+      init: false,
+      coupons: []
+    };
+    async onLoad ({coupons}) {
+      this.coupons = JSON.parse(coupons);
+      this.loaded();
+    };
+    methods = {
+      select (coupon) {
+        Event.emit(Event.TRADE_COUPON_UPDATE, coupon);
+        wepy.navigateBack();
+      }
+    };
+    events = {};
+    components = {
+      Placeholder: Placeholder,
+      CouponItem: CouponItem
+    };
+    mixins = [base];
+    config = {
+      navigationBarTitleText: '选择优惠券'
+    };
+  }
+</script>

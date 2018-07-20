@@ -1,0 +1,13 @@
+.goods-action-btn {
+    width: 28px;
+    height: 28px;
+}
+
+.goods-action-btn__img {
+    height: 100%;
+    width: 100%;
+}
+
+.goods-action-num {
+    margin: 0 10px;
+}

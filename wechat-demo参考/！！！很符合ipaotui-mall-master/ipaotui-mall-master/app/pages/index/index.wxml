@@ -1,0 +1,26 @@
+<import src="/templates/load-more.wxml" />
+<import src="templates/shop.wxml" />
+
+<!--index.wxml-->
+<view class="topbar">
+  <navigator url="./address?callback=callback" class="address trangle">
+    <image class="address__icon" src="/images/location.png"></image>{{currentAddress ? currentAddress.title : '定位中...'}}
+  </navigator>
+  <navigator url="./search" class="search">
+    <icon type="search" size="20" /> 搜索
+  </navigator>
+</view>
+<view class="category">
+  <navigator class="category__item" url="/pages/index/category?id={{item.category_id}}" wx:for="{{category}}" wx:key="category_id">
+    <view>
+      <image src="{{item.icon}}" class="category__icon"></image>
+    </view>
+    {{item.title}}
+  </navigator>
+</view>
+<view class="weui-panel weui-panel_access">
+  <view class="weui-panel__bd shop__list">
+    <template is="shop" wx:for="{{shopList}}" wx:key="{{seller_id}}" data="{{...item}}"></template>
+  </view>
+</view>
+<template is="load-more" data="{{loading: loading, hasMore: hasMore, noMoreLabel: '更多商家接入中, 敬请期待'}}"></template>

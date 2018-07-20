@@ -1,7 +1,10 @@
-<style lang="less">
+<style lang="less" scoped>
 .staricon{
   width:10px;
   height:10px;
+}
+text{
+  font-size:14px;
 }
 </style>
 <template>
@@ -11,6 +14,7 @@
     <image src="{{star >= 3 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
     <image src="{{star >= 4 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
     <image src="{{star >= 5 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+    <text>   {{star}}.0分</text>
   </view>
 </template>
 <script>

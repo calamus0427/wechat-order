@@ -1,0 +1,360 @@
+<template>
+  <Loading :init.sync="init"/>
+  <view class="container" wx:if="{{init}}">
+    <!--状态栏-->
+    <view class="order-status-bar row">
+      <icon class="status-{{order.status}} large"/>
+      <view class="status-box column">
+        <text class="xxl">{{order.statusText}}</text>
+        <!-- 订单文本描述/需要抽取到Service中 -->
+        <text class="muted mt10">{{order.statusDesc}}</text>
+      </view>
+    </view>
+
+    <!--物流栏-->
+    <block wx:if="{{order.isExpress && order.orderExpress.telPhone}}">
+      <view class="order-trace-bar row-between" >
+        <view class="row">
+          <icon class="sender"/>
+          <text class="ml20">{{order.orderExpress.note}}（{{order.orderExpress.telPhone}}）</text>
+        </view>
+        <view  class="row" @tap="sender">
+          <icon class="call"/>
+          <text class="ml10 primary">电话联系</text>
+        </view>
+      </view>
+    </block>
+
+    <!--地址展现-->
+    <block wx:if="{{order.orderType == '20' || order.orderType == '10'}}">
+      <Address :address.sync="address" />
+    </block>
+    <block wx:if="{{order.orderType == '30' || order.orderType == '33'}}">
+      <InShopStatus :order.sync="order" />
+    </block>
+
+    <!--订单项目-->
+    <OrderItem :order.sync="order" action="0"></OrderItem>
+
+    <!--订单详情-->
+    <view class="weui-cells weui-cells-show mt10">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">支付方式</view>
+        <view class="weui-cell__ft">{{order.paymentText}}</view>
+      </view>
+      <view class="weui-cell" wx:if="{{order.orderType == '20' || order.orderType == '10'}}">
+        <view class="weui-cell__bd">配送方式</view>
+        <view class="weui-cell__ft">{{order.deliveryText}}</view>
+      </view>
+      <view class="weui-cell">
+        <view class="weui-cell__bd">买家留言</view>
+        <view class="weui-cell__ft">{{order.message ? order.message : '无'}}</view>
+      </view>
+    </view>
+
+    <!--信息汇总-->
+    <view class="panel summary-box mb20">
+      <view class="price-box row-between">
+        <text>商品金额</text>
+        <text class="major">￥{{order.dealPrice}}</text>
+      </view>
+      <view class="price-box row-between">
+        <text>运费</text>
+        <text class="major">+￥{{order.postFee}}</text>
+      </view>
+      <view class="price-box row-between" wx:if="{{order.couponPrice > 0}}">
+        <text>优惠券</text>
+        <text class="major">-￥{{order.couponPrice}}</text>
+      </view>
+      <view class="price-box row-between" wx:if="{{order.bonusPrice > 0}}">
+        <text>积分抵扣</text>
+        <text class="major">-￥{{order.bonusPrice}}</text>
+      </view>
+      <view class="price-box row-between" wx:if="{{order.reduceFee > 0}}">
+        <view class="row">
+          <icon class="reduce" style="color: #d81e06;"/>
+          <text>优惠满减</text>
+        </view>
+        <text class="major">-￥{{order.reduceFee}}</text>
+      </view>
+
+      <view class="price-hr"></view>
+      <view class="final-box origin-box" wx:if="{{order.orderPriceHistory.length > 0}}">
+        <text class="lg muted">原价：</text>
+        <text class="lg muted">￥{{originPrice}}</text>
+      </view>
+      <view class="final-box">
+        <text class="lg">实付款：</text>
+        <text class="lg major">￥{{order.finalPrice}}</text>
+      </view>
+    </view>
+
+    <!--操作栏-->
+    <view class="order-action-bar row-end" wx:if="{{action != 0 && order.actions.length > 0}}">
+      <block wx:for="{{order.actions}}" wx:for-item="action" wx:key="index">
+        <button wx:if="{{action.primary}}" class="weui-btn mini-btn mr10" size="mini"  type="primary" @tap="action({{action.func}}, {{order}})">{{action.name}}</button>
+        <button wx:else class="weui-btn mini-btn mr10" size="mini"  @tap="action({{action.func}}, {{order}})">{{action.name}}</button>
+      </block>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import base from '../../mixins/base';
+  import auth from '../../api/auth';
+  import order from '../../api/order';
+  import Tips from '../../utils/Tips';
+  import Event from '../../utils/Event';
+  import Address from '../../components/address/display_item';
+  import Route from '../../utils/WxUtils';
+  import OrderItem from '../../components/order/order_item';
+  import InShopStatus from '../../components/order/inshop_status';
+  import Loading from '../../components/common/loading';
+  export default class OrderDetail extends wepy.page {
+    data = {
+      order: {
+        orderGoodsInfos: [],
+        orderPriceHistory: []
+      },
+      express: {},
+      address: {},
+      init: false
+    };
+    async onLoad ({orderId}) {
+      const result = await auth.user({block: true, redirect: true});
+      if (!result) return;
+      // 订单信息
+      this.order = await order.getInfo(orderId);
+      // 收货地址
+      this.address = {
+        name: this.order.receiveName,
+        simpleAddress: this.order.address,
+        phone: this.order.receivePhone
+      };
+      this.loaded();
+    };
+    /**
+     * 再来一单
+     */
+    async again(order) {
+      Event.emit(Event.CART_LIST_RESET, order.orderGoodsInfos);
+      // 跳转到首页，重新加载
+      Route.backOrRedirect('/pages/shop/index');
+      // 预加载/处理首页没打开的情况
+      this.$root.$preload('cart', order.orderGoodsInfos);
+    }
+    /**
+     * 评价订单
+     */
+    comment(order) {
+      const scores = order.orderGoodsInfos.map(item => {
+        return {
+          goodsId: item.goodsId,
+          orderId: order.orderId,
+          sku: item.goodsSku,
+          preview: item.imageUrl,
+          star: 5,
+          starArr: [1, 1, 1, 1, 1],
+          comment: ''
+        };
+      });
+      this.$preload('data', scores);
+      this.$root.$navigate(`/pages/goods/comment_edit?orderId=${order.orderId}`);
+    }
+    /**
+     * 关闭订单
+     */
+    async close({orderId}) {
+      await Tips.confirm('确定关闭该订单？');
+      try {
+        Tips.loading();
+        await order.closeOrder(orderId);
+        await Tips.success('关闭成功');
+        wepy.navigateBack();
+      } catch (e) {
+        console.warn(e);
+        await Tips.success('关闭失败');
+      }
+      Event.emit(Event.ORDER_LIST_UPDATE);
+    }
+    /**
+     * 订单支付
+     */
+    async pay({orderId}) {
+      try {
+        Tips.loading();
+        const payment = await order.prepayOrder(orderId);
+        Tips.loaded();
+        await order.wxpayOrder(payment);
+        await Tips.success('支付成功');
+        wepy.navigateBack();
+      } catch (e) {
+        console.warn(e);
+        await Tips.success('支付取消');
+      }
+      Event.emit(Event.ORDER_LIST_UPDATE);
+    }
+    /**
+     * 订单收货
+     */
+    async receive({orderId}) {
+      await Tips.confirm('确认收货？');
+      try {
+        Tips.loading();
+        await order.confirmOrder(orderId);
+        await Tips.success('订单已完成');
+        wepy.navigateBack();
+      } catch (e) {
+        console.warn(e);
+        await Tips.success('操作失败');
+      }
+      Event.emit(Event.ORDER_LIST_UPDATE);
+    }
+    /**
+     * 申请退款
+     */
+    async refund(refundOrder) {
+      if (Number(refundOrder.finalPrice) == 0) {
+        Tips.alert('￥0 订单无需退款');
+        return;
+      }
+      const refund = order.createOrderRefund(refundOrder);
+      const refundStr = JSON.stringify(refund);
+      await Tips.confirm('您确认要申请退款吗？');
+      this.$navigate(`/pages/order/refund_edit?refund=${refundStr}`);
+    }
+    /**
+     * 撤销退款
+     */
+    async unrefund(refundOrder) {
+      const orderId = refundOrder.orderId;
+      const refundUuid = refundOrder.curRefund.refundUuid;
+      await Tips.confirm('您确认取消退款申请吗？');
+      Tips.loading();
+      await order.cancelRefundOrder(orderId, refundUuid);
+      await Tips.success('取消成功');
+      Event.emit(Event.ORDER_LIST_UPDATE);
+      Route.backOrRedirect('/pages/customer/index');
+    }
+    /**
+     * 退款详情
+     */
+    refundDetail({curRefund}) {
+      const refundStr = JSON.stringify(curRefund);
+      this.$navigate(`/pages/order/refund_detail?refund=${refundStr}`);
+    }
+    methods = {
+      action(funcName, order) {
+        console.info('[action]' + funcName);
+        if (this[funcName]) {
+          const func = this[funcName].bind(this);
+          func(order);
+        } else {
+          Tips.error('未知错误');
+        }
+      },
+      sender() {
+        wepy.makePhoneCall({phoneNumber: this.order.orderExpress.telPhone});
+      }
+    };
+    computed = {
+      originPrice() {
+        if (this.order && this.order.orderPriceHistory) {
+          const records = this.order.orderPriceHistory;
+          const length = records.length;
+          if (length > 0) {
+            return records[length - 1].currentPrice.toFixed(2);
+          }
+        }
+        return null;
+      }
+    };
+    components = {
+      Address: Address,
+      OrderItem: OrderItem,
+      InShopStatus: InShopStatus,
+      Loading: Loading
+    };
+
+    mixins = [base];
+    config = {
+      navigationBarTitleText: '订单详情'
+    };
+  }
+</script>
+
+<style lang="scss">
+  @import "../../styles/variable";
+  .container{
+    padding-bottom: 110rpx;
+  }
+
+  //状态栏
+  .order-status-bar{
+    background-color: #FFF;
+    min-height: 70rpx;
+    padding: 20rpx 30rpx;
+    border-bottom: $border;
+
+    .status-box{
+      margin-left: 30rpx;
+    }
+  }
+
+  //物流状态预览栏
+  .order-trace-bar{
+    padding: 25rpx;
+    background-color: #FFF;
+    border-bottom: $border;
+
+    .info-box{
+      width: 600rpx;
+      margin-left: 20rpx;
+    }
+  }
+
+  //汇总栏
+  .summary-box{
+    padding: 10px 15px;
+
+    .price-hr{
+     border-top: $border;
+     width: 100%;
+    }
+
+    .final-box{
+      float: right;
+      width: 100%;
+      padding-top: 10rpx;
+      text-align: right;
+    }
+
+    .origin-box{
+      text{
+        text-decoration: line-through;
+      }
+    }
+
+    .price-box{
+      padding:5rpx 0;
+    }
+  }
+
+  //商品栏
+  .order-item-container{
+    margin-bottom: 0;
+  }
+
+  // 操作栏
+  .order-action-bar {
+    position: fixed;
+    background-color: white;
+    width: 750rpx;
+    bottom: 0;
+    border-top: $border;
+    padding-right: 10rpx;
+  }
+
+
+</style>

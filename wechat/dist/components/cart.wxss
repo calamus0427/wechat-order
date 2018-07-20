@@ -1,0 +1,13 @@
+.ads-body {
+  border-left: 3px solid #FF5577;
+  padding-left: 5px;
+}
+.scroll-view_H {
+  display: flex;
+  white-space: nowrap;
+  /* color:#FF5577 */
+}
+.scroll-view-item_H {
+  font-size: 14px;
+  display: inline-block;
+}

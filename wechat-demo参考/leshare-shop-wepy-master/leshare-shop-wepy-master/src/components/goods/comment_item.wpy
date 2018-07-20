@@ -1,0 +1,72 @@
+<template>
+  <view class="score-box">
+    <view class="info-box mb10">
+      <view class="name-box row-between">
+        <view class="row-center">
+          <image wx:if="{{comment.avatar}}" src="{{comment.avatar}}"/>
+          <icon wx:else class="customer large" color="gray"/>
+          <text class="username lg ml20">{{comment.nickName}}</text>
+          <text class="muted xs ml20">{{comment.createTime}}</text>
+        </view>
+        <view class="star-box row">
+          <block wx:for="{{comment.starArr}}" wx:key="*this">
+            <icon class="star{{item == 1 ? '-fill' : ''}} xsmall" color="{{item == 1 ? 'major' : 'gray'}}"/>
+          </block>
+        </view>
+      </view>
+    </view>
+    <text class="content-box mb10">{{comment.comment ? comment.comment : '好评！'}}</text>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class CommentItem extends wepy.component {
+    props = {
+      comment: {
+      }
+    };
+    data = {};
+    methods = {};
+    events = {};
+    onLoad() {
+    }
+  }
+</script>
+
+<style lang="scss">
+  @import "../../styles/variable";
+  .score-box{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 30rpx;
+    border-bottom: 1px solid #EDEDED;
+  }
+
+  .info-box{
+    display: flex;
+    flex: 1;
+    image{
+      width: 30px;
+      height: 30px;
+      border-radius: 15px;
+    }
+  }
+
+  .info-box .avatar{
+    height: 70rpx;
+    width: 70rpx;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+
+  .name-box{
+    flex: 1;
+  }
+
+  .star-box icon{
+    padding: 0;
+    vertical-align: middle;
+  }
+</style>

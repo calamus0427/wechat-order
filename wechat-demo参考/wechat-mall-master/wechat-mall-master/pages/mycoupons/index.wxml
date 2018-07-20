@@ -1,0 +1,17 @@
+<view class="container">
+    <view class="coupons">
+        <scroll-view class="coupons-scroll" scroll-x="true">
+            <view class="coupons-item" wx:for-items="{{coupons}}" wx:for-index="idx"  bindtap="gitCoupon" data-id="{{item.id}}">
+               <view class="coupon-money">{{item.money}}元</view>
+               <view class="coupon-name">{{item.name}}</view>
+               <image class="coupon-ico" src="../../images/icon_ticket.png"></image>
+               <view class="coupon-hold">满 {{item.moneyHreshold}} 元使用</view>
+               <view class="coupon-date">{{item.dateEnd}} 前有效</view>
+            </view>
+        </scroll-view>
+    </view>
+</view><!--
+<view class="bottom-box" bindtap="home">
+    <image class="fav-img-btn" src="../../images/nav/youhui-on.png"></image>
+    <view class="add-btn">领取更多饭票</view>
+</view>-->

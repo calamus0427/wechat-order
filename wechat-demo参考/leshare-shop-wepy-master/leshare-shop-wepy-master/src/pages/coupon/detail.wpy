@@ -1,0 +1,134 @@
+<template>
+  <Tips />
+  <view wx:if="{{init}}">
+    <CouponItem :coupon.sync="coupon" />
+
+    <view class="success-box column-center"  wx:if="{{success}}">
+      <text>{{message}}</text>
+    </view>
+
+    <view class="qr-box column-center" wx:if="{{!success}}">
+      <text class="muted mb20 lg" wx:if="{{coupon.supportType !=1}}">线下店铺消费时出示</text>
+      <canvas  style="width: 200px; height: 200px;" canvas-id="qrcode" wx:if="{{coupon.supportType !=1}}"></canvas>
+      <text style="width: 200px; height: 200px;" class="muted lg column-center" wx:if="{{coupon.supportType ==1}}">暂不支持线下店铺消费</text>
+    </view>
+
+    <view class="btn-panel" wx:if="{{!success}}">
+      <button class="weui-btn" type="primary"  @tap="check" wx:if="{{coupon.isSelfUse}}">自助核销</button>
+      <button class="weui-btn" type="warn" plain @tap="delete">删除优惠券</button>
+    </view>
+  </view>
+
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import store from '../../store/utils';
+  import base from '../../mixins/base';
+  import input from '../../mixins/input';
+  import coupon from '../../api/coupon';
+  import CouponItem from '../../components/coupons/display_item';
+  import Qrcode from '../../components/wux/qrcode/qrcode';
+  import Tips from '../../utils/Tips';
+  import Event from '../../utils/Event';
+  import FormTips from '../../components/weui/tips';
+  let interval = null;
+  export default class CouponDetail extends wepy.page {
+    data = {
+      init: false,
+      coupon: null,
+      success: false,
+      message: ''
+    };
+    onLoad (options, {preload}) {
+      this.coupon = preload.coupon;
+      const id = preload.coupon.id;
+      interval = setInterval(async () => {
+        const ownList = await coupon.own();
+        const target = ownList ? ownList.find(item => item.id == id) : null;
+        if (target == null) {
+          this.coupon.status = 'USED';
+          this.message = '店家已核销';
+          this.success = true;
+          clearInterval(interval);
+          Event.emit(Event.COUPON_LIST_UPDATE);
+          await store.refresh('coupon');
+          await Tips.success('已核销', 1000);
+          this.$apply();
+        }
+      }, 3000);
+      this.loaded();
+      Qrcode.init('qrcode', `${this.coupon.couponId}#${this.coupon.id}`);
+    };
+    onUnload () {
+      clearInterval(interval);
+    }
+    methods = {
+      async check() {
+        await Tips.confirm('确认自助核销？该优惠券将被使用，操作后请将结果给店家展示');
+        try {
+          Tips.loading('核销中');
+          await coupon.use(this.coupon.id);
+          this.coupon.status = 'USED';
+          this.message = '已自助核销';
+          this.success = true;
+          clearInterval(interval);
+          await Tips.success('操作成功', 1000);
+          this.$apply();
+          Event.emit(Event.COUPON_LIST_UPDATE);
+          await store.refresh('coupon');
+        } catch (e) {
+          console.warn(e);
+          this.tips('核销失败:' + e.message);
+          Tips.loaded();
+        }
+      },
+      async delete() {
+        await Tips.confirm('确认删除该优惠券?');
+        Tips.loading('删除中');
+        await coupon.remove(this.coupon.id);
+        clearInterval(interval);
+        await Tips.success('操作成功');
+        Event.emit(Event.COUPON_LIST_UPDATE);
+        await store.refresh('coupon');
+        wepy.navigateBack();
+      }
+    };
+    events = {};
+    components = {
+      CouponItem: CouponItem,
+      Tips: FormTips
+    };
+    mixins = [base, input];
+    config = {
+      navigationBarTitleText: '使用优惠券'
+    };
+  }
+</script>
+
+<style lang="scss">
+  @import "../../styles/variable";
+  .qr-box{
+    margin-top: 30rpx;
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    padding-top: 40rpx;
+    padding-bottom: 40rpx;
+    background-color: white;
+    border: $border;
+  }
+  .success-box{
+    background-color: white;
+    padding: 20rpx;
+    margin: 20rpx;
+    height: 100px;
+    border: $border;
+    text {
+      font-size: 27px;
+      color: $color-muted;
+    }
+  }
+  .middle{
+    margin-left: 200rpx;
+  }
+</style>

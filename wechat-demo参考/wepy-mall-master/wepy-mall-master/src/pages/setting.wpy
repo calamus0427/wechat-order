@@ -1,0 +1,110 @@
+<style lang="less">
+.setting {
+
+}
+
+.list_block {
+  padding-top: 20rpx;
+}
+
+.item_bock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40rpx 25rpx;
+  border-bottom: 1px solid #f7f7f7;
+  background: #fff;
+}
+
+.title {
+  color: #808080;
+  font-size: 32rpx;
+}
+
+.item_content {
+  font-size: 32rpx;
+  color: #333333;
+}
+
+</style>
+<!--我的消息-->
+<template>
+  <view class="setting">
+    <scroll-view scroll-y="true" class="swiper-item-box">
+      <view class="list_block">
+        <view class="item_bock">
+          <view class="title">昵称</view>
+          <view class="item_content">{{userInfo.nickName}}</view>
+        </view>
+        <view class="item_bock">
+          <view class="title">我的手机</view>
+          <view class="item_content">{{userInfo.mobile}}</view>
+        </view>
+        <view class="item_bock">
+          <view class="title">收货地址</view>
+          <navigator class="item_content" url="/pages/address">更改地址 &gt;</navigator>
+        </view>
+      </view>
+  </view>
+  </scroll-view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+import api from '@/api/api';
+import {
+  SYSTEM_INFO,
+  USER_SPECICAL_INFO
+} from '@/utils/constant';
+export default class Messages extends wepy.page {
+  config = {
+    navigationBarTitleText: '设置',
+  }
+  components = {
+
+  }
+  data = {
+    userInfo: {},
+    winHeight: 0
+  }
+  async getUserInfo(phone,code) {
+    let that = this;
+    let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
+    let openId = userSpecialInfo.openid;
+    const json = await api.getUserInfo({
+      query: {
+        openId: openId
+      }
+    });
+    if (json.data.code == 0) {
+      this.userInfo=json.data.user;
+      console.log("===================")
+      console.log(that.userInfo);
+      that.$apply();
+    } else {
+      tip.error(json.data.msg)
+    }
+    that.showLoading = false;
+  }
+  onLoad() {
+    let that = this;
+
+    //设置滚动高度
+    let systemInfo = wepy.getStorageSync(SYSTEM_INFO);
+    that.winHeight = systemInfo.windowHeight;
+    this.getUserInfo();
+  }
+  computed = {
+
+  }
+  methods = {
+
+
+  }
+  events = {
+
+  }
+
+}
+
+</script>

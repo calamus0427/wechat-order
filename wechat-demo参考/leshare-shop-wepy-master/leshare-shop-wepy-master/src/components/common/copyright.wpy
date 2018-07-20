@@ -1,0 +1,35 @@
+<template>
+  <view class="weui-footer {{buttom == 'true' ? 'weui-footer_fixed-bottom' : ''}} " @tap="tap">
+    <view class="weui-footer__links">
+      <view class="weui-footer__link">乐享启创提供技术支持</view>
+    </view>
+    <view class="weui-footer__text">Copyright © 2018 leshare.shop {{version}}</view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Copyright extends wepy.component {
+    data = {
+      version: null
+    };
+    onLoad () {
+      this.version = wepy.$instance.globalData.version;
+    }
+    methods = {
+    };
+    props ={
+      buttom: {
+        default: 'false'
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+  @import "../../styles/variable";
+  .weui-footer{
+    padding: 15rpx 0;
+    background-color: $color-bg-body;
+  }
+</style>

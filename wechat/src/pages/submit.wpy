@@ -1,0 +1,60 @@
+
+<template>
+    <view>
+      提交订单
+    </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class submit extends wepy.page {
+    mixins = []
+    config = {
+      navigationBarTitleText: '提交订单'
+    }
+    components = {
+
+    }
+
+    mixins = []
+
+    data = {
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+
+    }
+
+    events = {
+
+    }
+
+    onLoad() {
+    }
+    onReady() {
+      this.initPage()
+    }
+    initPage(){
+
+    }
+  }
+</script>
+<style lang="less">
+.main-box{
+  display:flex;
+  width: 100%;
+  position: absolute;
+  top: 80px;
+  bottom: 0px;
+  .goods-box{
+    flex: 1;
+    height: 100%;
+  }
+  }
+</style>
+

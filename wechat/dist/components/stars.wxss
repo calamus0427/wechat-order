@@ -1,4 +1,7 @@
-.staricon {
+.staricon._fd05b0c {
   width: 10px;
   height: 10px;
+}
+text._fd05b0c {
+  font-size: 14px;
 }

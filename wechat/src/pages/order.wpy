@@ -1,0 +1,164 @@
+<style lang="less">
+
+</style>
+<template>
+    <view  >
+      <SearchBar type="tag"  :placeholder="searchText"></SearchBar>
+      <view class="sort">
+          <view class="sort-item">好评优先 <text class="iconfont icon-dianzan"></text></view>
+          <view class="sort-item">价格优先 <text class="iconfont icon-qian2"></text></view>
+      </view>
+    <!--主内容区域-->
+      <view wx:if="{{init}}" class="main-box row">
+        <SideTab :tab="categories"  @change.user="switchTab"/>
+        <scroll-view scroll-y class="goods-box">
+          <foodList></foodList>
+        </scroll-view>
+      </view>
+
+      <view wx:else>
+        敬请期待
+      </view>
+    </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import SideTab from '../components/side_tab'
+  import imageList from '../components/imageList'
+  import SearchBar from '../components/searchbar'
+  import Ads from '../components/ads'
+  import base from '../mixins/base'
+  import http from '../mixins/http'
+  import foodList from '../components/foodList'
+  import icon from '../components/icon'
+
+
+  export default class order extends wepy.page {
+    mixins = [base, http]
+    config = {
+      navigationBarTitleText: '订餐服务'
+    }
+    components = {
+      SideTab:SideTab,
+      imageList:imageList,
+      foodList:foodList,
+      SearchBar:SearchBar,
+      Ads:Ads,
+      icon:icon
+    }
+
+    mixins = []
+
+    data = {
+      init:true,
+      searchText:'请输入商家或者商品名称',
+      categories: {
+                'list':[
+                  {'id':'1','title':'热推辣货'},
+                  {'id':'2','title':'炒菜'},
+                  {'id':'3','title':'盖饭'},
+                  {'id':'4','title':'面条'},
+                  {'id':'5','title':'饺子'},
+                  {'id':'6','title':'拌菜'},
+                  {'id':'7','title':'小吃'},
+                  {'id':'8','title':'粥'},
+                  {'id':'9','title':'外加调料'}
+                  ],
+                  'selectedId':'1'
+                }
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      // 点击分类
+      switchTab(selectedId) {
+        console.log(selectedId)
+        // this.tab.categoryId = selectedId;
+        // this.reload();
+      }
+
+    }
+
+    events = {
+
+    }
+
+    onLoad() {
+    }
+    onReady() {
+      this.initPage()
+    }
+    initPage(){
+      this.getAnimeTag()
+    }
+    search(){
+      wx.navigateTo({
+          url: '/pages/searchTag'
+        })
+    }
+    getAnimeTag(){
+
+        wx.request({
+          url: 'https://www.calamus.xyz/api/getAnimeTag.php', //仅为示例，并非真实的接口地址
+          success: (res) =>{
+            console.log(res)
+            this.categories = res.data ;
+          },
+          fail:(res)=>{
+            console.log("fail",res)
+            this.categories = {
+                'list':[
+                  {'id':'1','title':'热推辣货'},
+                  {'id':'2','title':'炒菜'},
+                  {'id':'3','title':'盖饭'},
+                  {'id':'4','title':'面条'},
+                  {'id':'5','title':'饺子'},
+                  {'id':'6','title':'拌菜'},
+                  {'id':'7','title':'小吃'},
+                  {'id':'8','title':'粥'},
+                  {'id':'9','title':'外加调料'}
+                  ],
+                  'selectedId':'1'
+                }
+          }
+        })
+    }
+  }
+</script>
+<style lang="less">
+.weui-search-bar{
+  background-color: #13BA84 !important;
+}
+.sort{
+  height:40px;
+  background-color: #fff;
+  .sort-item{
+    display:inline-block;
+    width:50%;
+    text-align:center;
+    font-size:14px;
+    line-height:26px;
+    margin-top:7px;
+    box-sizing:border-box;
+  }
+  .sort-item:first-child{
+    border-right:1px solid #13BA84;
+  }
+}
+.main-box{
+  display:flex;
+  width: 100%;
+  position: absolute;
+  top: 95px;
+  bottom: 0px;
+  .goods-box{
+    flex: 1;
+    height: 100%;
+  }
+  }
+</style>
+

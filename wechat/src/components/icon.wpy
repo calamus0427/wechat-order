@@ -1,0 +1,75 @@
+<template>
+  <view class="ads-body">
+    <text class="iconfont icon-renminbi"></text>
+    <text class="iconfont icon-gouwuchekong"></text>
+    <text class="iconfont icon-msnui-sub"></text>
+    <text class="iconfont icon-msnui-time-bold"></text>
+    <text class="iconfont icon-unie60b"></text>
+    <text class="iconfont icon-renminbi1"></text>
+    <text class="iconfont icon-50"></text>
+    <text class="iconfont icon-weizhi"></text>
+    <text class="iconfont icon-gouwuche"></text>
+    <text class="iconfont icon-qian"></text>
+    <text class="iconfont icon-shijianzhongbiao2"></text>
+    <text class="iconfont icon-dianzan"></text>
+    <text class="iconfont icon-tianjia"></text>
+    <text class="iconfont icon-renminbi2"></text>
+    <text class="iconfont icon-z-nolike"></text>
+    <text class="iconfont icon-shijian"></text>
+    <text class="iconfont icon-iconfontzhizuobiaozhun44"></text>
+    <text class="iconfont icon-webicon308"></text>
+    <text class="iconfont icon-webicon310"></text>
+    <text class="iconfont icon-qian2"></text>
+    <text class="iconfont icon-iconfontzhizuobiaozhun023148"></text>
+    <text class="iconfont icon-shijian1"></text>
+    <text class="iconfont icon-gouwuche1"></text>
+    <text class="iconfont icon-gouwuche2"></text>
+    <text class="iconfont icon-RMB"></text>
+    <text class="iconfont icon-BAI"></text>
+    <text class="iconfont icon-like"></text>
+    <text class="iconfont icon-icon--"></text>
+    <text class="iconfont icon-qian3"></text>
+    <text class="iconfont icon-shijian2"></text>
+
+  </view>
+
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class icon extends wepy.component {
+    props = {
+    }
+
+    data = {
+      iconName:[]
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+    }
+
+
+  }
+</script>
+
+<style type="less">
+.ads-body{
+  border-left:3px solid #FF5577;
+  padding-left:5px;
+}
+.scroll-view_H{
+  display: flex;
+  white-space: nowrap;
+  /* color:#FF5577 */
+}
+.scroll-view-item_H{
+  font-size:14px;
+  display: inline-block;
+}
+
+</style>

@@ -1,0 +1,60 @@
+
+<template>
+    <view>
+      新增收货地址
+    </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class address extends wepy.page {
+    mixins = []
+    config = {
+      navigationBarTitleText: '新增收货地址'
+    }
+    components = {
+
+    }
+
+    mixins = []
+
+    data = {
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+
+    }
+
+    events = {
+
+    }
+
+    onLoad() {
+    }
+    onReady() {
+      this.initPage()
+    }
+    initPage(){
+
+    }
+  }
+</script>
+<style lang="less">
+.main-box{
+  display:flex;
+  width: 100%;
+  position: absolute;
+  top: 80px;
+  bottom: 0px;
+  .goods-box{
+    flex: 1;
+    height: 100%;
+  }
+  }
+</style>
+

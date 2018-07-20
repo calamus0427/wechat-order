@@ -1,0 +1,111 @@
+<template>
+  <view wx:if="{{init}}">
+    <!-- 头图区域 -->
+    <view class="user-info-container">
+      <image class="user-avatar" src="{{shop.avatar}}" />
+      <text class="user-nickname">{{shop.name}}</text>
+      <text class="user-desc">购买商品、查看订单需要进行用户信息授权</text>
+    </view>
+
+    <view class="btn-panel">
+      <button open-type="getUserInfo" class="weui-btn" type="primary" bindgetuserinfo="confirm" wx:if="{{reInfo}}" >确认授权</button>
+      <button class="weui-btn" type="primary"  @tap="tips" wx:else >确认授权</button>
+      <button class="weui-btn" @tap="back">随便逛逛</button>
+    </view>
+
+    <Copyright />
+  </view>
+
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import { connect } from 'wepy-redux';
+  import store from '../../store/utils';
+  import auth from '../../api/auth';
+  import base from '../../mixins/base';
+  import Tips from '../../utils/Tips';
+  import WxUtils from '../../utils/WxUtils';
+
+  @connect({
+    shop: store.get('shop')
+  })
+  export default class UserLogin extends wepy.page {
+    data = {
+      redirect: 'false',
+      init: false,
+      reInfo: null,
+      reAuth: null
+    };
+    async onLoad ({redirect}) {
+      await store.init();
+      this.redirect = redirect;
+      this.reInfo = WxUtils.canIUse('button.open-type.getUserInfo');
+      this.loaded();
+    };
+    methods = {
+      async confirm({detail}) {
+        if (detail.rawData) {
+          const result = await auth.user({block: false, redirect: false}, detail);
+          if (!result) return;
+          Tips.success('授权成功');
+          if (this.redirect == 'true') {
+            WxUtils.backOrRedirect('/pages/customer/index');
+          } else {
+            wepy.navigateBack();
+          }
+        } else {
+          Tips.error('授权失败');
+        }
+      },
+      back() {
+        if (this.redirect == 'true') {
+          WxUtils.backOrRedirect('/pages/home/home');
+        } else {
+          wepy.navigateBack();
+        }
+      },
+      tips() {
+        Tips.modal('微信版本过低，请更新微信，或在列表删除小程序后重新访问');
+      }
+    };
+    events = {
+    };
+    components = {};
+    mixins = [base];
+    config = {
+      navigationBarTitleText: '用户授权'
+    };
+  }
+</script>
+
+<style lang="scss">
+  @import "../../styles/variable";
+  /*用户信息*/
+  .user-info-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400rpx;
+    background-color: $color-primary;
+    padding-left: 50rpx;
+    padding-right: 50rpx;
+  }
+  .user-avatar{
+    height:160rpx;
+    width: 160rpx;
+    border-radius: 50%;
+  }
+
+  .user-nickname{
+    color: white;
+    font-size: 40rpx;
+  }
+
+  .user-desc{
+    color: white;
+    font-size: 30rpx;
+    margin-top: 30rpx;
+  }
+</style>

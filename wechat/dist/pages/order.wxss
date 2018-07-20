@@ -1,0 +1,36 @@
+@import "./../components/icon.wxss";
+@import "./../components/ads.wxss";
+@import "./../components/searchbar.wxss";
+@import "./../components/foodList.wxss";
+@import "./../components/imageList.wxss";
+@import "./../components/side_tab.wxss";
+.weui-search-bar {
+  background-color: #13BA84 !important;
+}
+.sort {
+  height: 40px;
+  background-color: #fff;
+}
+.sort .sort-item {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+  font-size: 14px;
+  line-height: 26px;
+  margin-top: 7px;
+  box-sizing: border-box;
+}
+.sort .sort-item:first-child {
+  border-right: 1px solid #13BA84;
+}
+.main-box {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  top: 95px;
+  bottom: 0px;
+}
+.main-box .goods-box {
+  flex: 1;
+  height: 100%;
+}

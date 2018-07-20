@@ -30,10 +30,9 @@
   top: 5px;
 }
 .side-tab .tab-item-seleted {
-  border-right: 4px solid #FF5577;
-  background-color: #FFF;
+  background-color: #13BA84;
 }
 .side-tab .tab-item-seleted text {
-  color: #FF5577;
+  color: #fff;
   font-weight: bold;
 }

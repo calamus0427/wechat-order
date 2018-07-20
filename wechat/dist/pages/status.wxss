@@ -1,0 +1,30 @@
+.status._8b88069 {
+  text-align: center;
+  margin: 30px 0;
+}
+.status view._8b88069 {
+  margin-top: 10px;
+}
+.content-item._8b88069 {
+  padding: 0 15px;
+}
+.hr._8b88069 {
+  border-bottom: 1px solid #ccc;
+  margin: 0 15px;
+  margin-bottom: 20px;
+}
+.content-item .content-item-name._8b88069 {
+  color: #999;
+}
+.content-item._8b88069:first-child {
+  margin-bottom: 20px;
+}
+.content-item .content-item-detail._8b88069 {
+  float: right;
+}
+button._8b88069 {
+  background-color: #16cc80;
+  color: #fff;
+  width: 80%;
+  margin-top: 50px;
+}

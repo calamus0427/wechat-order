@@ -1,0 +1,20 @@
+<!--index.wxml-->
+<!--1px = 750/320 = 2.34rpx;-->
+<view class="container">
+    <view class="coupons" hidden="{{hasNoCoupons}}">
+        <scroll-view class="coupons-scroll" scroll-x="true">
+            <view class="coupons-item" wx:for-items="{{coupons}}" wx:for-index="idx" wx:key="id"  bindtap="gitCoupon" data-id="{{item.id}}">
+               <view class="coupon-money">{{item.moneyMax}}元</view>
+               <view class="coupon-name">{{item.name}}</view>
+               <image class="coupon-ico" src="../../images/icon_ticket_already.png"></image>
+               <view class="coupon-hold">满 {{item.moneyHreshold}} 元使用</view>
+               <view class="coupon-date" wx:if="{{item.dateEndType == 0}}">{{item.dateEnd}} 前有效</view>
+               <view class="coupon-date" wx:if="{{item.dateEndType == 1}}">领取 {{item.dateEndDays}} 天内有效</view>
+            </view>
+        </scroll-view>
+    </view>
+</view>
+<view class="bottom-box" bindtap="home">
+    <image class="fav-img-btn" src="../../images/nav/home-on.png"></image>
+    <view class="add-btn">发现更多美食</view>
+</view>

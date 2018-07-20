@@ -1,0 +1,257 @@
+<template>
+  <!--tab模块-->
+  <view class="swiper-tab-pd">
+    <tab @currentTab.user="getCurrentTab" :tabList.sync="tabList" :currentTab.sync="currentTab"></tab>
+  </view>
+  <scroll-view scroll-y="true" class="swiper-item-box" style="height:{{winHeight - 31}}px" bindscrolltolower="onReachBottom">
+    <orderItem :orderList.sync="orderList"></orderItem>
+    <!--加载更多时动画-->
+    <bottomLoadMore :show.sync="showLoading" message="正在加载"></bottomLoadMore>
+    <!--暂无数据显示-->
+    <placeholder :show.sync="is_empty" message="暂无发现数据"></placeholder>
+  </scroll-view>
+</template>
+<script>
+import wepy from 'wepy';
+import Tab from '@/components/tab'
+import {
+  SYSTEM_INFO,
+  USER_SPECICAL_INFO
+} from '@/utils/constant';
+import OrderItem from '@/components/order_item'
+import BottomLoadMore from "../components/common/bottomLoadMore"
+import Placeholder from "../components/common/placeholder"
+import api from '@/api/api';
+export default class Order extends wepy.page {
+  config = {
+    navigationBarTitleText: "补货订单",
+  }
+  components = {
+    tab: Tab,
+    orderItem: OrderItem,
+    bottomLoadMore: BottomLoadMore,
+    placeholder: Placeholder
+  }
+  data = {
+    winHeight: 0,
+    totalCount: 0,
+    tabList: ["全部", "待处理", "待收货", "已完成"],
+    orderList: [],
+    currentPage: 1,
+    is_empty: false,
+    orderStatus: "",
+    currentTab: 0,
+    flag: 0,
+    //是否显示 底部loading
+    showLoading: true,
+    //防止重复加载
+    preventRepeatReuqest: false,
+    //待付款
+    pendingPayCount : 0,
+    //待发货
+    backrdersCount : 0,
+    //待收货
+    shippedCount : 0,
+
+    receiveFlg : 0
+  }
+
+  async getMyOrder(currentPage, size,refresh) {
+
+    console.log("refresh值："+refresh);
+    let that = this;
+    console.log("orderStatus值");
+    console.log("orderStatus值" + that.orderStatus);
+    let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
+    let openId = userSpecialInfo.openid;
+    const json = await api.getMyOrderList({
+      query: {
+        openId: openId,
+        orderStatus: that.orderStatus,
+        receiveFlg : that.receiveFlg,
+        page: currentPage || 1,
+        size: size || 10,
+        type: 2 //补货单
+      }
+    });
+    if (json.data.code == 0) {
+      console.log("json.data.list");
+      console.log(json.data.list);
+      if (refresh) {
+        that.orderList = json.data.list;
+      } else {
+        that.orderList = [...that.orderList, ...json.data.list];
+      }
+      that.page_total = json.data.page_total;
+      that.totalCount = json.data.totalCount;
+      console.log("条目数：" + that.totalCount);
+      if (json.data.page_total == 0) {
+        //暂无数据
+        that.is_empty = true;
+      } else {
+        that.is_empty = false;
+      }
+      that.getMyOrderSize();
+      console.log("list返回数据");
+      console.log(that.orderList);
+    } else {
+      tip.error(json.data.msg)
+    }
+    that.showLoading = false;
+    that.$apply();
+  }
+
+  async getMyOrderSize() {
+    console.log("订单数量统计");
+    let that = this;
+    let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
+    let openId = userSpecialInfo.openid;
+    const json = await api.getMyOrderSize({
+      query: {
+        openId: openId,
+        type: 2
+      }
+    });
+    if (json.data.code == 0) {
+      //待付款
+      that.pendingPayCount = json.data.pendingPayCount;
+      //待发货
+      that.backrdersCount = json.data.backrdersCount;
+      //待收货
+      that.shippedCount = json.data.shippedCount;
+
+      //重写list
+      var dotList = ["全部", { name: "待处理", dotNum: that.pendingPayCount }, { name: "待收货", dotNum: that.backrdersCount }, "已完成"];
+      this.$invoke("tab", "changeList", dotList);
+      that.$apply();
+    }
+  }
+
+
+  onLoad(opts) {
+    let that = this;
+    let title = "";
+    that.orderList = [];
+    that.currentTab = opts.type;
+    that.getMyOrder();
+    //设置滚动高度
+    let systemInfo = wepy.getStorageSync(SYSTEM_INFO);
+    that.winHeight = systemInfo.windowHeight;
+    that.$apply();
+  }
+  computed = {
+
+  }
+  methods = {
+    getCurrentTab(cur, evt) {
+      this.currentPage = 1;
+      this.page_total = 0;
+      this.orderList = [];
+
+      let that = this;
+      that.currentTab = cur;
+      console.log("cur");
+      console.log(cur);
+      if (cur == 0) {
+        console.log("所有订单类型");
+        that.orderStatus = "";
+        that.getMyOrder();
+      } else if (cur == 1) {
+        console.log("未付款订单类型");
+        that.orderStatus = 0;
+        that.getMyOrder();
+      } else if (cur == 2) {
+        console.log("待收货订单类型");
+        that.orderStatus = 2;
+        that.receiveFlg=2;
+        that.getMyOrder();
+      } else if (cur == 3) {
+
+        console.log("已完成订单类型");
+        that.orderStatus = 4;
+        that.receiveFlg=4;
+        that.getMyOrder();
+      }
+      that.$apply();
+    },
+    /**
+     * 滑动切换tab
+     */
+    bindChange(e) {
+
+      let that = this;
+      that.currentTab = e.detail.current;
+      console.log("change tab...." + e.detailcurrent);
+      that.$apply();
+    },
+  }
+  events = {
+    refreshOrderList(msg){
+      console.log("msg值:"+msg);
+      if(msg==3){
+        this.currentTab=3;
+        this.$apply();
+        this.orderStatus = 4;
+      }
+      this.getMyOrder(1,10,1);
+    }
+  }
+  watch = {
+    currentTab(val) {
+      console.log("====" + val)
+    }
+  }
+
+  //加载更多
+  onReachBottom() {
+    console.log("加载更多");
+    let that = this;
+    that.showLoading = true;
+    console.log(that.page_total + "232===" + that.currentPage);
+    //判断总页数是否大于翻页数
+    if ((that.page_total) > that.currentPage) {
+      //防止重复加载
+      if (that.preventRepeatReuqest) {
+        return true;
+      }
+      that.preventRepeatReuqest = true;
+      that.currentPage++;
+      console.log(this.currentTab);
+      if (this.currentTab == 0) {
+        console.log("所有订单类型");
+        that.getMyOrder(that.currentPage);
+      } else if (this.currentTab == 1) {
+        console.log("未付款订单类型");
+        that.orderStatus = 0;
+        that.getMyOrder(that.currentPage);
+      } else if (this.currentTab == 2) {
+        console.log("待发货订单类型");
+        that.orderStatus = 1;
+        that.receiveFlg=1;
+        that.getMyOrder(that.currentPage);
+      } else if (this.currentTab == 3) {
+        console.log("已完成订单类型");
+        that.orderStatus = 4;
+        that.getMyOrder(that.currentPage);
+      }
+      that.preventRepeatReuqest = false;
+    } else {
+      that.showLoading = false;
+    }
+  };
+
+}
+
+</script>
+<style lang="less">
+.swiper-tab-pd {
+  padding: 0 30rpx;
+  background: #fff;
+}
+
+.swiper-tab-order.active {
+  color: #ff4856;
+  border-bottom: 5rpx solid #ff4856;
+}
+
+</style>

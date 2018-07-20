@@ -1,0 +1,223 @@
+<template>
+  <view class="foodList">
+    <block wx:if="{{list.length > 0}}">
+      <block wx:for="{{list}}" wx:key="index">
+        <navigator url="/pages/detail">
+          <view class="foodList-des">
+            <view class="foodList-item-image">
+              <image src="{{item.image}}" mode="aspectFill"/>
+            </view>
+            <view class="foodList-item-content">
+              <text class="foodList-item-name">{{item.name}}</text>
+              <Stars :star="item.stars"></Stars>
+              <text>月销量：{{item.shoped}}笔</text>
+            </view>
+          </view>
+          <view class="foodList-item-description">{{item.description}}</view>
+          <view class="buybuybuy">
+            <text class="money">
+              <text class="iconfont icon-renminbi2"></text>{{item.price}}
+            </text>
+            <text class="cart">
+              <text class="iconfont icon-jian1"></text>
+              <text>1</text>
+              <text class="iconfont icon-webicon310"></text>
+            </text>
+          </view>
+        </navigator>
+      </block>
+      <block wx:if="{{loading}}">
+        <view class="weui-loadmore">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+      </block>
+      <block wx:elif="{{noMore}}">
+        <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"></view>
+        </view>
+      </block>
+    </block>
+    <block wx:else>
+      <view class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无推荐</view>
+      </view>
+    </block>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import http from '../mixins/http'
+  import base from '../mixins/base'
+  import Stars from './stars'
+
+  export default class foodList extends wepy.component {
+    components = {
+      Stars: Stars
+    }
+    mixins = [base, http]
+    props = {
+      list: {
+        type: Object,
+        default: [
+          {
+            'name':'特色油炸鳕鱼，麻辣口味鳕鱼',
+            'image':'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3856289508,2200725606&fm=200&gp=0.jpg',
+            'description':'包含半斤鳕鱼，口味有超辣，正常辣，微辣，请备注选择',
+            'price':39,
+            'stars':'5',
+            'shoped':'5',
+            'id':''
+          }
+          ]
+      },
+      title: {
+        type: String,
+        default: '推荐追番表'
+      },
+      star:{
+        default:''
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      },
+      noMore: {
+        type: Boolean,
+        default: true
+      },
+      /**
+       * [type 列表类型：常规列表/收藏列表]
+       * @type {list/collect}
+       */
+      type: {
+        type: String,
+        default: 'list'
+      }
+    }
+
+    data = {
+      icon_eye: '/images/icon/addBefore.jpg',
+      icon_eye_active: '/images/icon/addAfter.jpg'
+    }
+
+    computed = {
+      isCollectList() {
+        return this.type === 'collect'
+      }
+    }
+
+    methods = {
+      toStar(book, index) {
+        // 将要发生的收藏动作
+        const isCollect = Boolean(book && +book.collected)
+        const newType = isCollect ? 0 : 1
+        const newTypeText = newType ? '添加' : '取消'
+        // 收藏本书
+        this.$post({
+          url: '',
+          data: {
+            book_ids: [book.id],
+            type: newType
+          }
+        }, {
+          success: ({code, data}) => {
+            // 重置本书收藏状态
+            if (this.isObject(this.list[index])) {
+              this.list[index].collected = newType
+            }
+            wx.showToast({
+              title: `${newTypeText}收藏！`,
+              icon: 'success',
+              duration: 1000
+            })
+          },
+          fail: ({code, data}) => {
+            // =============================== 调试代码 ===============================
+            // this.book.collected = newType
+            // =============================== 调试代码 ===============================
+            wx.showToast({
+              title: `${newTypeText}收藏失败！`,
+              icon: 'loading',
+              image: '/images/icon/icon-cancel.png',
+              duration: 1000
+            })
+          }
+        })
+      }
+    }
+  }
+</script>
+
+<style type="less" scoped>
+.weui-badge{
+  background-color: #FF5577;
+}
+.foodList{
+  margin-top:10px;
+  background-color: #fff;
+}
+.foodList-des{
+  display:flex;
+}
+text{
+  font-size:14px;
+}
+.foodList-item-name{
+  font-size:32rpx !important;
+  color:#000;
+}
+.foodList-item{
+  display:flex;
+  align-items:center;
+}
+.foodList-item-main{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.foodList-item-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.foodList-item-right{
+  display:flex;
+  align-items:center;
+}
+.foodList-item-image image{
+  margin:8px;
+  height:100px;
+  width:100px;
+  border:1px solid #ccc;
+}
+.foodList-item-description{
+  color:#999;
+  font-size:14px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  word-break:break-all;
+  text-overflow:ellipsis;
+}
+.money,.cart{
+  display:inline-block;
+  line-height:30px;
+}
+.cart{
+  float: right;
+  margin-right:5px;
+}
+.money{
+  color:red;
+  font-size:25px !important;
+}
+.cart .iconfont{
+  background-color: red;
+  color:#fff;
+  border-radius:50%;
+  margin:0 5px;
+  }
+</style>

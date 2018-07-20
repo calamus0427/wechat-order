@@ -1,0 +1,276 @@
+@import "variable";
+page{
+  height: 100%;
+  background-color: $color-bg-body;
+}
+
+//******外边距原子样式******/
+.mr10{margin-right: 10rpx}
+.mr20{margin-right: 20rpx}
+.ml10{margin-left: 10rpx}
+.ml20{margin-left: 20rpx}
+.mt10{margin-top: 10rpx}
+.mt20{margin-top: 20rpx}
+.mb10{margin-bottom: 10rpx}
+.mb20{margin-bottom: 20rpx}
+
+
+//******通用样式******/
+text, view {
+  font-size: $text-nm;
+  color: $color-normal;
+}
+
+.form {
+  text,view{
+    font-size: $text-form;
+  }
+}
+text.white{color:#FFF}
+text.muted,input.muted,view.muted{color: $color-muted}
+text.weak{color: $color-weak}
+text.primary{color: $color-primary}
+text.major{color: $color-major}
+text.danger{color: $color-danger}
+
+text.xl{font-size: $text-xl}
+text.xxl{font-size: $text-xxl}
+text.lg{font-size: $text-lg}
+text.sm{font-size: $text-sm}
+text.xs{font-size: $text-xs}
+text.xxs{font-size: $text-xxs}
+
+text.inline{
+  text-overflow: ellipsis;
+  word-break:keep-all;
+  white-space:nowrap;
+  overflow:hidden;
+}
+text.cancel{
+  font-size: $text-sm;
+  color: $color-muted;
+  text-decoration: line-through;
+}
+
+view.bg-white{background-color: white}
+
+//******布局样式******/
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.row-center{
+  @extend .row;
+  justify-content: center;
+}
+.row-between {
+  @extend .row;
+  justify-content: space-between;
+}
+.row-around {
+  @extend .row;
+  justify-content: space-around;
+}
+.row-end {
+  @extend .row;
+  justify-content: flex-end;
+}
+.column {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.column-center{
+  @extend .column;
+  align-items: center;
+}
+.column-around{
+  @extend .column;
+  align-items: center;
+  justify-content: space-around;
+}
+.column-between{
+  @extend .column;
+  align-items: center;
+  justify-content: space-between;
+}
+.container{
+  @extend  .column;
+}
+.fixed-bottom{
+  position: fixed;
+  bottom: 0;
+}
+
+//******间隔******/
+.hr{
+  width: 100%;
+  height: 6rpx;
+}
+.h-gap{
+  width: 100%;
+  height: 10px;
+}
+
+.tab-border{
+  position: fixed;
+  height: 1px;
+  width: 100%;
+  background-color: #E6E8EB;
+  bottom: 0;
+}
+
+//******面板与标签******/
+.panel {
+  background: #fff;
+  border-top: $border;
+  border-bottom: $border;
+  margin-top: 10rpx;
+  overflow: hidden;
+}
+.label {
+  display: inline-block;
+  font-size: 12px;
+  height: 28px;
+  line-height: 28px;
+  color: #333;
+  border: 1rpx solid #999;
+  padding: 0 10px;
+  border-radius: 2px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  text-align: center;
+  &.primary {
+    color: #fff;
+    background: $color-primary;
+    border: 1rpx solid $color-primary;
+  }
+  &.disabled {
+    color: #cacaca;
+    background: #eee;
+    border: 1rpx solid #e5e5e5;
+  }
+  &.small {
+    font-size: 11px;
+    height: 20px;
+    line-height: 18px;
+    padding: 0 3px;
+  }
+  &.pain.primary {
+    color: $color-primary;
+    background: #fff;
+  }
+}
+
+/** 微信列表样式 **/
+.weui-cells-show{
+  margin-top: 0;
+  text, view{
+    font-size: $text-nm;
+  }
+  .weui-cell__ft{
+    color: $color-normal;
+  }
+  .weui-cell::before,.weui-cells::after{
+    border-top: $border;
+  }
+  &::before {
+    border-top: $border;
+  }
+  &::after {
+    border-bottom: $border;
+  }
+}
+/** 微信表单样式 **/
+.weui-cells-form{
+  @extend .weui-cells-show;
+  text, view{
+    font-size: $text-form;
+  }
+}
+/** 微信Loadmore样式 **/
+.weui-loadmore__tips_in-dot, .weui-loadmore__tips_in-line{
+  background-color: $color-bg-body;
+}
+
+/** 重新定义按钮 **/
+button{
+  margin:0;
+}
+/*主要按钮*/
+button[type="primary"]{
+  background-color: $color-primary;
+}
+button[type="primary"][plain]{
+  color: $color-primary;
+  border-color: $color-primary;
+}
+.button-hover[type="primary"]{
+  background-color: $color-primary-darken;
+}
+/*分享按钮*/
+button[plain]{
+  border:none;
+}
+button.pain-btn[open-type="share"]{
+  background-color: transparent;
+  line-height: normal;
+  padding: 0;
+  margin: 0;
+}
+button.pain-btn[open-type="share"]::after {
+  border:none;
+}
+.weui-btn.mini-btn{
+  margin-top: 0;
+}
+/** 按钮面板样式 **/
+.btn-panel {
+  background: #fff;
+  border-top: 1rpx solid #e5e5e5;
+  border-bottom: 1rpx solid #e5e5e5;
+  margin-top: 10px;
+  overflow: hidden;
+  padding: 30rpx;
+  width: 690rpx;
+}
+.btn-panel-bottom{
+  position: fixed;
+  bottom: 0;
+}
+/** loading样式 **/
+.loading-wrap{
+  height: 80%;
+}
+.loading-icon{
+  width: 60px;
+  height: 50px;
+}
+//******图片样式******/
+@mixin icon-image($size){
+  min-height: $size;
+  min-width: $size;
+  height: $size;
+  width: $size;
+  vertical-align: middle;
+}
+.icon-sm {
+  @include icon-image(15px);
+}
+.icon {
+  @include icon-image(20px);
+}
+.icon-lg {
+  @include icon-image(30px);
+}
+.icon-xl {
+  @include icon-image(50px);
+}
+.icon-xxl{
+  @include icon-image(60px);
+}
+.icon-round {
+  border-radius: 50%;
+}

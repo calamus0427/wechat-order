@@ -1,0 +1,50 @@
+<!--index.wxml-->
+<!--1px = 750/320 = 2.34rpx;-->
+<view class="container">
+   <view class="swiper-container">
+        <swiper class="swiper_box" 
+                    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
+            <block wx:for="{{banners}}" wx:key="id">
+                <swiper-item>
+                    <image bindtap="tapBanner" data-id="{{item.businessId}}" src="{{item.picUrl}}_m" class="slide-image" width="750rpx" height="562.5rpx"/>
+                </swiper-item>
+            </block>
+        </swiper>
+        <view class="dots">  
+            <block wx:for="{{banners}}" wx:key="unique">  
+                <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>  
+            </block>  
+        </view>  
+   </view>
+    <view class="type-container">
+        <scroll-view class="type-navbar" scroll-x="true">
+            <view class="type-box" wx:for-items="{{categories}}" wx:key="id">
+                <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="tabClick">
+                <image src="{{item.icon}}" class="type-navbar-image"></image>
+                    {{item.name}}
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+    <view class="goods-container">
+        <view class="goods-box" wx:for-items="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap" data-id="{{item.id}}">
+          <view class="goods-title">{{item.name}}</view>
+          <view class="good-money">¥ {{item.minPrice}} <text wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price" >¥ {{item.originalPrice}}</text>
+          </view>
+          <view class="title-opacity"></view>  
+          <view class="img-box">
+            <image src="{{item.pic}}_m" class="image" mode="aspectFill" lazy-load="true"/>
+          </view>
+        </view>
+    </view>
+    <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
+</view>
+<!-- 优惠券领取 -->
+<view class="modal-box" hidden="{{flag}}" bindtap="hide">
+  <view class="modal-body">
+    <view class="modal-content">
+      <image src="../../images/new.png" class="fenxiang" bindtap="newCoupon"></image>
+      <image src="../../images/close.png" class="knowBtnImg" bindtap="hide"></image>
+    </view>
+  </view>
+</view>

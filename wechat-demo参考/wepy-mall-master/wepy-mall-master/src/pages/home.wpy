@@ -1,0 +1,247 @@
+<template>
+  <view class="container">
+    <swiper class="swiper" indicator-active-color="{{indicatorActiveColor}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">
+      <block wx:for="{{adList}}" wx:key="key">
+        <swiper-item>
+          <image src="{{item.picUrl}}" class="slide-image" @tap="goToAdvert({{item.advertUrl}})" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="pos">
+      <view class="search_read_only">
+        <navigator class="search_content" open-type="navigate" url="/pages/search">
+          <i class="iconfont icon-search"></i>
+          <view class="search_input">搜索商品</view>
+        </navigator>
+        <navigator class="message" url="/pages/messages">
+          <i class="iconfont icon-message cfff"></i>
+          <view class="doc cfff">消息</view>
+        </navigator>
+      </view>
+    </view>
+    <view class="nav_list">
+      <navigator open-type="navigate" url="/pages/sign_in">
+        <image src="../images/icon_nav_01_new.png" class="nav_icon"></image>
+        <view class="nav_text">签到有礼</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/exchange_goods">
+        <image src="../images/icon_nav_02_new.png" class="nav_icon"></image>
+        <view class="nav_text">换货专区</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/wholesale">
+        <image src="../images/icon_nav_03_new.png" class="nav_icon"></image>
+        <view class="nav_text">特价专区</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/replenishment_goods">
+        <image src="../images/icon_nav_04_new.png" class="nav_icon"></image>
+        <view class="nav_text">我要补货</view>
+      </navigator>
+    </view>
+    <!--发现好商品模块-->
+    <discover :list.sync="discoverList"></discover>
+    <!--加载更多时动画-->
+    <bottomLoadMore :show.sync="showLoading" message="正在加载"></bottomLoadMore>
+    <!--暂无数据显示-->
+    <placeholder :show.sync="is_empty" message="暂无发现数据"></placeholder>
+    <!--弹屏  types:0 图片  1：领红包   show 是否显示  @close 关闭回调  @callback 点击图片回调 或确定回调-->
+    <bombscreen :types.sync="tps" :show.sync="is_show_alert" @close.user="closeAlert" @callback.user="alertCallback"></bombscreen>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+import api from '@/api/api';
+import tip from '@/utils/tip'
+import Discover from '@/components/discover'
+import Bombscreen from '@/components/bomb_screen'
+import BottomLoadMore from "../components/common/bottomLoadMore"
+import Placeholder from "../components/common/placeholder"
+export default class Home extends wepy.page {
+  config = {
+    navigationBarTitleText: '演示商城',
+  }
+  components = {
+    discover: Discover,
+    bottomLoadMore: BottomLoadMore,
+    placeholder: Placeholder,
+    bombscreen: Bombscreen
+  }
+  data = {
+    indicatorDots: true,
+    autoplay: true,
+    interval: 3000,
+    duration: 1000,
+    indicatorActiveColor: "#fff",
+    discoverList: [],
+    //是否有数据
+    is_empty: false,
+    //当前页面
+    currentPage: 1,
+    //总页数
+    page_total: 0,
+    //是否显示 底部loading
+    showLoading: true,
+    //防止重复加载
+    preventRepeatReuqest: false,
+    //广告列表
+    adList: [],
+    tps: 0,
+    is_show_alert: true
+  }
+  async getDiscoverList(currentPage, size) {
+    let that = this;
+    const json = await api.getHomeDisvocerList({
+      query: {
+        page: currentPage || 1,
+        size: size || 10
+      }
+    });
+    if (json.data.code == 0) {
+      that.discoverList = [...that.discoverList, ...json.data.list];
+
+      if (json.data.page_total) { // 后台的数据不再返回page_total
+      that.page_total = json.data.page_total
+      };
+      if (json.data.page_total == 0) {
+        //暂无数据
+        that.is_empty = true;
+      }
+      that.$apply();
+    } else {
+      tip.error(json.data.msg);
+    }
+    that.showLoading = false;
+  }
+  async getAdList() {
+    const json = await api.getAdList({
+      query: {}
+    });
+    if (json.data.code == 0) {
+      this.adList = json.data.list;
+      this.$apply();
+    } else {}
+  }
+  onLoad() {
+    let that = this;
+    this.discoverList = [];
+    that.getDiscoverList();
+    this.getAdList();
+  }
+  computed = {}
+  methods = {
+    goToAdvert(url) {
+      console.log("url===" + url);
+      if (url.length == 0) {
+        return;
+      }
+      wepy.navigateTo({
+        url: url
+      })
+    },
+    onShareAppMessage: function(res) {
+      if (res.from === 'button') {
+        // 来自页面内转发按钮
+        console.log(res.target)
+      }
+      return {
+        title: '素洁服装厂',
+        path: '/pages/home',
+        success: function(res) {
+          // 转发成功
+        },
+        fail: function(res) {
+          // 转发失败
+        }
+      }
+    },
+    alertCallback() {
+      tip.alert('跳转');
+    },
+    closeAlert() {
+     // tip.alert('关闭');
+    }
+  }
+  events = {}
+  //加载更多
+  onReachBottom() {
+    let that = this;
+    that.showLoading = true;
+    console.log(that.page_total + "===" + that.currentPage);
+    //判断总页数是否大于翻页数
+    if ((that.page_total) > that.currentPage) {
+      //防止重复加载
+      if (that.preventRepeatReuqest) {
+        return true;
+      }
+      that.preventRepeatReuqest = true;
+      that.currentPage++;
+      that.getDiscoverList(that.currentPage);
+      that.preventRepeatReuqest = false;
+    } else {
+      that.showLoading = false;
+    }
+  };
+}
+
+</script>
+<style lang="less">
+.swiper {
+  height: 348rpx;
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+}
+
+.pos {
+  position: absolute;
+  top: 0rpx;
+  left: 0;
+  right: 0;
+  .search_content {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #efefee;
+    .icon-search,
+    .search_input {
+      color: #efefee;
+    }
+  }
+  .message {
+    display: block;
+    text-align: center;
+    margin-left: 20rpx;
+  }
+  .doc {
+    font-size: 16rpx;
+    display: block;
+  }
+}
+
+
+.nav_list {
+  color: #404040;
+  display: flex;
+  font-size: 26rpx;
+  justify-content: space-between;
+  padding: 17rpx 50rpx;
+  navigator {
+    text-align: center
+  }
+  .nav_icon {
+    height: 80rpx;
+    margin: 0 auto;
+    width: 80rpx;
+    margin-bottom: 14rpx;
+  }
+  .nav_text {
+    font-size: 26rpx
+  }
+}
+
+.recommend-title {
+  padding: 40rpx 0;
+  text-align: center;
+  color: #333;
+}
+
+</style>
