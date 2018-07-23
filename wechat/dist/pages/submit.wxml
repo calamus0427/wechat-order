@@ -1,4 +1,38 @@
 
-    <view>
-      提交订单
-    </view>
+    <view class="submit _3b324e2">
+      <view class="submit-content submit-address _3b324e2">
+        <navigator url="address" class="address _3b324e2">
+          <view class="_3b324e2">
+            <view class="_3b324e2">
+              <text class="iconfont icon-weizhi _3b324e2"/>
+              {{message.address}}
+            </view>
+            <view class="submit-user color-gray _3b324e2">{{message.name}}  {{message.sex == 'female'?'女士':'先生'}}  {{message.tel}}</view>
+          </view>
+          <view class="iconfont icon-gengduo _3b324e2"/>
+        </navigator>
+        <view class="time _3b324e2" bindtap="chooseTime">
+          <view class="_3b324e2">
+            <text class="iconfont icon-shijianzhongbiao2 _3b324e2"/>
+            {{message.time}}
+            <text class="color-green size-s _3b324e2">大约16:40送达</text>
+          </view>
+          <view class="iconfont icon-gengduo _3b324e2"/>
+        </view>
+      </view>
+      <view class="submit-content submit-order _3b324e2">
+        <view class="order-name _3b324e2">
+          <view class="size-l _3b324e2">{{message.cantee}}</view>
+        </view>
+        <view class="order-foodList _3b324e2">
+          <view class="order-foodList-item color-gray size-s _3b324e2"  wx:for="{{message.foodList}}" wx:key="index">
+            <text class="_3b324e2">{{item.name}}</text>
+            <view class="_3b324e2">
+              <text class="iconfont icon-renminbi2 _3b324e2"/>{{item.price}}
+            </view>
+          </view>
+        </view>
+        <view class="order-price _3b324e2">小计：<text class="color-red _3b324e2"><text class="iconfont icon-renminbi2 _3b324e2"/>{{message.price}}</text></view>
+      </view>
+      <button bindtap="submit" class="_3b324e2" data-wpysubmit-a="">确定</button>
+</view>

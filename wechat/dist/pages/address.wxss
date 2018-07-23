@@ -1,11 +1,6 @@
-.main-box {
-  display: flex;
-  width: 100%;
-  position: absolute;
-  top: 80px;
-  bottom: 0px;
-}
-.main-box .goods-box {
-  flex: 1;
-  height: 100%;
+button {
+  background-color: #16cc80;
+  color: #fff;
+  width: 80%;
+  margin-top: 50px;
 }

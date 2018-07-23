@@ -1,11 +1,45 @@
-.main-box {
-  display: flex;
-  width: 100%;
-  position: absolute;
-  top: 80px;
-  bottom: 0px;
+view._3b324e2 {
+  font-size: 16px;
 }
-.main-box .goods-box {
-  flex: 1;
-  height: 100%;
+.submit-content._3b324e2 {
+  background-color: #fff;
+  margin: 10px 15px;
+}
+button._3b324e2 {
+  background-color: #16cc80;
+  color: #fff;
+  width: 80%;
+  margin-top: 50px;
+}
+.address._3b324e2,
+.time._3b324e2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 10px;
+}
+.address._3b324e2,
+.order-name._3b324e2,
+.order-foodList._3b324e2 {
+  border-bottom: 1px solid #ccc;
+}
+.submit-user._3b324e2 {
+  padding-left: 18px;
+}
+.order-name._3b324e2 {
+  padding: 10px;
+}
+.order-name view._3b324e2 {
+  border-left: 4px solid #16cc80;
+  padding-left: 10px;
+}
+.order-foodList .order-foodList-item._3b324e2 {
+  margin: 10px;
+}
+.order-foodList .order-foodList-item view._3b324e2 {
+  float: right;
+}
+.order-price._3b324e2 {
+  padding: 10px;
+  text-align: right;
 }

@@ -1,7 +1,38 @@
 
 <template>
-    <view>
-      新增收货地址
+    <view class="address">
+        <view class="weui-cells weui-cells_form">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">联系人：</view>
+                <view class="weui-cell__rt">
+                    <input placeholder="请填写收货地址" />
+                </view>
+            </view>
+             <view class="weui-cell ">
+                <view class="weui-cell__bd"></view>
+                <view class="weui-cell__rt">
+                  <radio-group class="radio-group" bindchange="radioChange">
+                    <label class="radio" >
+                      <radio value="male" checked/>先生
+                       <radio value="female"/>女士
+                    </label>
+                  </radio-group>
+                </view>
+            </view>
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">手机号：</view>
+                <view class="weui-cell__rt">
+                    <input   placeholder="请填写收货地址" />
+                </view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">收货地址：</view>
+                <view class="weui-cell__rt">
+                    <input placeholder="请填写收货地址" />
+                </view>
+            </view>
+        </view>
+        <button @tap="submit()">保存地址</button>
     </view>
 </template>
 
@@ -42,19 +73,32 @@
     initPage(){
 
     }
+    submit(){
+      console.log("保存地址")
+      wx.navigateTo({
+        url: '/pages/submit',
+        success: function(res){
+          // success
+        },
+        fail: function() {
+          // fail
+        },
+        complete: function() {
+          // complete
+        }
+      })
+    }
+    radioChange(e) {
+      console.log('radio发生change事件，携带value值为：', e.detail.value)
+    }
   }
 </script>
 <style lang="less">
-.main-box{
-  display:flex;
-  width: 100%;
-  position: absolute;
-  top: 80px;
-  bottom: 0px;
-  .goods-box{
-    flex: 1;
-    height: 100%;
-  }
-  }
+button{
+  background-color:#16cc80;
+  color:#fff;
+  width:80%;
+  margin-top:50px;
+}
 </style>
 

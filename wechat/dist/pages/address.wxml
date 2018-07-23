@@ -1,4 +1,35 @@
 
-    <view>
-      新增收货地址
+    <view class="address">
+        <view class="weui-cells weui-cells_form">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">联系人：</view>
+                <view class="weui-cell__rt">
+                    <input placeholder="请填写收货地址"/>
+                </view>
+            </view>
+             <view class="weui-cell ">
+                <view class="weui-cell__bd"/>
+                <view class="weui-cell__rt">
+                  <radio-group class="radio-group" bindchange="radioChange">
+                    <label class="radio">
+                      <radio value="male" checked/>先生
+                       <radio value="female"/>女士
+                    </label>
+                  </radio-group>
+                </view>
+            </view>
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">手机号：</view>
+                <view class="weui-cell__rt">
+                    <input placeholder="请填写收货地址"/>
+                </view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">收货地址：</view>
+                <view class="weui-cell__rt">
+                    <input placeholder="请填写收货地址"/>
+                </view>
+            </view>
+        </view>
+        <button bindtap="submit" data-wpysubmit-a="">保存地址</button>
     </view>

@@ -1,7 +1,42 @@
 
 <template>
-    <view>
-      提交订单
+    <view class="submit">
+      <view class="submit-content submit-address">
+        <navigator url="address" class="address">
+          <view>
+            <view>
+              <text class="iconfont icon-weizhi"></text>
+              {{message.address}}
+            </view>
+            <view class="submit-user color-gray">{{message.name}}  {{message.sex == 'female'?'女士':'先生'}}  {{message.tel}}</view>
+          </view>
+          <view class="iconfont icon-gengduo"></view>
+        </navigator>
+        <view class="time" @tap="chooseTime">
+          <view>
+            <text class="iconfont icon-shijianzhongbiao2"></text>
+            {{message.time}}
+            <text class="color-green size-s">大约16:40送达</text>
+          </view>
+          <view class="iconfont icon-gengduo"></view>
+        </view>
+      </view>
+      <view class="submit-content submit-order">
+        <view class="order-name">
+          <view class="size-l">{{message.cantee}}</view>
+        </view>
+        <view class="order-foodList">
+          <view  class="order-foodList-item color-gray size-s" wx:for="{{message.foodList}}" wx:key="index">
+            <text>{{item.name}}</text>
+            <view>
+              <text class="iconfont icon-renminbi2"></text>{{item.price}}
+            </view>
+          </view>
+        </view>
+        <view class="order-price">小计：<text class="color-red"><text class="iconfont icon-renminbi2"></text>{{message.price}}</text></view>
+      </view>
+      <button @tap="submit()">确定</button>
+</view>
     </view>
 </template>
 
@@ -20,6 +55,17 @@
     mixins = []
 
     data = {
+      message:{
+        address:'西安软件园',
+        name:'兰正龙',
+        sex:'male',
+        tel:'0000000000',
+        time:'立即送出',
+        cantee:'一食堂',
+        foodList:[{name:'红烧茄子',price:'7'},
+                  {name:'红烧茄子',price:'7'}],
+        price:'100'
+      }
     }
 
     computed = {
@@ -42,19 +88,75 @@
     initPage(){
 
     }
+    chooseTime(){
+      console.log("选时间")
+    }
+    submit(){
+      console.log("提交订单")
+      wx.navigateTo({
+        url: 'status',
+        success: function(res){
+          // success
+        },
+        fail: function() {
+          // fail
+        },
+        complete: function() {
+          // complete
+        }
+      })
+    }
   }
 </script>
-<style lang="less">
-.main-box{
+<style lang="less" scoped>
+view{
+  font-size:16px;
+}
+.submit-content{
+  background-color:#fff;
+  margin:10px 15px;
+}
+button{
+  background-color:#16cc80;
+  color:#fff;
+  width:80%;
+  margin-top:50px;
+}
+.address,.time{
   display:flex;
-  width: 100%;
-  position: absolute;
-  top: 80px;
-  bottom: 0px;
-  .goods-box{
-    flex: 1;
-    height: 100%;
-  }
-  }
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 10px;
+}
+.address,.order-name,.order-foodList{
+  border-bottom:1px solid #ccc;
+}
+.submit-user{
+  padding-left:18px;
+}
+
+
+
+.order-name{
+  padding:10px
+}
+.order-name view{
+  border-left:4px solid #16cc80;
+  padding-left:10px;
+}
+.order-foodList .order-foodList-item{
+  margin:10px;
+}
+.order-foodList .order-foodList-item view{
+  float:right;
+}
+.order-foodList{
+
+}
+
+.order-price{
+  padding:10px;
+  text-align:right;
+}
 </style>
 
