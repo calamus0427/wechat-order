@@ -1,5 +1,5 @@
 @import "./../components/icon.wxss";
-@import "./../components/ads.wxss";
+@import "./../components/cart.wxss";
 @import "./../components/searchbar.wxss";
 @import "./../components/foodList.wxss";
 @import "./../components/imageList.wxss";

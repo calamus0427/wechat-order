@@ -19,6 +19,7 @@
       <view wx:else>
         敬请期待
       </view>
+      <Cart></Cart>
     </view>
 </template>
 
@@ -27,7 +28,7 @@
   import SideTab from '../components/side_tab'
   import imageList from '../components/imageList'
   import SearchBar from '../components/searchbar'
-  import Ads from '../components/ads'
+  import Cart from '../components/cart'
   import base from '../mixins/base'
   import http from '../mixins/http'
   import foodList from '../components/foodList'
@@ -44,7 +45,7 @@
       imageList:imageList,
       foodList:foodList,
       SearchBar:SearchBar,
-      Ads:Ads,
+      Cart:Cart,
       icon:icon
     }
 

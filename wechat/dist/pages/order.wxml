@@ -132,4 +132,33 @@
       <view  wx:else>
         敬请期待
       </view>
+      
+  <view class="cart _c6c7b4b">
+    <view class="foodList _c6c7b4b">
+      <view class="cat danddian _c6c7b4b">
+        <view class="title _c6c7b4b">单点菜品</view>
+        <view class="_c6c7b4b"><text class="iconfont icon-shanchu _c6c7b4b"/>清空购物出</view>
+        <view class="foodItem _c6c7b4b"  wx:for="{{$Cart$list[0].food}}">
+            {{item.name}}--{{item.price}}
+        </view>
+      </view>
+      <view class="cat taocan _c6c7b4b">
+        <view class="title _c6c7b4b">套餐菜品</view>
+        <view class="foodItem _c6c7b4b"  wx:for="{{$Cart$list[1].food}}">
+            {{item.name}}--{{item.price}}
+        </view>
+      </view>
+    </view>
+    <view class="submit _c6c7b4b">
+      <view class="cart-num _c6c7b4b">
+        <text class="sp iconfont icon-gouwuchekong size-xl _c6c7b4b"/>
+        <text class="weui-badge badge-top _c6c7b4b">22</text>
+      </view>
+      <text class="iconfont icon-renminbi2 color-red size-xl _c6c7b4b"/>
+      <text class="color-red size-xl _c6c7b4b">{{$Cart$cart.price}}</text>
+      <text class="sp size-xl color-ccc _c6c7b4b">|</text>
+      <text class="size-s _c6c7b4b">差<text class="size-s iconfont icon-renminbi2 _c6c7b4b"/>{{$Cart$limis}}起送</text>
+      <text class="btn _c6c7b4b">去结算</text>
+    </view>
+  </view>
     </view>

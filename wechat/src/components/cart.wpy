@@ -1,8 +1,32 @@
 <template>
-  <view class="ads-body">
-    购物车
+  <view class="cart">
+    <view class="foodList">
+      <view class="cat danddian">
+        <view class="title">单点菜品</view>
+        <view><text class="iconfont icon-shanchu"></text>清空购物出</view>
+        <view class="foodItem" wx:for="{{list[0].food}}">
+            {{item.name}}--{{item.price}}
+        </view>
+      </view>
+      <view class="cat taocan" >
+        <view class="title">套餐菜品</view>
+        <view class="foodItem" wx:for="{{list[1].food}}">
+            {{item.name}}--{{item.price}}
+        </view>
+      </view>
+    </view>
+    <view class="submit">
+      <view class="cart-num">
+        <text class="sp iconfont icon-gouwuchekong size-xl"></text>
+        <text class="weui-badge badge-top">22</text>
+      </view>
+      <text class="iconfont icon-renminbi2 color-red size-xl"></text>
+      <text class="color-red size-xl">{{cart.price}}</text>
+      <text class="sp size-xl color-ccc">|</text>
+      <text class="size-s">差<text class="size-s iconfont icon-renminbi2"></text>{{limis}}起送</text>
+      <text class="btn">去结算</text>
+    </view>
   </view>
-
 </template>
 
 <script>
@@ -13,11 +37,36 @@
     }
 
     data = {
-
+      cart:{
+        price:39
+      },
+      list:[{
+        name:"单点菜品",
+        id:'1',
+        food:[{
+          'name':'酸辣鳕鱼',
+          'price':20.5
+        },{
+          'name':'酸辣鳕鱼',
+          'price':20.5
+        },{
+          'name':'酸辣鳕鱼',
+          'price':20.5
+        }]
+      },{
+        name:"套餐菜品",
+        id:'2',
+        food:[{
+          'name':'孕妇套餐',
+          'price':20.5
+        }]
+      }]
     }
 
     computed = {
-
+      limis(){
+        return this.cart.price
+      }
     }
 
     methods = {
@@ -27,19 +76,44 @@
   }
 </script>
 
-<style type="less">
-.ads-body{
-  border-left:3px solid #FF5577;
-  padding-left:5px;
+<style type="less" scoped>
+.cart{
+  position: fixed;
+  bottom:0px;
+  width:100%;
+  background-color: #fff;
+  font-size:16px;
 }
-.scroll-view_H{
-  display: flex;
-  white-space: nowrap;
-  /* color:#FF5577 */
-}
-.scroll-view-item_H{
-  font-size:14px;
-  display: inline-block;
-}
+.foodList .title:nth-child(1){
+    color:red;
+  }
 
+.submit{
+  height:50px;
+  line-height:50px;
+}
+.btn{
+  display:inline-block;
+  background-color:#16cc80;
+  color:#fff;
+  width:100px;
+  height:50px;
+  float: right;
+  text-align:center;
+}
+.sp{
+  margin:0 5px;
+}
+.badge-top{
+    position: absolute;
+    font-size:10px !important;
+    top: 0.5em;
+    left: 2em;
+}
+.cart-num{
+  position:relative;
+  display:inline-block;
+  margin-right:10px;
+  margin-left:5px;
+}
 </style>

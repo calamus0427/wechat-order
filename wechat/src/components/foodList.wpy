@@ -155,7 +155,6 @@
   background-color: #FF5577;
 }
 .foodList{
-  margin-top:10px;
   background-color: #fff;
 }
 .foodList-des{
