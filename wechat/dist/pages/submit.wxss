@@ -1,3 +1,4 @@
+@import "./../components/time.wxss";
 view._3b324e2 {
   font-size: 16px;
 }

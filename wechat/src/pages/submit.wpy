@@ -36,12 +36,18 @@
         <view class="order-price">小计：<text class="color-red"><text class="iconfont icon-renminbi2"></text>{{message.price}}</text></view>
       </view>
       <button @tap="submit()">确定</button>
+      <block wx:if="{{chooseTimeFlag}}">
+        <Time current="currentTime" flag.sync="{{chooseTimeFlag}}"></Time>
+        {{currentTime}}
+      </block>
 </view>
     </view>
 </template>
 
 <script>
   import wepy from 'wepy'
+  import time from '../components/time'
+
 
   export default class submit extends wepy.page {
     mixins = []
@@ -49,7 +55,7 @@
       navigationBarTitleText: '提交订单'
     }
     components = {
-
+      Time:time
     }
 
     mixins = []
@@ -65,7 +71,8 @@
         foodList:[{name:'红烧茄子',price:'7'},
                   {name:'红烧茄子',price:'7'}],
         price:'100'
-      }
+      },
+      chooseTimeFlag:false
     }
 
     computed = {
@@ -90,6 +97,7 @@
     }
     chooseTime(){
       console.log("选时间")
+      this.chooseTimeFlag = true ;
     }
     submit(){
       console.log("提交订单")

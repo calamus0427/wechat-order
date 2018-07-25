@@ -1,13 +1,25 @@
-.ads-body {
-  border-left: 3px solid #FF5577;
-  padding-left: 5px;
+.sendTime._f929710 {
+  position: fixed ;
+  bottom: 0;
+  height: 200px;
+  width: 100%;
+  background-color: #fff;
 }
-.scroll-view_H {
-  display: flex;
-  white-space: nowrap;
-  /* color:#FF5577 */
+.iconfont._f929710 {
+  float: right;
+  margin-right: 10px;
 }
-.scroll-view-item_H {
-  font-size: 14px;
-  display: inline-block;
+.time-item._f929710 {
+  margin: 10px;
+}
+.checked._f929710 {
+  color: green;
+}
+.submit-btn._f929710 {
+  display: block;
+  height: 45px;
+  border-top: 1px solid #ccc;
+  line-height: 45px;
+  width: 100%;
+  text-align: center;
 }

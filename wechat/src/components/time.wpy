@@ -1,7 +1,16 @@
 <template>
-  <view class="ads-body">
-    送货时间
-  </view>
+<view class="sendTime" wx:if="{{flag}}">
+   <scroll-view style="height: 155px;" scroll-y>
+    <block wx:for="{{list}}" wx:key="{{item}}">
+      <view @tap="choose({{item}})" class="time-item {{item == currentTime ? 'checked':''}}">
+        {{item}}<text class="iconfont {{item == currentTime ? 'icon-xuanze_green':'icon-xuanze'}}"></text>
+      </view>
+    </block>
+  </scroll-view>
+  <text class="submit-btn" @tap="submitTime">确定</text>
+</view>
+
+
 </template>
 
 <script>
@@ -9,10 +18,16 @@
 
   export default class cart extends wepy.component {
     props = {
+      flag: {
+        type: String,
+        default: 'nothing',
+        twoWay: true
+    }
     }
 
     data = {
-
+      list:['立即送出','19:00','20:00','21:00'],
+      currentTime:'立即送出'
     }
 
     computed = {
@@ -20,25 +35,45 @@
     }
 
     methods = {
-    }
+      choose(time){
+        console.log(time)
+        this.currentTime = time ;
+        console.log(this.currentTime)
+      },
+      submitTime(){
+        console.log(this.currentTime)
+        this.flag = false
+      }
+    };
 
 
   }
 </script>
 
-<style type="less">
-.ads-body{
-  border-left:3px solid #FF5577;
-  padding-left:5px;
+<style type="less" scoped>
+.sendTime{
+  position: fixed ;
+  bottom: 0;
+  height: 200px;
+  width:100%;
+  background-color:#fff;
 }
-.scroll-view_H{
-  display: flex;
-  white-space: nowrap;
-  /* color:#FF5577 */
+.iconfont{
+  float:right;
+  margin-right:10px;
 }
-.scroll-view-item_H{
-  font-size:14px;
-  display: inline-block;
+.time-item{
+  margin:10px;
 }
-
+.checked{
+  color: green;
+}
+.submit-btn{
+  display:block;
+  height: 45px;
+  border-top:1px solid #ccc;
+  line-height:45px;
+  width:100%;
+  text-align:center;
+}
 </style>

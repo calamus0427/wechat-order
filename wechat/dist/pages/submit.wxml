@@ -35,4 +35,18 @@
         <view class="order-price _3b324e2">小计：<text class="color-red _3b324e2"><text class="iconfont icon-renminbi2 _3b324e2"/>{{message.price}}</text></view>
       </view>
       <button bindtap="submit" class="_3b324e2" data-wpysubmit-a="">确定</button>
+      <block  wx:if="{{chooseTimeFlag}}" class="_3b324e2">
+        
+<view class="sendTime _f929710 _3b324e2"  wx:if="{{$Time$flag}}">
+   <scroll-view style="height: 155px;" scroll-y class="_f929710">
+    <block wx:for="{{$Time$list}}" wx:key="{{item}}" class="_f929710">
+      <view bindtap="$Time$choose" class="time-item {{item == $Time$currentTime ? 'checked':''}} _f929710" data-wpychoose-a="{{item}}">
+        {{item}}<text class="iconfont {{item == $Time$currentTime ? 'icon-xuanze_green':'icon-xuanze'}} _f929710"/>
+      </view>
+    </block>
+  </scroll-view>
+  <text class="submit-btn _f929710" bindtap="$Time$submitTime">确定</text>
+</view>
+        {{currentTime}}
+      </block>
 </view>
