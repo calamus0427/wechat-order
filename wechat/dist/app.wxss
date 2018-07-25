@@ -1144,11 +1144,20 @@ page {
 .color-ccc {
   color: #ccc !important;
 }
+.bg-ccc {
+  background-color: #ccc !important;
+}
 .color-bbb {
   color: #bbb !important;
 }
+.bg-bbb {
+  background-color: #bbb !important;
+}
 .color-ddd {
   color: #ddd !important;
+}
+.bg-ddd {
+  background-color: #ddd !important;
 }
 .color-pink {
   color: #FF5577 !important;

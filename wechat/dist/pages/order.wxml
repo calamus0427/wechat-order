@@ -134,18 +134,23 @@
       </view>
       
   <view class="cart _c6c7b4b">
-    <view class="foodList _c6c7b4b">
-      <view class="cat danddian _c6c7b4b">
-        <view class="title _c6c7b4b">单点菜品</view>
-        <view class="_c6c7b4b"><text class="iconfont icon-shanchu _c6c7b4b"/>清空购物出</view>
-        <view class="foodItem _c6c7b4b"  wx:for="{{$Cart$list[0].food}}">
-            {{item.name}}--{{item.price}}
+    <view  wx:if="{{$Cart$list}}" class="foodList _c6c7b4b">
+      <view class="cat danddian _c6c7b4b" wx:for="{{$Cart$list}}">
+        <view class="title bg-ddd _c6c7b4b" style="border-left:solid 3px {{$Cart$colorList[index]}}">
+          {{item.name}}
+          <text class="clearCart _c6c7b4b" wx:if="{{index == 0}}"><text class="iconfont icon-shanchu _c6c7b4b"/>清空购物车</text>
         </view>
-      </view>
-      <view class="cat taocan _c6c7b4b">
-        <view class="title _c6c7b4b">套餐菜品</view>
-        <view class="foodItem _c6c7b4b"  wx:for="{{$Cart$list[1].food}}">
-            {{item.name}}--{{item.price}}
+        <view class="foodItem _c6c7b4b" wx:for="{{$Cart$list[index].food}}">
+            <text class="name _c6c7b4b">{{item.name}}</text>
+            <view class="buybuybuy _c6c7b4b">
+              <text class="iconfont icon-renminbi2 _c6c7b4b"/>{{item.price}}
+              <text class="_c6c7b4b">
+                <text class="iconfont icon-jian1 _c6c7b4b"/>
+                <text class="_c6c7b4b">1</text>
+                <text class="iconfont icon-webicon310 _c6c7b4b"/>
+              </text>
+            </view>
+
         </view>
       </view>
     </view>
@@ -158,7 +163,7 @@
       <text class="color-red size-xl _c6c7b4b">{{$Cart$cart.price}}</text>
       <text class="sp size-xl color-ccc _c6c7b4b">|</text>
       <text class="size-s _c6c7b4b">差<text class="size-s iconfont icon-renminbi2 _c6c7b4b"/>{{$Cart$limis}}起送</text>
-      <text class="btn _c6c7b4b">去结算</text>
+      <text class="btn _c6c7b4b" bindtap="$Cart$account" data-wpyaccount-a="">去结算</text>
     </view>
   </view>
     </view>
