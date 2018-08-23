@@ -144,8 +144,8 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/submit',
-      'pages/order',       
+      'pages/order', 
+      'pages/submit',        
       'pages/address',
       'pages/status'
     ],
@@ -191,7 +191,7 @@ export default class extends wepy.app {
 
   constructor () {
     super()
-    this.use('requestfix')
+    this.use('promisify')
   }
 
   onLaunch() {

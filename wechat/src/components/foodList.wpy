@@ -5,15 +5,15 @@
         <navigator url="/pages/detail">
           <view class="foodList-des">
             <view class="foodList-item-image">
-              <image src="{{item.image}}" mode="aspectFill"/>
+              <image src="{{item.img}}" mode="aspectFill"/>
             </view>
             <view class="foodList-item-content">
               <text class="foodList-item-name">{{item.name}}</text>
-              <Stars :star="item.stars"></Stars>
+              <Stars :star="item.star"></Stars>
               <text>月销量：{{item.shoped}}笔</text>
             </view>
           </view>
-          <view class="foodList-item-description">{{item.description}}</view>
+          <view class="foodList-item-description">{{item.des}}</view>
           <view class="buybuybuy">
             <text class="money">
               <text class="iconfont icon-renminbi2"></text>{{item.price}}
@@ -63,14 +63,20 @@
         default: [
           {
             'name':'特色油炸鳕鱼，麻辣口味鳕鱼',
-            'image':'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3856289508,2200725606&fm=200&gp=0.jpg',
-            'description':'包含半斤鳕鱼，口味有超辣，正常辣，微辣，请备注选择',
+            'img':'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3856289508,2200725606&fm=200&gp=0.jpg',
+            'des':'包含半斤鳕鱼，口味有超辣，正常辣，微辣，请备注选择',
             'price':39,
             'stars':'5',
             'shoped':'5',
             'id':''
           }
-          ]
+          ],
+          twoWay: true
+      },
+      chooseList:{
+        type: Object,
+        default: [],
+        twoWay: true
       },
       title: {
         type: String,
@@ -98,6 +104,7 @@
     }
 
     data = {
+      ceshi:'111',
       icon_eye: '/images/icon/addBefore.jpg',
       icon_eye_active: '/images/icon/addAfter.jpg'
     }

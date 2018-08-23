@@ -79,7 +79,7 @@
         <navigator url="/pages/detail" class="_0fdbfaa">
           <view class="foodList-des _0fdbfaa">
             <view class="foodList-item-image _0fdbfaa">
-              <image src="{{item.image}}" mode="aspectFill" class="_0fdbfaa"/>
+              <image src="{{item.img}}" mode="aspectFill" class="_0fdbfaa"/>
             </view>
             <view class="foodList-item-content _0fdbfaa">
               <text class="foodList-item-name _0fdbfaa">{{item.name}}</text>
@@ -95,7 +95,7 @@
               <text class="_0fdbfaa">月销量：{{item.shoped}}笔</text>
             </view>
           </view>
-          <view class="foodList-item-description _0fdbfaa">{{item.description}}</view>
+          <view class="foodList-item-description _0fdbfaa">{{item.des}}</view>
           <view class="buybuybuy _0fdbfaa">
             <text class="money _0fdbfaa">
               <text class="iconfont icon-renminbi2 _0fdbfaa"/>{{item.price}}

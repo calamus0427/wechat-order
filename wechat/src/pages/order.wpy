@@ -10,16 +10,16 @@
       </view>
     <!--主内容区域-->
       <view wx:if="{{init}}" class="main-box row">
-        <SideTab :tab="categories"  @change.user="switchTab"/>
+        <SideTab :tab.sync="categories"  @change.user="switchTab"/>
         <scroll-view scroll-y class="goods-box">
-          <foodList></foodList>
+          <foodList  :list.sync="foodList" :chooseList.sync="catList"></foodList>
         </scroll-view>
       </view>
 
       <view wx:else>
         敬请期待
       </view>
-      <Cart :flag.sync="cartShow"></Cart>
+      <Cart :flag.sync="cartShow" :list.sync="catList"></Cart>
     </view>
 </template>
 
@@ -55,20 +55,9 @@
       init:true,
       cartShow:false,
       searchText:'请输入商家或者商品名称',
-      categories: {
-                'list':[
-                  {'id':'1','title':'热推辣货'},
-                  {'id':'2','title':'炒菜'},
-                  {'id':'3','title':'盖饭'},
-                  {'id':'4','title':'面条'},
-                  {'id':'5','title':'饺子'},
-                  {'id':'6','title':'拌菜'},
-                  {'id':'7','title':'小吃'},
-                  {'id':'8','title':'粥'},
-                  {'id':'9','title':'外加调料'}
-                  ],
-                  'selectedId':'1'
-                }
+      categories: {},
+      foodList:[],
+      catList:[]
     }
 
     computed = {
@@ -95,39 +84,28 @@
       this.initPage()
     }
     initPage(){
-      this.getAnimeTag()
+      this.getFoodList();
+      this.getCat();
     }
     search(){
       wx.navigateTo({
           url: '/pages/searchTag'
         })
     }
-    getAnimeTag(){
-
-        wx.request({
-          url: 'https://www.calamus.xyz/api/getAnimeTag.php', //仅为示例，并非真实的接口地址
-          success: (res) =>{
-            console.log(res)
-            this.categories = res.data ;
-          },
-          fail:(res)=>{
-            console.log("fail",res)
-            this.categories = {
-                'list':[
-                  {'id':'1','title':'热推辣货'},
-                  {'id':'2','title':'炒菜'},
-                  {'id':'3','title':'盖饭'},
-                  {'id':'4','title':'面条'},
-                  {'id':'5','title':'饺子'},
-                  {'id':'6','title':'拌菜'},
-                  {'id':'7','title':'小吃'},
-                  {'id':'8','title':'粥'},
-                  {'id':'9','title':'外加调料'}
-                  ],
-                  'selectedId':'1'
-                }
-          }
-        })
+    async getFoodList(){
+      var url = "http://yapi.demo.qunar.com/mock/16780/get_food"
+      wepy.request(url).then((res) => {
+        this.foodList = res.data.list[0].food;
+        this.$apply();
+      })
+    }
+    async getCat(){
+      var url = "http://yapi.demo.qunar.com/mock/16780/get_food_tag"
+      wepy.request(url).then((res) => {
+        console.log("11",res)
+        this.categories = res.data;
+        this.$apply();
+      })
     }
   }
 </script>

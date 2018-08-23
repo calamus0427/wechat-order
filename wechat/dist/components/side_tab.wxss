@@ -9,6 +9,7 @@
   width: 180rpx;
   min-width: 180rpx;
   height: 100%;
+  z-index: 2;
 }
 .side-tab .tab-item {
   position: relative;
