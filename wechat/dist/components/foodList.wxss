@@ -4,6 +4,7 @@
 }
 .foodList._0fdbfaa {
   background-color: #fff;
+  z-index: 3;
 }
 .foodList-des._0fdbfaa {
   display: flex;
@@ -57,6 +58,9 @@ text._0fdbfaa {
 .cart._0fdbfaa {
   float: right;
   margin-right: 5px;
+}
+.inline._0fdbfaa {
+  display: inline;
 }
 .money._0fdbfaa {
   color: red;

@@ -1,6 +1,7 @@
 
     <view>
-      
+      <view class="cart-control" bindtap="closeList" data-wpycloselist-a="">
+        
 <block>
 <block  wx:if="{{$SearchBar$type=='tag'}}">
   <view class="weui-search-bar" bindtap="$SearchBar$search">
@@ -50,13 +51,13 @@
 
 
 
-      <view class="sort">
-          <view class="sort-item">好评优先 <text class="iconfont icon-dianzan"/></view>
-          <view class="sort-item">价格优先 <text class="iconfont icon-qian2"/></view>
-      </view>
-    <!--主内容区域-->
-      <view  wx:if="{{init}}" class="main-box row">
-        
+        <view class="sort">
+            <view class="sort-item">好评优先 <text class="iconfont icon-dianzan"/></view>
+            <view class="sort-item">价格优先 <text class="iconfont icon-qian2"/></view>
+        </view>
+      <!--主内容区域-->
+        <view  wx:if="{{init}}" class="main-box row">
+          
   <scroll-view class="side-tab" scroll-y>
     <block  wx:for="{{$SideTab$tab.list}}" wx:key="id">
       <view class="tab-item {{item.id == $SideTab$tab.selectedId ? 'tab-item-seleted' : ''}}" bindtap="$SideTab$switchTab" data-wpyswitchtab-a="{{item.id}}">
@@ -71,12 +72,11 @@
     </block>
   </scroll-view>
 
-        <scroll-view scroll-y class="goods-box">
-          
+          <scroll-view scroll-y class="goods-box">
+            
   <view class="foodList _0fdbfaa">
     <block  wx:if="{{$foodList$list.length > 0}}" class="_0fdbfaa">
       <block wx:for="{{$foodList$list}}" wx:key="index" class="_0fdbfaa">
-        <navigator url="/pages/detail" class="_0fdbfaa">
           <view class="foodList-des _0fdbfaa">
             <view class="foodList-item-image _0fdbfaa">
               <image src="{{item.img}}" mode="aspectFill" class="_0fdbfaa"/>
@@ -100,13 +100,12 @@
             <text class="money _0fdbfaa">
               <text class="iconfont icon-renminbi2 _0fdbfaa"/>{{item.price}}
             </text>
-            <text class="cart _0fdbfaa">
-              <text class="iconfont icon-jian1 _0fdbfaa"/>
-              <text class="_0fdbfaa">1</text>
-              <text class="iconfont icon-webicon310 _0fdbfaa"/>
-            </text>
+            <view class="cart inline _0fdbfaa">
+              <view bindtap="$foodList$subtract" class="inline iconfont icon-jian1 _0fdbfaa" data-wpysubtract-a="{{item}}"/>
+              <view class="inline _0fdbfaa">1</view>
+              <view bindtap="$foodList$plus" class="inline iconfont icon-webicon310 _0fdbfaa" data-wpyplus-a="{{item}}"/>
+            </view>
           </view>
-        </navigator>
       </block>
       <block wx:if="{{$foodList$loading}}" class="_0fdbfaa">
         <view class="weui-loadmore _0fdbfaa">
@@ -126,16 +125,17 @@
       </view>
     </block>
   </view>
-        </scroll-view>
-      </view>
+          </scroll-view>
+        </view>
 
-      <view  wx:else>
-        敬请期待
+        <view  wx:else>
+          敬请期待
+        </view>
       </view>
       
   <view class="cart _dc164a2">
-    <view bindtap="$Cart$closeList" class="cart-control _dc164a2" data-wpycloselist-a="">
-    </view>
+    <!-- <view bindtap="closeList()" class="cart-control">
+    </view> -->
     <view class="cart-content _dc164a2">
             <block  wx:if="{{$Cart$flag}}" class="_dc164a2">
         <view wx:if="{{$Cart$list}}" class="foodList _dc164a2">

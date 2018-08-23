@@ -2,22 +2,24 @@
 
 </style>
 <template>
-    <view  >
-      <SearchBar type="tag"  :placeholder="searchText"></SearchBar>
-      <view class="sort">
-          <view class="sort-item">好评优先 <text class="iconfont icon-dianzan"></text></view>
-          <view class="sort-item">价格优先 <text class="iconfont icon-qian2"></text></view>
-      </view>
-    <!--主内容区域-->
-      <view wx:if="{{init}}" class="main-box row">
-        <SideTab :tab.sync="categories"  @change.user="switchTab"/>
-        <scroll-view scroll-y class="goods-box">
-          <foodList  :list.sync="foodList" :chooseList.sync="catList"></foodList>
-        </scroll-view>
-      </view>
+    <view>
+      <view class="cart-control" @tap="closeList()">
+        <SearchBar type="tag"  :placeholder="searchText"></SearchBar>
+        <view class="sort">
+            <view class="sort-item">好评优先 <text class="iconfont icon-dianzan"></text></view>
+            <view class="sort-item">价格优先 <text class="iconfont icon-qian2"></text></view>
+        </view>
+      <!--主内容区域-->
+        <view wx:if="{{init}}" class="main-box row">
+          <SideTab :tab.sync="categories"  @change.user="switchTab"/>
+          <scroll-view scroll-y class="goods-box">
+            <foodList  :list.sync="foodList" :chooseList.sync="catList"></foodList>
+          </scroll-view>
+        </view>
 
-      <view wx:else>
-        敬请期待
+        <view wx:else>
+          敬请期待
+        </view>
       </view>
       <Cart :flag.sync="cartShow" :list.sync="catList"></Cart>
     </view>
@@ -70,7 +72,10 @@
         console.log(selectedId)
         // this.tab.categoryId = selectedId;
         // this.reload();
-      }
+      },
+closeList(){
+        this.cartShow = false;
+      },
 
     }
 

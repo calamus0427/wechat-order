@@ -2,7 +2,6 @@
   <view class="foodList">
     <block wx:if="{{list.length > 0}}">
       <block wx:for="{{list}}" wx:key="index">
-        <navigator url="/pages/detail">
           <view class="foodList-des">
             <view class="foodList-item-image">
               <image src="{{item.img}}" mode="aspectFill"/>
@@ -18,13 +17,12 @@
             <text class="money">
               <text class="iconfont icon-renminbi2"></text>{{item.price}}
             </text>
-            <text class="cart">
-              <text class="iconfont icon-jian1"></text>
-              <text>1</text>
-              <text class="iconfont icon-webicon310"></text>
-            </text>
+            <view class="cart inline">
+              <view   @tap="subtract({{item}})"  class="inline iconfont icon-jian1"></view>
+              <view class="inline">1</view>
+              <view  @tap="plus({{item}})" class="inline iconfont icon-webicon310"></view>
+            </view>
           </view>
-        </navigator>
       </block>
       <block wx:if="{{loading}}">
         <view class="weui-loadmore">
@@ -60,18 +58,8 @@
     props = {
       list: {
         type: Object,
-        default: [
-          {
-            'name':'特色油炸鳕鱼，麻辣口味鳕鱼',
-            'img':'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3856289508,2200725606&fm=200&gp=0.jpg',
-            'des':'包含半斤鳕鱼，口味有超辣，正常辣，微辣，请备注选择',
-            'price':39,
-            'stars':'5',
-            'shoped':'5',
-            'id':''
-          }
-          ],
-          twoWay: true
+        default: [],
+        twoWay: true
       },
       chooseList:{
         type: Object,
@@ -152,6 +140,13 @@
             })
           }
         })
+      },
+      subtract(item){
+console.log("s",item)
+      },
+      plus(item){
+console.log("p",item)
+
       }
     }
   }
@@ -163,6 +158,7 @@
 }
 .foodList{
   background-color: #fff;
+  z-index:3;
 }
 .foodList-des{
   display:flex;
@@ -215,6 +211,9 @@ text{
 .cart{
   float: right;
   margin-right:5px;
+}
+.inline{
+  display: inline;
 }
 .money{
   color:red;

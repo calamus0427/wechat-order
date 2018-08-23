@@ -1,7 +1,7 @@
 <template>
   <view class="cart">
-    <view @tap="closeList()" class="cart-control">
-    </view>
+    <!-- <view @tap="closeList()" class="cart-control">
+    </view> -->
     <view class="cart-content">
             <block wx:if="{{flag}}">
         <view wx:if="{{list}}" class="foodList">
