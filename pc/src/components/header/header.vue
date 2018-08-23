@@ -43,7 +43,6 @@
     },
     mounted(){
       console.log("%c【用户 "+this.$store.state.login.user.name+ "】","color:#E1244E;font-size:14px;text-shadow:3px 1px 2px #e1244e9e;")
-      this.getAppList();
       if(this.$route.params.id){
             this.appItem = parseInt(this.$route.params.id);
       }

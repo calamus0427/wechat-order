@@ -135,36 +135,7 @@ export default {
                         }
                     }
                 ],
-      data: [
-      {
-              "title": "小可爱1号",
-              "id": 1,
-              'remarks':'管理员',
-              'cat':'管理人员',
-              'tel':'11111111111',
-              'email':'1@qq.com',
-              'img':'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2970637416,2521829339&fm=27&gp=0.jpg',
-              'createTime':'2018-07-13'
-          },{
-              "title": "小可爱2号",
-              "id": 2,
-              'remarks':'窗口人员',
-              'cat':'窗口人员',
-              'tel':'11111111111',
-              'email':'2@qq.com',
-              'img':'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1637349115,3472182484&fm=27&gp=0.jpg',
-              'createTime':'2018-07-13'
-          },{
-              "title": "小可爱3号",
-              "id": 3,
-              'remarks':'配送人员',
-              'cat':'配送人员',
-              'tel':'11111111111',
-              'email':'3@qq.com',
-              'img':'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2346318586,2948873667&fm=11&gp=0.jpg',
-              'createTime':'2018-07-13'
-          }
-      ]
+      data: []
     }
   },
   mounted(){
@@ -181,16 +152,17 @@ export default {
         this.getList(this.page.start,this.page.length,this.currentStatus);
     },
     getList(start,size,status){
-      var url = 'text' ;
-      var param = "%7B%27status%27%3A%27"+ status +"%27%7D";
+      var url = 'http://yapi.demo.qunar.com/mock/16780/get_user' ;
+      var param = "";
       var page = start * size ;
-        // this.$http.get(url)
-        //   .then( (res)=> {
-        //       this.data = res.data.data ;
-        //       this.page.total = res.data.recordsTotal;
-        //   },(err)=>{
-        //     console.error('get dataTable failed',err);
-        //   })
+        this.$http.get(url)
+          .then( (res)=> {
+              console.log(res.data.list)
+              this.data = res.data.list ;
+              this.page.total = res.data.list.length;
+          },(err)=>{
+            console.error('get dataTable failed',err);
+          })
       },
       //页码切换
       changePage(res){

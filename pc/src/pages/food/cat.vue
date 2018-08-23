@@ -131,30 +131,18 @@ export default {
       console.log("%c查询数据","color:#E1244E;font-size:14px;",this.search)
     },
     getfoodList(page,size,status){
-      var url = '' ;
-      var param = "%7B%27status%27%3A%27"+ status +"%27%7D"
-        // this.$http.get(url)
-        //   .then( (res)=> {
-        //     if(res.data.code == 1000){
-        //         this.page.dataTotal = parseInt(res.data.data.total) ;
-        //         this.foodList = res.data.data.data ;
-        //         var countAble = res.data.data.data.filter(function(item,index,array){
-        //             //元素值，元素的索引，原数组。
-        //             return (item.status == '1');
-        //         });
-        //         var countDisable = res.data.data.data.filter(function(item,index,array){
-        //             //元素值，元素的索引，原数组。
-        //             return (item.status == '2');
-        //         });
-        //           if(status == 'all'){
-        //             this.countAll = parseInt(res.data.data.total);
-        //           }
-        //           this.countAble = countAble.length;
-        //           this.countDisable = countDisable.length;
-        //     }
-        //   },(err)=>{
-        //     console.error('get dataTable failed',err);
-        //   })
+      var url = 'http://yapi.demo.qunar.com/mock/16780/get_food_tag' ;
+      var param = "";
+        this.$http.get(url)
+          .then( (res)=> {
+            if(res.data.code == 200){
+              var foodList = res.data.list
+                this.page.dataTotal = parseInt(foodList.length) ;
+                this.foodList = foodList ;
+            }
+          },(err)=>{
+            console.error('get dataTable failed',err);
+          })
       },
       getCount(){
         this.getfoodList(1,10000000,'all');

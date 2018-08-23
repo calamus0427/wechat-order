@@ -93,7 +93,7 @@ export default {
                     },
                     {
                         "title": "菜品名称",
-                        "key": "title",
+                        "key": "name",
                         "width": 100,
                         render: (h, params) => {
                             return h('div', [
@@ -107,7 +107,7 @@ export default {
                                            this.showDetail(params.row.name)
                                         }
                                     }
-                                }, params.row.title)
+                                }, params.row.name)
                             ]);
                         }
                     },
@@ -231,16 +231,20 @@ export default {
         this.getList(this.page.start,this.page.length,this.currentStatus);
     },
     getList(start,size,status){
-      var url = 'text' ;
-      var param = "%7B%27status%27%3A%27"+ status +"%27%7D";
+      var url = 'http://yapi.demo.qunar.com/mock/16780/get_food' ;
+      var param = "";
       var page = start * size ;
-        // this.$http.get(url)
-        //   .then( (res)=> {
-        //       this.data = res.data.data ;
-        //       this.page.total = res.data.recordsTotal;
-        //   },(err)=>{
-        //     console.error('get dataTable failed',err);
-        //   })
+        this.$http.get(url)
+          .then( (res)=> {
+              var foodList = res.data.list.filter((item,index,array)=>{
+                  return item.id == 1 ;
+              })[0].food
+              console.log("list",foodList)
+              this.data = foodList ;
+              this.page.total = foodList.length;
+          },(err)=>{
+            console.error('get dataTable failed',err);
+          })
       },
       //页码切换
       changePage(res){

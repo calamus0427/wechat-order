@@ -11,11 +11,11 @@
       <div class="ra-setting">
         <div class="ra-setting-title">院区信息</div>
         <FormItem label="所属医院：">
-          {{form.type}}
+          {{form.hospital}}
             <!-- <Input v-model="form.type"></Input> -->
         </FormItem>
         <FormItem label="院区：">
-          {{form.loginName}}
+          {{form.district}}
             <!-- <Input v-model="form.loginName"></Input> -->
         </FormItem>
       </div>
@@ -50,24 +50,9 @@ export default {
       passwordRules:{},
       form: {
         "id": 38,
-        "phone": null,
-        "developerIdentity": null,
-        "developerSecretKey": null,
-        "loginName": "",
-        "companyName": null,
-        "type": "",
-        "email": "",
-        "officeName":'',
-        "officeId":'1',// 归属部门
-        "salt":'1', // 佐料
-        "no":'1', // 工号
-        "name":'', // 姓名
-        "mobile":'', // 手机
-        "userType":'1', // 用户类型, 如，1系统管理员，开发人员，2为部门经理
-        "loginIp":'11.11.11.111',  // 最后登陆IP
-        "loginFlag":'1',   // 是否允许登陆
-        "defaultAppid":'26',//默认应用Id
-        "address":'' //地址
+        "hospital":"",
+        "district":"",
+        "address":""
       },
       rules: {
           loginName: [
@@ -81,13 +66,10 @@ export default {
   },
   methods:{
     getUserInfo(){
-          this.$http.get(this.$request.user+this.$store.state.login.user.name)
+      let url = "http://yapi.demo.qunar.com/mock/16780/get_info";
+          this.$http.get(url)
             .then( (res)=> {
-              if(res.data.code == 1000){
-                this.form = res.data.data;
-              }else{
-                this.$Message.error(res.data.msg);
-              }
+              this.form = res.data.info;
             },(err)=>{
               console.error('获取用户信息失败',err);
             })
