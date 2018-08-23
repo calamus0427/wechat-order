@@ -102,7 +102,7 @@
             </text>
             <view class="cart inline _0fdbfaa">
               <view bindtap="$foodList$subtract" class="inline iconfont icon-jian1 _0fdbfaa" data-wpysubtract-a="{{item}}"/>
-              <view class="inline _0fdbfaa">1</view>
+              <view class="inline _0fdbfaa">{{item.num || 1}}</view>
               <view bindtap="$foodList$plus" class="inline iconfont icon-webicon310 _0fdbfaa" data-wpyplus-a="{{item}}"/>
             </view>
           </view>
@@ -150,7 +150,7 @@
                   <text class="iconfont icon-renminbi2 _dc164a2"/>{{item.price}}
                   <text class="_dc164a2">
                     <text class="iconfont icon-jian1 _dc164a2"/>
-                    <text class="_dc164a2">1</text>
+                    <text class="_dc164a2">{{item.num || 1}}</text>
                     <text class="iconfont icon-webicon310 _dc164a2"/>
                   </text>
                 </view>

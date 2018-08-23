@@ -8,7 +8,7 @@
                 </view>
             </view>
              <view class="weui-cell ">
-                <view class="weui-cell__bd"/>
+                <view class="weui-cell__bd">性别：</view>
                 <view class="weui-cell__rt">
                   <radio-group class="radio-group" bindchange="radioChange">
                     <label class="radio">

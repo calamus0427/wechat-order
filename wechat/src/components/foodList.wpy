@@ -19,7 +19,7 @@
             </text>
             <view class="cart inline">
               <view   @tap="subtract({{item}})"  class="inline iconfont icon-jian1"></view>
-              <view class="inline">1</view>
+              <view class="inline">{{item.num || 1}}</view>
               <view  @tap="plus({{item}})" class="inline iconfont icon-webicon310"></view>
             </view>
           </view>

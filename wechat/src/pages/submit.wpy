@@ -15,8 +15,8 @@
         <view class="time" @tap="chooseTime">
           <view>
             <text class="iconfont icon-shijianzhongbiao2"></text>
-            {{message.time}}
-            <text class="color-green size-s">大约16:40送达</text>
+            {{choosedTime}}--
+            <text wx:if="{{choosedTime == '立即送出'}}" class="color-green size-s">大约1点到</text>
           </view>
           <view class="iconfont icon-gengduo"></view>
         </view>
@@ -36,7 +36,7 @@
         <view class="order-price">小计：<text class="color-red"><text class="iconfont icon-renminbi2"></text>{{message.price}}</text></view>
       </view>
       <button @tap="submit()">确定</button>
-      <Time current="currentTime" :flag.sync="flag"></Time>
+      <Time current="currentTime" :flag.sync="flag" :currentTime.sync="choosedTime"></Time>
 </view>
     </view>
 </template>
@@ -69,6 +69,7 @@
                   {name:'红烧茄子',price:'7'}],
         price:'100'
       },
+      choosedTime:'立即送出',
       flag:false
     }
 

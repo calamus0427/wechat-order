@@ -22,12 +22,16 @@
         type: String,
         default: false,
         twoWay: true
+    },
+    currentTime:{
+      type: String,
+      default: '立即送出',
+      twoWay: true
     }
     }
 
     data = {
       list:['立即送出','19:00','20:00','21:00'],
-      currentTime:'立即送出'
     }
 
     computed = {
@@ -41,7 +45,7 @@
         console.log(this.currentTime)
       },
       submitTime(){
-        console.log(this.currentTime)
+        console.log(this.currentTime) 
         this.flag = false
       }
     };
