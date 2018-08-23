@@ -44,7 +44,7 @@ var _class = function (_component) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _this.$isComponent = false, _this.$preloadData = {}, _this.$prefetchData = {}, _temp), _possibleConstructorReturn(_this, _ret);
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _this.$isComponent = false, _this.$preloadData = undefined, _this.$prefetchData = undefined, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(_class, [{
@@ -65,6 +65,11 @@ var _class = function (_component) {
             _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), 'onLoad', this).call(this);
         }
     }, {
+        key: 'onUnload',
+        value: function onUnload() {
+            _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), 'onUnload', this).call(this);
+        }
+    }, {
         key: '$preload',
         value: function $preload(key, data) {
             if ((typeof key === 'undefined' ? 'undefined' : _typeof(key)) === 'object') {
@@ -73,7 +78,7 @@ var _class = function (_component) {
                     this.$preload(k, key[k]);
                 }
             } else {
-                this.$preloadData[key] = data;
+                (this.$preloadData ? this.$preloadData : this.$preloadData = {})[key] = data;
             }
         }
     }, {
@@ -104,8 +109,8 @@ var _class = function (_component) {
             var goTo = this.$parent.$pages[realPath];
             if (goTo && goTo.onPrefetch) {
                 var prevPage = this.$parent.__prevPage__;
-                var preloadData = {};
-                if (prevPage && Object.keys(prevPage.$preloadData).length > 0) {
+                var preloadData = undefined;
+                if (prevPage && prevPage.$preloadData) {
                     preloadData = prevPage.$preloadData;
                 }
                 goTo.$prefetchData = goTo.onPrefetch(params, { from: this, preload: preloadData });

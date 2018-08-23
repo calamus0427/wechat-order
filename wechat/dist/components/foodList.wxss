@@ -1,45 +1,45 @@
 @import "./stars.wxss";
-.weui-badge._1f3c072 {
+.weui-badge._0fdbfaa {
   background-color: #FF5577;
 }
-.foodList._1f3c072 {
+.foodList._0fdbfaa {
   background-color: #fff;
 }
-.foodList-des._1f3c072 {
+.foodList-des._0fdbfaa {
   display: flex;
 }
-text._1f3c072 {
+text._0fdbfaa {
   font-size: 14px;
 }
-.foodList-item-name._1f3c072 {
+.foodList-item-name._0fdbfaa {
   font-size: 32rpx !important;
   color: #000;
 }
-.foodList-item._1f3c072 {
+.foodList-item._0fdbfaa {
   display: flex;
   align-items: center;
 }
-.foodList-item-main._1f3c072 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.foodList-item-bottom._1f3c072 {
+.foodList-item-main._0fdbfaa {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.foodList-item-right._1f3c072 {
+.foodList-item-bottom._0fdbfaa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.foodList-item-right._0fdbfaa {
   display: flex;
   align-items: center;
 }
-.foodList-item-image image._1f3c072 {
+.foodList-item-image image._0fdbfaa {
   margin: 8px;
   height: 100px;
   width: 100px;
   border: 1px solid #ccc;
 }
-.foodList-item-description._1f3c072 {
+.foodList-item-description._0fdbfaa {
   color: #999;
   font-size: 14px;
   display: -webkit-box;
@@ -49,20 +49,20 @@ text._1f3c072 {
   word-break: break-all;
   text-overflow: ellipsis;
 }
-.money._1f3c072,
-.cart._1f3c072 {
+.money._0fdbfaa,
+.cart._0fdbfaa {
   display: inline-block;
   line-height: 30px;
 }
-.cart._1f3c072 {
+.cart._0fdbfaa {
   float: right;
   margin-right: 5px;
 }
-.money._1f3c072 {
+.money._0fdbfaa {
   color: red;
   font-size: 25px !important;
 }
-.cart .iconfont._1f3c072 {
+.cart .iconfont._0fdbfaa {
   background-color: red;
   color: #fff;
   border-radius: 50%;

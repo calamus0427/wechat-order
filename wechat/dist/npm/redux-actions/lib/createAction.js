@@ -5,21 +5,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = createAction;
 
-var _identity = require('./../../lodash/identity.js');
-
-var _identity2 = _interopRequireDefault(_identity);
-
-var _isFunction = require('./../../lodash/isFunction.js');
-
-var _isFunction2 = _interopRequireDefault(_isFunction);
-
-var _isNull = require('./../../lodash/isNull.js');
-
-var _isNull2 = _interopRequireDefault(_isNull);
-
 var _invariant = require('./../../invariant/browser.js');
 
 var _invariant2 = _interopRequireDefault(_invariant);
+
+var _isFunction = require('./utils/isFunction.js');
+
+var _isFunction2 = _interopRequireDefault(_isFunction);
+
+var _identity = require('./utils/identity.js');
+
+var _identity2 = _interopRequireDefault(_identity);
+
+var _isNull = require('./utils/isNull.js');
+
+var _isNull2 = _interopRequireDefault(_isNull);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

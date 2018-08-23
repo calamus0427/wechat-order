@@ -19,7 +19,7 @@
       <view wx:else>
         敬请期待
       </view>
-      <Cart></Cart>
+      <Cart :flag.sync="cartShow"></Cart>
     </view>
 </template>
 
@@ -53,6 +53,7 @@
 
     data = {
       init:true,
+      cartShow:false,
       searchText:'请输入商家或者商品名称',
       categories: {
                 'list':[

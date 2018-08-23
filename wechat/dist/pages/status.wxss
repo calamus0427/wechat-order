@@ -1,28 +1,28 @@
-.status._8b88069 {
+.status._7bfdeea {
   text-align: center;
   margin: 30px 0;
 }
-.status view._8b88069 {
+.status view._7bfdeea {
   margin-top: 10px;
 }
-.content-item._8b88069 {
+.content-item._7bfdeea {
   padding: 0 15px;
 }
-.hr._8b88069 {
+.hr._7bfdeea {
   border-bottom: 1px solid #ccc;
   margin: 0 15px;
   margin-bottom: 20px;
 }
-.content-item .content-item-name._8b88069 {
+.content-item .content-item-name._7bfdeea {
   color: #999;
 }
-.content-item._8b88069:first-child {
+.content-item._7bfdeea:first-child {
   margin-bottom: 20px;
 }
-.content-item .content-item-detail._8b88069 {
+.content-item .content-item-detail._7bfdeea {
   float: right;
 }
-button._8b88069 {
+button._7bfdeea {
   background-color: #16cc80;
   color: #fff;
   width: 80%;

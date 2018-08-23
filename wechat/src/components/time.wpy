@@ -6,8 +6,8 @@
         {{item}}<text class="iconfont {{item == currentTime ? 'icon-xuanze_green':'icon-xuanze'}}"></text>
       </view>
     </block>
-  </scroll-view>
-  <text class="submit-btn" @tap="submitTime">确定</text>
+  </scroll-view> 
+  <text class="submit-btn" @tap="submitTime()">确定</text>
 </view>
 
 
@@ -20,7 +20,7 @@
     props = {
       flag: {
         type: String,
-        default: 'nothing',
+        default: false,
         twoWay: true
     }
     }

@@ -10,37 +10,37 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports.default = createActions;
 
-var _identity = require('./../../lodash/identity.js');
-
-var _identity2 = _interopRequireDefault(_identity);
-
-var _isPlainObject = require('./../../lodash/isPlainObject.js');
-
-var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-
-var _isArray = require('./../../lodash/isArray.js');
-
-var _isArray2 = _interopRequireDefault(_isArray);
-
-var _last = require('./../../lodash/last.js');
-
-var _last2 = _interopRequireDefault(_last);
-
-var _isString = require('./../../lodash/isString.js');
-
-var _isString2 = _interopRequireDefault(_isString);
-
-var _isFunction = require('./../../lodash/isFunction.js');
-
-var _isFunction2 = _interopRequireDefault(_isFunction);
-
-var _isNil = require('./../../lodash/isNil.js');
-
-var _isNil2 = _interopRequireDefault(_isNil);
-
 var _invariant = require('./../../invariant/browser.js');
 
 var _invariant2 = _interopRequireDefault(_invariant);
+
+var _isPlainObject = require('./utils/isPlainObject.js');
+
+var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+
+var _isFunction = require('./utils/isFunction.js');
+
+var _isFunction2 = _interopRequireDefault(_isFunction);
+
+var _identity = require('./utils/identity.js');
+
+var _identity2 = _interopRequireDefault(_identity);
+
+var _isArray = require('./utils/isArray.js');
+
+var _isArray2 = _interopRequireDefault(_isArray);
+
+var _isString = require('./utils/isString.js');
+
+var _isString2 = _interopRequireDefault(_isString);
+
+var _isNil = require('./utils/isNil.js');
+
+var _isNil2 = _interopRequireDefault(_isNil);
+
+var _getLastElement = require('./utils/getLastElement.js');
+
+var _getLastElement2 = _interopRequireDefault(_getLastElement);
 
 var _camelCase = require('./utils/camelCase.js');
 
@@ -75,7 +75,7 @@ function createActions(actionMap) {
     identityActions[_key - 1] = arguments[_key];
   }
 
-  var options = (0, _isPlainObject2.default)((0, _last2.default)(identityActions)) ? identityActions.pop() : {};
+  var options = (0, _isPlainObject2.default)((0, _getLastElement2.default)(identityActions)) ? identityActions.pop() : {};
   (0, _invariant2.default)(identityActions.every(_isString2.default) && ((0, _isString2.default)(actionMap) || (0, _isPlainObject2.default)(actionMap)), 'Expected optional object followed by string action types');
   if ((0, _isString2.default)(actionMap)) {
     return actionCreatorsFromIdentityActions([actionMap].concat(identityActions), options);

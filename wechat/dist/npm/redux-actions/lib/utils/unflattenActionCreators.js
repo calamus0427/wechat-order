@@ -5,11 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = unflattenActionCreators;
 
-var _isEmpty = require('./../../../lodash/isEmpty.js');
+var _constants = require('./../constants.js');
+
+var _isEmpty = require('./isEmpty.js');
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
-
-var _constants = require('./../constants.js');
 
 var _camelCase = require('./camelCase.js');
 

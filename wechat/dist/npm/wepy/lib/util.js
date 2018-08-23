@@ -6,11 +6,26 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+function isImmutable(maybeImmutable) {
+    if (!maybeImmutable || (typeof maybeImmutable === 'undefined' ? 'undefined' : _typeof(maybeImmutable)) !== 'object') {
+        return false;
+    }
+
+    var IMMUTABLE_KEYS = ['@@__IMMUTABLE_ITERABLE__@@', '@@__IMMUTABLE_KEYED__@@', '@@__IMMUTABLE_INDEXED__@@', '@@__IMMUTABLE_ORDERED__@@', '@@__IMMUTABLE_RECORD__@@'];
+
+    return !!IMMUTABLE_KEYS.filter(function (key) {
+        return maybeImmutable[key];
+    }).length;
+}
+
 exports.default = {
     $isEmpty: function $isEmpty(obj) {
         return Object.keys(obj).length === 0;
     },
     $isEqual: function $isEqual(a, b, aStack, bStack) {
+        if (isImmutable(a)) return a.equals(b);
+        if (isImmutable(b)) return b.equals(a);
+
         if (a === b) return a !== 0 || 1 / a === 1 / b;
 
         if (a !== a) return b !== b;
@@ -22,6 +37,10 @@ exports.default = {
         return this.$isDeepEqual(a, b, aStack, bStack);
     },
     $isDeepEqual: function $isDeepEqual(a, b, aStack, bStack) {
+        if (isImmutable(a)) a = a.toJS();
+
+        if (isImmutable(b)) b = b.toJS();
+
         var self = this;
 
         var className = toString.call(a);
@@ -166,6 +185,7 @@ exports.default = {
         } else if ('' + obj === 'null') {
             return obj;
         } else if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
+            if (isImmutable(obj)) return obj;
             return this.$extend(deep, {}, obj);
         } else return obj;
     },
@@ -226,6 +246,10 @@ exports.default = {
         }
         return rst;
     },
+
+
+    isImmutable: isImmutable,
+
     hyphenate: function hyphenate(str) {
         return str.replace(/([^-])([A-Z])/g, '$1-$2').replace(/([^-])([A-Z])/g, '$1-$2').toLowerCase();
     },

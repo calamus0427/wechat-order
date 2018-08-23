@@ -5,14 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = handleActions;
 
-var _isPlainObject = require('./../../lodash/isPlainObject.js');
-
-var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-
-var _isMap = require('./../../lodash/isMap.js');
-
-var _isMap2 = _interopRequireDefault(_isMap);
-
 var _reduceReducers = require('./../../reduce-reducers/dist/index.js');
 
 var _reduceReducers2 = _interopRequireDefault(_reduceReducers);
@@ -21,9 +13,13 @@ var _invariant = require('./../../invariant/browser.js');
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _handleAction = require('./handleAction.js');
+var _isPlainObject = require('./utils/isPlainObject.js');
 
-var _handleAction2 = _interopRequireDefault(_handleAction);
+var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+
+var _isMap = require('./utils/isMap.js');
+
+var _isMap2 = _interopRequireDefault(_isMap);
 
 var _ownKeys = require('./utils/ownKeys.js');
 
@@ -32,6 +28,10 @@ var _ownKeys2 = _interopRequireDefault(_ownKeys);
 var _flattenReducerMap = require('./utils/flattenReducerMap.js');
 
 var _flattenReducerMap2 = _interopRequireDefault(_flattenReducerMap);
+
+var _handleAction = require('./handleAction.js');
+
+var _handleAction2 = _interopRequireDefault(_handleAction);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

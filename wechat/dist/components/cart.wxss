@@ -1,37 +1,50 @@
-.cart._c6c7b4b {
+.cart._dc164a2 {
+  width: 100%;
+  font-size: 16px;
+  background-color: #fff;
+}
+.cart .cart-control._dc164a2 {
+  position: fixed;
+  background-color: transparent;
+  height: 100vh;
+  bottom: 0px;
+  width: 100%;
+  z-index: 1;
+}
+.cart .cart-content._dc164a2 {
+  background-color: #fff;
   position: fixed;
   bottom: 0px;
   width: 100%;
-  background-color: #fff;
-  font-size: 16px;
+  z-index: 2;
 }
-.foodList .title._c6c7b4b {
+.foodList .title._dc164a2 {
   padding-left: 5px;
   height: 30px;
   line-height: 30px;
 }
-.clearCart._c6c7b4b {
+.clearCart._dc164a2 {
   float: right;
   margin-right: 8px;
 }
-.foodItem._c6c7b4b {
+.foodItem._dc164a2 {
   margin: 8px;
 }
-.foodItem .buybuybuy._c6c7b4b {
+.foodItem .buybuybuy._dc164a2 {
   float: right;
 }
-.foodItem .buybuybuy .icon-jian1._c6c7b4b,
-.icon-webicon310._c6c7b4b {
+.foodItem .buybuybuy .icon-jian1._dc164a2,
+.icon-webicon310._dc164a2 {
   background-color: red;
   color: #fff;
   border-radius: 50%;
   margin: 0 5px;
 }
-.submit._c6c7b4b {
+.submit._dc164a2 {
   height: 50px;
   line-height: 50px;
 }
-.btn._c6c7b4b {
+.btn._dc164a2 {
   display: inline-block;
   background-color: #16cc80;
   color: #fff;
@@ -40,16 +53,16 @@
   float: right;
   text-align: center;
 }
-.sp._c6c7b4b {
+.sp._dc164a2 {
   margin: 0 5px;
 }
-.badge-top._c6c7b4b {
+.badge-top._dc164a2 {
   position: absolute;
   font-size: 10px !important;
   top: 0.5em;
   left: 2em;
 }
-.cart-num._c6c7b4b {
+.cart-num._dc164a2 {
   position: relative;
   display: inline-block;
   margin-right: 10px;

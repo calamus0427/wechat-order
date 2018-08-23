@@ -13,6 +13,7 @@ var _class = function () {
         _classCallCheck(this, _class);
 
         this.data = {};
+        this.computed = {};
         this.components = {};
         this.methods = {};
         this.events = {};
@@ -31,7 +32,7 @@ var _class = function () {
                 }
             });
 
-            ['data', 'events', 'components'].forEach(function (item) {
+            ['data', 'computed', 'events', 'components'].forEach(function (item) {
                 Object.getOwnPropertyNames(_this[item]).forEach(function (k) {
                     if (k !== 'init' && !parent[item][k]) parent[item][k] = _this[item][k];
                 });

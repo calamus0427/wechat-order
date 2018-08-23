@@ -1,52 +1,49 @@
 
-    <view class="submit _3b324e2">
-      <view class="submit-content submit-address _3b324e2">
-        <navigator url="address" class="address _3b324e2">
-          <view class="_3b324e2">
-            <view class="_3b324e2">
-              <text class="iconfont icon-weizhi _3b324e2"/>
+    <view class="submit _98dfdb1">
+      <view class="submit-content submit-address _98dfdb1">
+        <navigator url="address" class="address _98dfdb1">
+          <view class="_98dfdb1">
+            <view class="_98dfdb1">
+              <text class="iconfont icon-weizhi _98dfdb1"/>
               {{message.address}}
             </view>
-            <view class="submit-user color-gray _3b324e2">{{message.name}}  {{message.sex == 'female'?'女士':'先生'}}  {{message.tel}}</view>
+            <view class="submit-user color-gray _98dfdb1">{{message.name}}  {{message.sex == 'female'?'女士':'先生'}}  {{message.tel}}</view>
           </view>
-          <view class="iconfont icon-gengduo _3b324e2"/>
+          <view class="iconfont icon-gengduo _98dfdb1"/>
         </navigator>
-        <view class="time _3b324e2" bindtap="chooseTime">
-          <view class="_3b324e2">
-            <text class="iconfont icon-shijianzhongbiao2 _3b324e2"/>
+        <view class="time _98dfdb1" bindtap="chooseTime">
+          <view class="_98dfdb1">
+            <text class="iconfont icon-shijianzhongbiao2 _98dfdb1"/>
             {{message.time}}
-            <text class="color-green size-s _3b324e2">大约16:40送达</text>
+            <text class="color-green size-s _98dfdb1">大约16:40送达</text>
           </view>
-          <view class="iconfont icon-gengduo _3b324e2"/>
+          <view class="iconfont icon-gengduo _98dfdb1"/>
         </view>
       </view>
-      <view class="submit-content submit-order _3b324e2">
-        <view class="order-name _3b324e2">
-          <view class="size-l _3b324e2">{{message.cantee}}</view>
+      <view class="submit-content submit-order _98dfdb1">
+        <view class="order-name _98dfdb1">
+          <view class="size-l _98dfdb1">{{message.cantee}}</view>
         </view>
-        <view class="order-foodList _3b324e2">
-          <view class="order-foodList-item color-gray size-s _3b324e2"  wx:for="{{message.foodList}}" wx:key="index">
-            <text class="_3b324e2">{{item.name}}</text>
-            <view class="_3b324e2">
-              <text class="iconfont icon-renminbi2 _3b324e2"/>{{item.price}}
+        <view class="order-foodList _98dfdb1">
+          <view class="order-foodList-item color-gray size-s _98dfdb1"  wx:for="{{message.foodList}}" wx:key="index">
+            <text class="_98dfdb1">{{item.name}}</text>
+            <view class="_98dfdb1">
+              <text class="iconfont icon-renminbi2 _98dfdb1"/>{{item.price}}
             </view>
           </view>
         </view>
-        <view class="order-price _3b324e2">小计：<text class="color-red _3b324e2"><text class="iconfont icon-renminbi2 _3b324e2"/>{{message.price}}</text></view>
+        <view class="order-price _98dfdb1">小计：<text class="color-red _98dfdb1"><text class="iconfont icon-renminbi2 _98dfdb1"/>{{message.price}}</text></view>
       </view>
-      <button bindtap="submit" class="_3b324e2" data-wpysubmit-a="">确定</button>
-      <block  wx:if="{{chooseTimeFlag}}" class="_3b324e2">
-        
-<view class="sendTime _f929710 _3b324e2"  wx:if="{{$Time$flag}}">
-   <scroll-view style="height: 155px;" scroll-y class="_f929710">
-    <block wx:for="{{$Time$list}}" wx:key="{{item}}" class="_f929710">
-      <view bindtap="$Time$choose" class="time-item {{item == $Time$currentTime ? 'checked':''}} _f929710" data-wpychoose-a="{{item}}">
-        {{item}}<text class="iconfont {{item == $Time$currentTime ? 'icon-xuanze_green':'icon-xuanze'}} _f929710"/>
+      <button bindtap="submit" class="_98dfdb1" data-wpysubmit-a="">确定</button>
+      
+<view class="sendTime _ce986dc _98dfdb1"  wx:if="{{$Time$flag}}">
+   <scroll-view style="height: 155px;" scroll-y class="_ce986dc">
+    <block wx:for="{{$Time$list}}" wx:key="{{item}}" class="_ce986dc">
+      <view bindtap="$Time$choose" class="time-item {{item == $Time$currentTime ? 'checked':''}} _ce986dc" data-wpychoose-a="{{item}}">
+        {{item}}<text class="iconfont {{item == $Time$currentTime ? 'icon-xuanze_green':'icon-xuanze'}} _ce986dc"/>
       </view>
     </block>
-  </scroll-view>
-  <text class="submit-btn _f929710" bindtap="$Time$submitTime">确定</text>
+  </scroll-view> 
+  <text class="submit-btn _ce986dc" bindtap="$Time$submitTime" data-wpysubmittime-a="">确定</text>
 </view>
-        {{currentTime}}
-      </block>
 </view>

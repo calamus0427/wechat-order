@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _isPlainObject = require('./../../../lodash/isPlainObject.js');
+var _isPlainObject = require('./isPlainObject.js');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 

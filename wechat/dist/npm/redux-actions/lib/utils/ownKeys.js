@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = ownKeys;
 
-var _isMap = require('./../../../lodash/isMap.js');
+var _isMap = require('./isMap.js');
 
 var _isMap2 = _interopRequireDefault(_isMap);
 

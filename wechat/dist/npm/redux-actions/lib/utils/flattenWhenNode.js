@@ -4,17 +4,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _isMap = require('./../../../lodash/isMap.js');
+var _constants = require('./../constants.js');
+
+var _isMap = require('./isMap.js');
 
 var _isMap2 = _interopRequireDefault(_isMap);
-
-var _constants = require('./../constants.js');
 
 var _ownKeys = require('./ownKeys.js');
 
 var _ownKeys2 = _interopRequireDefault(_ownKeys);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function get(key, x) {
   return (0, _isMap2.default)(x) ? x.get(key) : x[key];
@@ -31,7 +33,16 @@ exports.default = function (predicate) {
     var partialFlatActionType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
     function connectNamespace(type) {
-      return partialFlatActionType ? '' + partialFlatActionType + namespace + type : type;
+      var _ref2;
+
+      if (!partialFlatActionType) return type;
+      var types = type.toString().split(_constants.ACTION_TYPE_DELIMITER);
+      var partials = partialFlatActionType.split(_constants.ACTION_TYPE_DELIMITER);
+      return (_ref2 = []).concat.apply(_ref2, _toConsumableArray(partials.map(function (p) {
+        return types.map(function (t) {
+          return '' + p + namespace + t;
+        });
+      }))).join(_constants.ACTION_TYPE_DELIMITER);
     }
 
     function connectPrefix(type) {

@@ -79,14 +79,14 @@ var Props = {
         }
         return valid;
     },
-    getValue: function getValue(props, key, value) {
+    getValue: function getValue(props, key, value, com) {
         var rst;
         if (value !== undefined && this.valid(props, key, value)) {
             rst = value;
         } else if (typeof props[key].default === 'function') {
             rst = props[key].default();
         } else rst = props[key].default;
-        return props[key].coerce ? props[key].coerce(rst) : rst;
+        return props[key].coerce ? props[key].coerce.call(com, rst) : rst;
     }
 };
 
@@ -151,50 +151,52 @@ var _class = function () {
 
             if (props) {
                 for (key in props) {
-                    val = undefined;
-                    if ($parent && $parent.$props && $parent.$props[this.$name]) {
-                        val = $parent.$props[this.$name][key];
-                        binded = $parent.$props[this.$name]['v-bind:' + key + '.once'] || $parent.$props[this.$name]['v-bind:' + key + '.sync'];
-                        if (binded) {
-                            if ((typeof binded === 'undefined' ? 'undefined' : _typeof(binded)) === 'object') {
-                                (function () {
-                                    props[key].repeat = binded.for;
-                                    props[key].item = binded.item;
-                                    props[key].index = binded.index;
-                                    props[key].key = binded.key;
-                                    props[key].value = binded.value;
+                    if (keyCheck(this, key)) {
+                        val = undefined;
+                        if ($parent && $parent.$props && $parent.$props[this.$name]) {
+                            val = $parent.$props[this.$name][key];
+                            binded = $parent.$props[this.$name]['v-bind:' + key + '.once'] || $parent.$props[this.$name]['v-bind:' + key + '.sync'];
+                            if (binded) {
+                                if ((typeof binded === 'undefined' ? 'undefined' : _typeof(binded)) === 'object') {
+                                    (function () {
+                                        props[key].repeat = binded.for;
+                                        props[key].item = binded.item;
+                                        props[key].index = binded.index;
+                                        props[key].key = binded.key;
+                                        props[key].value = binded.value;
 
-                                    inRepeat = true;
+                                        inRepeat = true;
 
-                                    var bindfor = binded.for,
-                                        binddata = $parent;
-                                    bindfor.split('.').forEach(function (t) {
-                                        binddata = binddata ? binddata[t] : {};
-                                    });
-                                    if (binddata && ((typeof binddata === 'undefined' ? 'undefined' : _typeof(binddata)) === 'object' || typeof binddata === 'string')) {
-                                        repeatKey = Object.keys(binddata)[0];
+                                        var bindfor = binded.for,
+                                            binddata = $parent;
+                                        bindfor.split('.').forEach(function (t) {
+                                            binddata = binddata ? binddata[t] : {};
+                                        });
+                                        if (binddata && ((typeof binddata === 'undefined' ? 'undefined' : _typeof(binddata)) === 'object' || typeof binddata === 'string')) {
+                                            repeatKey = Object.keys(binddata)[0];
+                                        }
+
+                                        if (!_this2.$mappingProps[key]) _this2.$mappingProps[key] = {};
+                                        _this2.$mappingProps[key]['parent'] = {
+                                            mapping: binded.for,
+                                            from: key
+                                        };
+                                    })();
+                                } else {
+                                    val = $parent[binded];
+                                    if (props[key].twoWay) {
+                                        if (!this.$mappingProps[key]) this.$mappingProps[key] = {};
+                                        this.$mappingProps[key]['parent'] = binded;
                                     }
-
-                                    if (!_this2.$mappingProps[key]) _this2.$mappingProps[key] = {};
-                                    _this2.$mappingProps[key]['parent'] = {
-                                        mapping: binded.for,
-                                        from: key
-                                    };
-                                })();
-                            } else {
-                                val = $parent[binded];
-                                if (props[key].twoWay) {
-                                    if (!this.$mappingProps[key]) this.$mappingProps[key] = {};
-                                    this.$mappingProps[key]['parent'] = binded;
                                 }
+                            } else if ((typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object' && val.value !== undefined) {
+                                this.data[key] = val.value;
                             }
-                        } else if ((typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object' && val.value !== undefined) {
-                            this.data[key] = val.value;
                         }
-                    }
-                    if (!this.data[key] && !props[key].repeat) {
-                        val = Props.getValue(props, key, val);
-                        this.data[key] = val;
+                        if (!this.data[key] && !props[key].repeat) {
+                            val = Props.getValue(props, key, val, this);
+                            this.data[key] = val;
+                        }
                     }
                 }
             }
@@ -204,8 +206,10 @@ var _class = function () {
             }
 
             for (k in this.data) {
-                defaultData['' + this.$prefix + k] = this.data[k];
-                this[k] = this.data[k];
+                if (keyCheck(this, k)) {
+                    defaultData['' + this.$prefix + k] = this.data[k];
+                    this[k] = this.data[k];
+                }
             }
 
             this.$data = _util2.default.$copy(this.data, true);
@@ -213,9 +217,11 @@ var _class = function () {
 
             if (this.computed) {
                 for (k in this.computed) {
-                    var fn = this.computed[k];
-                    defaultData['' + this.$prefix + k] = fn.call(this);
-                    this[k] = _util2.default.$copy(defaultData['' + this.$prefix + k], true);
+                    if (keyCheck(this, k)) {
+                        var fn = this.computed[k];
+                        defaultData['' + this.$prefix + k] = fn.call(this);
+                        this[k] = _util2.default.$copy(defaultData['' + this.$prefix + k], true);
+                    }
                 }
             }
             this.setData(defaultData);
@@ -225,11 +231,6 @@ var _class = function () {
                 coms.forEach(function (name) {
                     var com = _this2.$com[name];
                     com.$init(_this2.getWxPage(), $root, _this2);
-
-                    [].concat(com.$mixins, com).forEach(function (mix) {
-                        mix['onLoad'] && mix['onLoad'].call(com);
-                    });
-                    com.$apply();
                 });
             }
         }
@@ -252,8 +253,53 @@ var _class = function () {
             });
         }
     }, {
+        key: '$onLoad',
+        value: function $onLoad() {
+            var _this4 = this;
+
+            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                args[_key] = arguments[_key];
+            }
+
+            [].concat(this.$mixins, this).forEach(function (mix) {
+                mix['onLoad'] && mix['onLoad'].apply(_this4, args);
+            });
+
+            var coms = Object.getOwnPropertyNames(this.$com);
+            if (coms.length) {
+                coms.forEach(function (name) {
+                    var com = _this4.$com[name];
+                    com.$onLoad.call(com);
+                });
+            }
+        }
+    }, {
+        key: '$onUnload',
+        value: function $onUnload() {
+            var _this5 = this;
+
+            for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                args[_key2] = arguments[_key2];
+            }
+
+            var coms = Object.getOwnPropertyNames(this.$com);
+            if (coms.length) {
+                coms.forEach(function (name) {
+                    var com = _this5.$com[name];
+                    com.$onUnload.call(com);
+                });
+            }
+
+            [].concat(this.$mixins, this).forEach(function (mix) {
+                mix['onUnload'] && mix['onUnload'].apply(_this5, args);
+            });
+        }
+    }, {
         key: 'onLoad',
         value: function onLoad() {}
+    }, {
+        key: 'onUnload',
+        value: function onUnload() {}
     }, {
         key: 'setData',
         value: function setData(k, v) {
@@ -275,6 +321,10 @@ var _class = function () {
             for (t in k) {
                 var noPrefix = t.replace(reg, '');
                 this.$data[noPrefix] = _util2.default.$copy(k[t], true);
+
+                if (_util2.default.isImmutable(k[t])) {
+                    k[t] = k[t].toJS();
+                }
 
                 if (k[t] === undefined) {
                     delete k[t];
@@ -309,7 +359,7 @@ var _class = function () {
     }, {
         key: '$setIndex',
         value: function $setIndex(index) {
-            var _this4 = this;
+            var _this6 = this;
 
             this.$index = index;
 
@@ -329,9 +379,25 @@ var _class = function () {
                                 (function () {
                                     var bindfor = binded.for,
                                         binddata = $parent;
-                                    bindfor.split('.').forEach(function (t) {
-                                        binddata = binddata ? binddata[t] : {};
-                                    });
+
+                                    if (bindfor.indexOf('[') === 0) {
+                                        var bdarr = [];
+                                        bindfor = bindfor.substr(1, bindfor.length - 2).trim();
+
+                                        bindfor.split(',').forEach(function (e) {
+                                            var bd = $parent;
+                                            e.trim().split('.').forEach(function (t) {
+                                                bd = bd ? bd[t] : {};
+                                            });
+                                            bdarr.push(bd);
+                                        });
+
+                                        binddata = bdarr;
+                                    } else {
+                                        bindfor.split('.').forEach(function (t) {
+                                            binddata = binddata ? binddata[t] : {};
+                                        });
+                                    }
 
                                     index = Array.isArray(binddata) ? +index : index;
 
@@ -344,10 +410,10 @@ var _class = function () {
                                     } else {
                                         val = $parent[props[key].value];
                                     }
-                                    _this4.$index = index;
-                                    _this4.data[key] = val;
-                                    _this4[key] = val;
-                                    _this4.$data[key] = _util2.default.$copy(_this4[key], true);
+                                    _this6.$index = index;
+                                    _this6.data[key] = val;
+                                    _this6[key] = val;
+                                    _this6.$data[key] = _util2.default.$copy(_this6[key], true);
                                 })();
                             }
                         }
@@ -362,7 +428,7 @@ var _class = function () {
     }, {
         key: '$getComponent',
         value: function $getComponent(com) {
-            var _this5 = this;
+            var _this7 = this;
 
             if (typeof com === 'string') {
                 if (com.indexOf('/') === -1) {
@@ -374,13 +440,13 @@ var _class = function () {
                     path.forEach(function (s, i) {
                         if (i === 0) {
                             if (s === '') {
-                                com = _this5.$root;
+                                com = _this7.$root;
                             } else if (s === '.') {
-                                com = _this5;
+                                com = _this7;
                             } else if (s === '..') {
-                                com = _this5.$parent;
+                                com = _this7.$parent;
                             } else {
-                                com = _this5.$getComponent(s);
+                                com = _this7.$getComponent(s);
                             }
                         } else if (s) {
                             com = com.$com[s];
@@ -401,8 +467,8 @@ var _class = function () {
 
             var fn = com.methods ? com.methods[method] : '';
 
-            for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-                args[_key - 2] = arguments[_key];
+            for (var _len3 = arguments.length, args = Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
+                args[_key3 - 2] = arguments[_key3];
             }
 
             if (typeof fn === 'function') {
@@ -423,8 +489,8 @@ var _class = function () {
     }, {
         key: '$broadcast',
         value: function $broadcast(evtName) {
-            for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-                args[_key2 - 1] = arguments[_key2];
+            for (var _len4 = arguments.length, args = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+                args[_key4 - 1] = arguments[_key4];
             }
 
             var com = this;
@@ -457,10 +523,10 @@ var _class = function () {
     }, {
         key: '$emit',
         value: function $emit(evtName) {
-            var _this6 = this;
+            var _this8 = this;
 
-            for (var _len3 = arguments.length, args = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-                args[_key3 - 1] = arguments[_key3];
+            for (var _len5 = arguments.length, args = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+                args[_key5 - 1] = arguments[_key5];
             }
 
             var com = this;
@@ -475,7 +541,7 @@ var _class = function () {
                     var _fn = this.$parent.methods[method];
                     if (typeof _fn === 'function') {
                         this.$parent.$apply(function () {
-                            _fn.apply(_this6.$parent, args);
+                            _fn.apply(_this8.$parent, args);
                         });
                         return;
                     } else {
@@ -509,13 +575,13 @@ var _class = function () {
     }, {
         key: '$on',
         value: function $on(evtName, fn) {
-            var _this7 = this;
+            var _this9 = this;
 
             if (typeof evtName === 'string') {
                 (this.$events[evtName] || (this.$events[evtName] = [])).push(fn);
             } else if (Array.isArray(evtName)) {
                 evtName.forEach(function (k) {
-                    _this7.$on(k, fn);
+                    _this9.$on(k, fn);
                 });
             } else if ((typeof evtName === 'undefined' ? 'undefined' : _typeof(evtName)) === 'object') {
                 for (var k in evtName) {
@@ -538,7 +604,7 @@ var _class = function () {
     }, {
         key: '$off',
         value: function $off(evtName, fn) {
-            var _this8 = this;
+            var _this10 = this;
 
             if (evtName === undefined) {
                 this.$events = {};
@@ -557,7 +623,7 @@ var _class = function () {
                 }
             } else if (Array.isArray(evtName)) {
                 evtName.forEach(function (k) {
-                    _this8.$off(k, fn);
+                    _this10.$off(k, fn);
                 });
             }
             return this;
@@ -579,7 +645,7 @@ var _class = function () {
     }, {
         key: '$digest',
         value: function $digest() {
-            var _this9 = this;
+            var _this11 = this;
 
             var k = void 0;
             var originData = this.$data;
@@ -624,17 +690,17 @@ var _class = function () {
                         }
                         if (this.$mappingProps[k]) {
                             Object.keys(this.$mappingProps[k]).forEach(function (changed) {
-                                var mapping = _this9.$mappingProps[k][changed];
+                                var mapping = _this11.$mappingProps[k][changed];
                                 if ((typeof mapping === 'undefined' ? 'undefined' : _typeof(mapping)) === 'object') {
-                                    _this9.$parent.$apply();
-                                } else if (changed === 'parent' && !_util2.default.$isEqual(_this9.$parent.$data[mapping], _this9[k])) {
-                                    _this9.$parent[mapping] = _this9[k];
-                                    _this9.$parent.data[mapping] = _this9[k];
-                                    _this9.$parent.$apply();
-                                } else if (changed !== 'parent' && !_util2.default.$isEqual(_this9.$com[changed].$data[mapping], _this9[k])) {
-                                    _this9.$com[changed][mapping] = _this9[k];
-                                    _this9.$com[changed].data[mapping] = _this9[k];
-                                    _this9.$com[changed].$apply();
+                                    _this11.$parent.$apply();
+                                } else if (changed === 'parent' && !_util2.default.$isEqual(_this11.$parent.$data[mapping], _this11[k])) {
+                                    _this11.$parent[mapping] = _this11[k];
+                                    _this11.$parent.data[mapping] = _this11[k];
+                                    _this11.$parent.$apply();
+                                } else if (changed !== 'parent' && !_util2.default.$isEqual(_this11.$com[changed].$data[mapping], _this11[k])) {
+                                    _this11.$com[changed][mapping] = _this11[k];
+                                    _this11.$com[changed].data[mapping] = _this11[k];
+                                    _this11.$com[changed].$apply();
                                 }
                             });
                         }
@@ -642,13 +708,13 @@ var _class = function () {
                 }
                 if (Object.keys(readyToSet).length) {
                     this.setData(readyToSet, function () {
-                        if (_this9.$$nextTick) {
-                            var $$nextTick = _this9.$$nextTick;
-                            _this9.$$nextTick = null;
+                        if (_this11.$$nextTick) {
+                            var $$nextTick = _this11.$$nextTick;
+                            _this11.$$nextTick = null;
                             if ($$nextTick.promise) {
                                 $$nextTick();
                             } else {
-                                $$nextTick.call(_this9);
+                                $$nextTick.call(_this11);
                             }
                         }
                     });
@@ -669,14 +735,14 @@ var _class = function () {
     }, {
         key: '$nextTick',
         value: function $nextTick(fn) {
-            var _this10 = this;
+            var _this12 = this;
 
             if (typeof fn === 'undefined') {
                 return new Promise(function (resolve, reject) {
-                    _this10.$$nextTick = function () {
+                    _this12.$$nextTick = function () {
                         resolve();
                     };
-                    _this10.$$nextTick.promise = true;
+                    _this12.$$nextTick.promise = true;
                 });
             }
             this.$$nextTick = fn;
@@ -688,6 +754,19 @@ var _class = function () {
 
 exports.default = _class;
 
+function keyCheck(vm, k) {
+    if (typeof vm[k] === 'function') {
+        console.warn('You are not allowed to define a function "' + k + '" in data.');
+        return 0;
+    } else if (['data', 'props', 'methods', 'events', 'mixins'].indexOf(k) !== -1) {
+        console.warn('"' + k + '" is reserved word, please fix it.');
+        return 0;
+    } else if (k[0] === '$') {
+        console.warn('"' + k + ': You can not define a property started with "$"');
+        return 0;
+    }
+    return 1;
+}
 
 function getEventsFn(comContext, evtName) {
     var fn = comContext.events ? comContext.events[evtName] : comContext.$events[evtName] ? comContext.$events[evtName] : undefined;

@@ -5,29 +5,29 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = combineActions;
 
-var _isString = require('./../../lodash/isString.js');
-
-var _isString2 = _interopRequireDefault(_isString);
-
-var _isFunction = require('./../../lodash/isFunction.js');
-
-var _isFunction2 = _interopRequireDefault(_isFunction);
-
-var _isEmpty = require('./../../lodash/isEmpty.js');
-
-var _isEmpty2 = _interopRequireDefault(_isEmpty);
-
-var _toString = require('./../../lodash/toString.js');
-
-var _toString2 = _interopRequireDefault(_toString);
-
-var _isSymbol = require('./../../lodash/isSymbol.js');
-
-var _isSymbol2 = _interopRequireDefault(_isSymbol);
-
 var _invariant = require('./../../invariant/browser.js');
 
 var _invariant2 = _interopRequireDefault(_invariant);
+
+var _isFunction = require('./utils/isFunction.js');
+
+var _isFunction2 = _interopRequireDefault(_isFunction);
+
+var _isSymbol = require('./utils/isSymbol.js');
+
+var _isSymbol2 = _interopRequireDefault(_isSymbol);
+
+var _isEmpty = require('./utils/isEmpty.js');
+
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
+var _toString = require('./utils/toString.js');
+
+var _toString2 = _interopRequireDefault(_toString);
+
+var _isString = require('./utils/isString.js');
+
+var _isString2 = _interopRequireDefault(_isString);
 
 var _constants = require('./constants.js');
 

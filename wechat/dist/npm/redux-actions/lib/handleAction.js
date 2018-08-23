@@ -8,33 +8,33 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 exports.default = handleAction;
 
-var _isFunction = require('./../../lodash/isFunction.js');
-
-var _isFunction2 = _interopRequireDefault(_isFunction);
-
-var _isPlainObject = require('./../../lodash/isPlainObject.js');
-
-var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-
-var _identity = require('./../../lodash/identity.js');
-
-var _identity2 = _interopRequireDefault(_identity);
-
-var _isNil = require('./../../lodash/isNil.js');
-
-var _isNil2 = _interopRequireDefault(_isNil);
-
-var _isUndefined = require('./../../lodash/isUndefined.js');
-
-var _isUndefined2 = _interopRequireDefault(_isUndefined);
-
-var _includes = require('./../../lodash/includes.js');
-
-var _includes2 = _interopRequireDefault(_includes);
-
 var _invariant = require('./../../invariant/browser.js');
 
 var _invariant2 = _interopRequireDefault(_invariant);
+
+var _isFunction = require('./utils/isFunction.js');
+
+var _isFunction2 = _interopRequireDefault(_isFunction);
+
+var _isPlainObject = require('./utils/isPlainObject.js');
+
+var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+
+var _identity = require('./utils/identity.js');
+
+var _identity2 = _interopRequireDefault(_identity);
+
+var _isNil = require('./utils/isNil.js');
+
+var _isNil2 = _interopRequireDefault(_isNil);
+
+var _isUndefined = require('./utils/isUndefined.js');
+
+var _isUndefined2 = _interopRequireDefault(_isUndefined);
+
+var _toString = require('./utils/toString.js');
+
+var _toString2 = _interopRequireDefault(_toString);
 
 var _constants = require('./constants.js');
 
@@ -44,7 +44,7 @@ function handleAction(type) {
   var reducer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _identity2.default;
   var defaultState = arguments[2];
 
-  var types = type.toString().split(_constants.ACTION_TYPE_DELIMITER);
+  var types = (0, _toString2.default)(type).split(_constants.ACTION_TYPE_DELIMITER);
   (0, _invariant2.default)(!(0, _isUndefined2.default)(defaultState), 'defaultState for reducer handling ' + types.join(', ') + ' should be defined');
   (0, _invariant2.default)((0, _isFunction2.default)(reducer) || (0, _isPlainObject2.default)(reducer), 'Expected reducer to be a function or object with next and throw reducers');
 
@@ -60,7 +60,7 @@ function handleAction(type) {
     var action = arguments[1];
     var actionType = action.type;
 
-    if (!actionType || !(0, _includes2.default)(types, actionType.toString())) {
+    if (!actionType || types.indexOf((0, _toString2.default)(actionType)) === -1) {
       return state;
     }
 

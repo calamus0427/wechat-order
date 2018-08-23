@@ -36,10 +36,7 @@
         <view class="order-price">小计：<text class="color-red"><text class="iconfont icon-renminbi2"></text>{{message.price}}</text></view>
       </view>
       <button @tap="submit()">确定</button>
-      <block wx:if="{{chooseTimeFlag}}">
-        <Time current="currentTime" flag.sync="{{chooseTimeFlag}}"></Time>
-        {{currentTime}}
-      </block>
+      <Time current="currentTime" :flag.sync="flag"></Time>
 </view>
     </view>
 </template>
@@ -72,7 +69,7 @@
                   {name:'红烧茄子',price:'7'}],
         price:'100'
       },
-      chooseTimeFlag:false
+      flag:false
     }
 
     computed = {
@@ -97,7 +94,7 @@
     }
     chooseTime(){
       console.log("选时间")
-      this.chooseTimeFlag = true ;
+      this.flag = true ;
     }
     submit(){
       console.log("提交订单")

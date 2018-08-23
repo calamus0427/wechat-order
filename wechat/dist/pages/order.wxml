@@ -73,56 +73,56 @@
 
         <scroll-view scroll-y class="goods-box">
           
-  <view class="foodList _1f3c072">
-    <block  wx:if="{{$foodList$list.length > 0}}" class="_1f3c072">
-      <block wx:for="{{$foodList$list}}" wx:key="index" class="_1f3c072">
-        <navigator url="/pages/detail" class="_1f3c072">
-          <view class="foodList-des _1f3c072">
-            <view class="foodList-item-image _1f3c072">
-              <image src="{{item.image}}" mode="aspectFill" class="_1f3c072"/>
+  <view class="foodList _0fdbfaa">
+    <block  wx:if="{{$foodList$list.length > 0}}" class="_0fdbfaa">
+      <block wx:for="{{$foodList$list}}" wx:key="index" class="_0fdbfaa">
+        <navigator url="/pages/detail" class="_0fdbfaa">
+          <view class="foodList-des _0fdbfaa">
+            <view class="foodList-item-image _0fdbfaa">
+              <image src="{{item.image}}" mode="aspectFill" class="_0fdbfaa"/>
             </view>
-            <view class="foodList-item-content _1f3c072">
-              <text class="foodList-item-name _1f3c072">{{item.name}}</text>
+            <view class="foodList-item-content _0fdbfaa">
+              <text class="foodList-item-name _0fdbfaa">{{item.name}}</text>
               
-  <view class="stars _fd05b0c _1f3c072">
-    <image src="{{$foodList$Stars$star >= 1 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _fd05b0c" mode="aspectFit"/>
-    <image src="{{$foodList$Stars$star >= 2 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _fd05b0c" mode="aspectFit"/>
-    <image src="{{$foodList$Stars$star >= 3 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _fd05b0c" mode="aspectFit"/>
-    <image src="{{$foodList$Stars$star >= 4 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _fd05b0c" mode="aspectFit"/>
-    <image src="{{$foodList$Stars$star >= 5 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _fd05b0c" mode="aspectFit"/>
-    <text class="_fd05b0c">   {{$foodList$Stars$star}}.0分</text>
+  <view class="stars _1bf4c96 _0fdbfaa">
+    <image src="{{$foodList$Stars$star >= 1 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _1bf4c96" mode="aspectFit"/>
+    <image src="{{$foodList$Stars$star >= 2 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _1bf4c96" mode="aspectFit"/>
+    <image src="{{$foodList$Stars$star >= 3 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _1bf4c96" mode="aspectFit"/>
+    <image src="{{$foodList$Stars$star >= 4 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _1bf4c96" mode="aspectFit"/>
+    <image src="{{$foodList$Stars$star >= 5 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _1bf4c96" mode="aspectFit"/>
+    <text class="_1bf4c96">   {{$foodList$Stars$star}}.0分</text>
   </view>
-              <text class="_1f3c072">月销量：{{item.shoped}}笔</text>
+              <text class="_0fdbfaa">月销量：{{item.shoped}}笔</text>
             </view>
           </view>
-          <view class="foodList-item-description _1f3c072">{{item.description}}</view>
-          <view class="buybuybuy _1f3c072">
-            <text class="money _1f3c072">
-              <text class="iconfont icon-renminbi2 _1f3c072"/>{{item.price}}
+          <view class="foodList-item-description _0fdbfaa">{{item.description}}</view>
+          <view class="buybuybuy _0fdbfaa">
+            <text class="money _0fdbfaa">
+              <text class="iconfont icon-renminbi2 _0fdbfaa"/>{{item.price}}
             </text>
-            <text class="cart _1f3c072">
-              <text class="iconfont icon-jian1 _1f3c072"/>
-              <text class="_1f3c072">1</text>
-              <text class="iconfont icon-webicon310 _1f3c072"/>
+            <text class="cart _0fdbfaa">
+              <text class="iconfont icon-jian1 _0fdbfaa"/>
+              <text class="_0fdbfaa">1</text>
+              <text class="iconfont icon-webicon310 _0fdbfaa"/>
             </text>
           </view>
         </navigator>
       </block>
-      <block wx:if="{{$foodList$loading}}" class="_1f3c072">
-        <view class="weui-loadmore _1f3c072">
-          <view class="weui-loading _1f3c072"/>
-          <view class="weui-loadmore__tips _1f3c072">正在加载</view>
+      <block wx:if="{{$foodList$loading}}" class="_0fdbfaa">
+        <view class="weui-loadmore _0fdbfaa">
+          <view class="weui-loading _0fdbfaa"/>
+          <view class="weui-loadmore__tips _0fdbfaa">正在加载</view>
         </view>
       </block>
-      <block wx:elif="{{$foodList$noMore}}" class="_1f3c072">
-        <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot _1f3c072">
-          <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot _1f3c072"/>
+      <block wx:elif="{{$foodList$noMore}}" class="_0fdbfaa">
+        <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot _0fdbfaa">
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot _0fdbfaa"/>
         </view>
       </block>
     </block>
-    <block  wx:else class="_1f3c072">
-      <view class="weui-loadmore weui-loadmore_line _1f3c072">
-        <view class="weui-loadmore__tips weui-loadmore__tips_in-line _1f3c072">暂无推荐</view>
+    <block  wx:else class="_0fdbfaa">
+      <view class="weui-loadmore weui-loadmore_line _0fdbfaa">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line _0fdbfaa">暂无推荐</view>
       </view>
     </block>
   </view>
@@ -133,37 +133,44 @@
         敬请期待
       </view>
       
-  <view class="cart _c6c7b4b">
-    <view  wx:if="{{$Cart$list}}" class="foodList _c6c7b4b">
-      <view class="cat danddian _c6c7b4b" wx:for="{{$Cart$list}}">
-        <view class="title bg-ddd _c6c7b4b" style="border-left:solid 3px {{$Cart$colorList[index]}}">
-          {{item.name}}
-          <text class="clearCart _c6c7b4b" wx:if="{{index == 0}}"><text class="iconfont icon-shanchu _c6c7b4b"/>清空购物车</text>
-        </view>
-        <view class="foodItem _c6c7b4b" wx:for="{{$Cart$list[index].food}}">
-            <text class="name _c6c7b4b">{{item.name}}</text>
-            <view class="buybuybuy _c6c7b4b">
-              <text class="iconfont icon-renminbi2 _c6c7b4b"/>{{item.price}}
-              <text class="_c6c7b4b">
-                <text class="iconfont icon-jian1 _c6c7b4b"/>
-                <text class="_c6c7b4b">1</text>
-                <text class="iconfont icon-webicon310 _c6c7b4b"/>
-              </text>
+  <view class="cart _dc164a2">
+    <view bindtap="$Cart$closeList" class="cart-control _dc164a2" data-wpycloselist-a="">
+    </view>
+    <view class="cart-content _dc164a2">
+            <block  wx:if="{{$Cart$flag}}" class="_dc164a2">
+        <view wx:if="{{$Cart$list}}" class="foodList _dc164a2">
+          <view class="cat danddian _dc164a2" wx:for="{{$Cart$list}}" wx:key="index">
+            <view class="title bg-ddd _dc164a2" style="border-left:solid 3px {{$Cart$colorList[index]}}">
+              {{item.name}}
+              <text bindtap="$Cart$clearCat" class="clearCart _dc164a2" wx:if="{{index == 0}}" data-wpyclearcat-a=""><text class="iconfont icon-shanchu _dc164a2"/>清空购物车</text>
             </view>
+            <view class="foodItem _dc164a2" wx:for="{{$Cart$list[index].food}}" wx:key="index">
+                <text class="name _dc164a2">{{item.name}}</text>
+                <view class="buybuybuy _dc164a2">
+                  <text class="iconfont icon-renminbi2 _dc164a2"/>{{item.price}}
+                  <text class="_dc164a2">
+                    <text class="iconfont icon-jian1 _dc164a2"/>
+                    <text class="_dc164a2">1</text>
+                    <text class="iconfont icon-webicon310 _dc164a2"/>
+                  </text>
+                </view>
 
+            </view>
+          </view>
         </view>
+      </block>
+      <view class="submit _dc164a2">
+        <view bindtap="$Cart$showList" class="cart-num _dc164a2" data-wpyshowlist-a="">
+          <text class="sp iconfont icon-gouwuchekong size-xl _dc164a2"/>
+          <text class="weui-badge badge-top _dc164a2">22</text>
+        </view>
+        <text class="iconfont icon-renminbi2 color-red size-xl _dc164a2"/>
+        <text class="color-red size-xl _dc164a2">{{$Cart$cart.price}}</text>
+        <text class="sp size-xl color-ccc _dc164a2">|</text>
+        <text class="size-s _dc164a2">差<text class="size-s iconfont icon-renminbi2 _dc164a2"/>{{$Cart$limis}}起送</text>
+        <text class="btn _dc164a2" bindtap="$Cart$account" data-wpyaccount-a="">去结算</text>
       </view>
     </view>
-    <view class="submit _c6c7b4b">
-      <view class="cart-num _c6c7b4b">
-        <text class="sp iconfont icon-gouwuchekong size-xl _c6c7b4b"/>
-        <text class="weui-badge badge-top _c6c7b4b">22</text>
-      </view>
-      <text class="iconfont icon-renminbi2 color-red size-xl _c6c7b4b"/>
-      <text class="color-red size-xl _c6c7b4b">{{$Cart$cart.price}}</text>
-      <text class="sp size-xl color-ccc _c6c7b4b">|</text>
-      <text class="size-s _c6c7b4b">差<text class="size-s iconfont icon-renminbi2 _c6c7b4b"/>{{$Cart$limis}}起送</text>
-      <text class="btn _c6c7b4b" bindtap="$Cart$account" data-wpyaccount-a="">去结算</text>
-    </view>
+
   </view>
     </view>

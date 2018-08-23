@@ -1,27 +1,27 @@
 
-    <view class="_8b88069">
-      <view class="status _8b88069">
-        <icon type="success" size="56" color="red" class="_8b88069"/>
-        <view class="_8b88069">订餐成功</view>
+    <view class="_7bfdeea">
+      <view class="status _7bfdeea">
+        <icon type="success" size="56" color="red" class="_7bfdeea"/>
+        <view class="_7bfdeea">订餐成功</view>
       </view>
-        <view class="content _8b88069">
-          <view class="content-item _8b88069">
-            <text class="content-item-name _8b88069">付款金额</text>
-            <text class="content-item-detail color-red _8b88069"><text class="iconfont icon-renminbi2 _8b88069"/>{{message.price}}</text>
+        <view class="content _7bfdeea">
+          <view class="content-item _7bfdeea">
+            <text class="content-item-name _7bfdeea">付款金额</text>
+            <text class="content-item-detail color-red _7bfdeea"><text class="iconfont icon-renminbi2 _7bfdeea"/>{{message.price}}</text>
           </view>
-          <view class="hr _8b88069"/>
-           <view class="content-item _8b88069">
-            <text class="content-item-name _8b88069">收货人</text>
-            <text class="content-item-detail _8b88069">{{message.user}}</text>
+          <view class="hr _7bfdeea"/>
+           <view class="content-item _7bfdeea">
+            <text class="content-item-name _7bfdeea">收货人</text>
+            <text class="content-item-detail _7bfdeea">{{message.user}}</text>
           </view>
-           <view class="content-item _8b88069">
-            <text class="content-item-name _8b88069">送货地址</text>
-            <text class="content-item-detail _8b88069">{{message.address}}</text>
+           <view class="content-item _7bfdeea">
+            <text class="content-item-name _7bfdeea">送货地址</text>
+            <text class="content-item-detail _7bfdeea">{{message.address}}</text>
           </view>
-           <view class="content-item _8b88069">
-            <text class="content-item-name _8b88069">预计送餐时间</text>
-            <text class="content-item-detail _8b88069">{{message.time}}</text>
+           <view class="content-item _7bfdeea">
+            <text class="content-item-name _7bfdeea">预计送餐时间</text>
+            <text class="content-item-detail _7bfdeea">{{message.time}}</text>
           </view>
         </view>
-        <button class="_8b88069">确定</button>
+        <button class="_7bfdeea">确定</button>
     </view>

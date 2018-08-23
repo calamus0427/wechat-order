@@ -15,7 +15,7 @@ var _util2 = _interopRequireDefault(_util);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PAGE_EVENT = ['onLoad', 'onReady', 'onShow', 'onHide', 'onUnload', 'onPullDownRefresh', 'onReachBottom', 'onShareAppMessage', 'onPageScroll', 'onTabItemTap'];
-var APP_EVENT = ['onLaunch', 'onShow', 'onHide', 'onError'];
+var APP_EVENT = ['onLaunch', 'onShow', 'onHide', 'onError', 'onPageNotFound'];
 
 var $bindEvt = function $bindEvt(config, com, prefix) {
     com.$prefix = _util2.default.camelize(prefix || '');
@@ -150,6 +150,8 @@ exports.default = {
                 args[_key3] = arguments[_key3];
             }
 
+            !('options' in this) && (this.options = args.length ? args[0] : {});
+
             page.$name = pageClass.name || 'unnamed';
             page.$init(this, self.$instance, self.$instance);
 
@@ -157,26 +159,32 @@ exports.default = {
             var secParams = {};
             secParams.from = prevPage ? prevPage : undefined;
 
-            if (prevPage && Object.keys(prevPage.$preloadData).length > 0) {
+            if (prevPage && prevPage.$preloadData) {
                 secParams.preload = prevPage.$preloadData;
-                prevPage.$preloadData = {};
+                prevPage.$preloadData = undefined;
             }
-            if (page.$prefetchData && Object.keys(page.$prefetchData).length > 0) {
+            if (page.$prefetchData) {
                 secParams.prefetch = page.$prefetchData;
-                page.$prefetchData = {};
+                page.$prefetchData = undefined;
             }
             args.push(secParams);
 
-            [].concat(page.$mixins, page).forEach(function (mix) {
-                mix['onLoad'] && mix['onLoad'].apply(page, args);
-            });
+            page.$onLoad.apply(page, args);
 
             page.$apply();
         };
 
-        config.onShow = function () {
+        config.onUnload = function () {
             for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
                 args[_key4] = arguments[_key4];
+            }
+
+            page.$onUnload.apply(page, args);
+        };
+
+        config.onShow = function () {
+            for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+                args[_key5] = arguments[_key5];
             }
 
             self.$instance.__prevPage__ = page;
@@ -205,10 +213,10 @@ exports.default = {
         };
 
         PAGE_EVENT.forEach(function (v) {
-            if (v !== 'onLoad' && v !== 'onShow') {
+            if (v !== 'onLoad' && v !== 'onUnload' && v !== 'onShow') {
                 config[v] = function () {
-                    for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
-                        args[_key5] = arguments[_key5];
+                    for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+                        args[_key6] = arguments[_key6];
                     }
 
                     var rst = void 0;

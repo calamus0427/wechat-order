@@ -1,21 +1,21 @@
-.sendTime._f929710 {
+.sendTime._ce986dc {
   position: fixed ;
   bottom: 0;
   height: 200px;
   width: 100%;
   background-color: #fff;
 }
-.iconfont._f929710 {
+.iconfont._ce986dc {
   float: right;
   margin-right: 10px;
 }
-.time-item._f929710 {
+.time-item._ce986dc {
   margin: 10px;
 }
-.checked._f929710 {
+.checked._ce986dc {
   color: green;
 }
-.submit-btn._f929710 {
+.submit-btn._ce986dc {
   display: block;
   height: 45px;
   border-top: 1px solid #ccc;
