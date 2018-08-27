@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import java.util.Iterator;
 import java.util.List;
@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/mydb")
-public class DbController {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @RequestMapping("/getUsers")
+    @RequestMapping("/get_users")
     public List<Map<String, Object>> getDbType(){
-        String sql = "select * from wechat";
+        String sql = "select * from user";
         List<Map<String, Object>> list =  jdbcTemplate.queryForList(sql);
         for (Map<String, Object> map : list) {
             Set<Entry<String, Object>> entries = map.entrySet( );
@@ -38,7 +38,28 @@ public class DbController {
         return list;
     }
 
-    @RequestMapping("/user/{id}")
+    //    用户分类查询
+    @RequestMapping("/get_user_cat")
+    public List<Map<String, Object>> getCat(){
+        String sql = "select * from user_cat";
+        List<Map<String, Object>> list =  jdbcTemplate.queryForList(sql);
+        for (Map<String, Object> map : list) {
+            Set<Entry<String, Object>> entries = map.entrySet( );
+            if(entries != null) {
+                Iterator<Entry<String, Object>> iterator = entries.iterator( );
+                while(iterator.hasNext( )) {
+                    Entry<String, Object> entry =(Entry<String, Object>) iterator.next( );
+                    Object key = entry.getKey( );
+                    Object value = entry.getValue();
+                    System.out.println(key+":"+value);
+                }
+            }
+        }
+        return list;
+    }
+
+    //    用户查询
+    @RequestMapping("/search/{id}")
     public Map<String,Object> getUser(@PathVariable String id){
         Map<String,Object> map = null;
 

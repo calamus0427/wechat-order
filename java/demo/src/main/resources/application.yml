@@ -1,0 +1,14 @@
+
+spring:
+  profiles:
+    active: a
+  datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/wechat
+      username: root
+      password: Calamus0427HX@
+
+  jpa:
+    hibernate:
+    ddl-auto: update
+    show-sql: true

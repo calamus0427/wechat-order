@@ -1,16 +1,26 @@
-package com.example.demo;
+package com.example.demo.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @ComponentScan
 @Configuration
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@CrossOrigin
+@RequestMapping("/cat")
+public class CatController {
 
     @RequestMapping("/{id}")
     public User getUser(@PathVariable String id){
@@ -40,3 +50,4 @@ public class UserController {
         }
     }
 }
+
