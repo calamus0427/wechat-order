@@ -42,77 +42,26 @@ export default {
   data () {
     return {
       value:'',
-      passwordForm:{
-        "loginName":this.$store.state.login.user.name,
-        "oldpassword":'',
-        "newpassword":''
-      },
-      passwordRules:{},
       form: {
         "id": 38,
         "hospital":"",
         "district":"",
         "address":""
-      },
-      rules: {
-          loginName: [
-              { required: true, message: '请输入用户名', trigger: 'change' }
-          ]
       }
     }
   },
   mounted(){
-    this.getUserInfo()
+    this.getInfo()
   },
   methods:{
-    getUserInfo(){
-      let url = "http://yapi.demo.qunar.com/mock/16780/get_info";
+    getInfo(){
+      let url =this.$request.getInfo;
           this.$http.get(url)
             .then( (res)=> {
-              this.form = res.data.info;
+              this.form = res.data[0];
             },(err)=>{
               console.error('获取用户信息失败',err);
             })
-    },
-    updateUserInfo(name){
-      this.$refs[name].validate((valid) => {
-                    if (valid) {
-                          var biList=this.$Qs.stringify(this.form);
-                          this.$http.put(this.$request.user,biList)
-                            .then( (res)=> {
-                              if(res.data.code == 1000){
-                                this.$Message.successs("更新用户信息成功");
-                              }else{
-                                this.$Message.error(res.data.msg);
-                              }
-                            },(err)=>{
-                              console.error('更新用户信息失败',err);
-                            })
-                    }
-                    else{
-                      this.$Message.error("更新用户信息失败");
-                    }
-                })
-    },
-    updatePassword(name){
-      this.$refs[name].validate((valid) => {
-                    if (valid) {
-                          var biList=this.$Qs.stringify(this.passwordForm);
-                          this.$http.put(this.$request.user,biList)
-                            .then( (res)=> {
-                              if(res.data.code == 1000){
-                                this.$Message.error("修改密码成功");
-                              }else{
-                                this.$Message.error(res.data.msg);
-                              }
-                            },(err)=>{
-                              this.$Message.error(res.data.msg);
-                            })
-                    }
-                    else{
-                      this.$Message.error("修改密码失败");
-                    }
-                })
     }
   }
 }

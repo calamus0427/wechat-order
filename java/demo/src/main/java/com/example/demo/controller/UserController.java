@@ -8,11 +8,13 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 
@@ -82,5 +84,15 @@ public class UserController {
             map = list.get(0);
         return map;
     }
+
+
+    //TODO：添加菜品
+
+    //TODO：修改菜品
+
+
+    //TODO：添加菜品分类
+
+    //TODO：修改菜品分类
 
 }

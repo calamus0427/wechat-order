@@ -32,6 +32,8 @@ import text from '../pages/text.vue'
 
 //食堂人员管理
 import user from '../pages/user/user.vue'
+import userCat from '../pages/user/userCat.vue'
+
 //食堂信息管理
 import info from '../pages/user/settingInfo.vue'
 
@@ -100,6 +102,14 @@ export default new Router({
                     path: '/user',
                     name: '食堂人员管理',
                     component: user,
+                    meta: {
+                        requireAuth: true
+                    }
+                },
+                {
+                    path: '/user_cat',
+                    name: '人员角色管理',
+                    component: userCat,
                     meta: {
                         requireAuth: true
                     }

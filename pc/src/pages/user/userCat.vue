@@ -54,65 +54,28 @@ export default {
                         "width": 80
                     },
                     {
-                        "title": "照片",
-                        "key": "img",
-                        "width": 100,
-                        render: (h, params) => {
-                            return h('img', {
-                                attrs: {
-                                    src: params.row.img,
-                                    style:'max-width: 70px;height: 50px;margin:5px;border-radius: 2px;'
-                                }
-                            },params.row.img)
-                        }
-                    },
-                    {
-                        "title": "姓名",
-                        "key": "title",
-                        "width": 100,
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                           this.showDetail(params.row.name)
-                                        }
-                                    }
-                                }, params.row.title)
-                            ]);
-                        }
-                    },
-                    {
-                        "title": "身份",
-                        "key": "cat",
+                        "title": "分类",
+                        "key": "name",
                         "width": 150
                     },
                     {
-                        "title": "联系电话",
-                        "key": "tel",
+                        "title": "状态",
+                        "key": "status",
                         "width": 120,
-                        "sortable": true
+                        "sortable": true,
+                        render: (h, params) => {
+                            return h('Tag', {
+                                props: {
+                                    color: params.row.status== 1 ? 'green' :'red'
+                                }
+                            },params.row.status == 1 ? '正常' : '禁用')
+                        }
                     },
                     {
-                        "title": "联系邮箱",
-                        "key": "email",
-                        "width": 120,
+                        "title": "描述",
+                        "key": "des",
                         "sortable": true
-                    },
-                    {
-                        "title": "创建时间",
-                        "key": "createTime",
-                        "width": 180,
-                        "sortable": true
-                    },
-                    {
-                        "title": "备注",
-                        "key": "remarks"
-                    },
+                    },             
                     {
                         "title": "操作",
                         "key": "action",
@@ -152,7 +115,7 @@ export default {
         this.getList(this.page.start,this.page.length,this.currentStatus);
     },
     getList(start,size,status){
-      var url = this.$request.getUser;
+      var url = this.$request.getUserCat;
       var param = "";
       var page = start * size ;
         this.$http.get(url)

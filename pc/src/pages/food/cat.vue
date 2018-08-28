@@ -31,34 +31,7 @@ import '../../components/card/overview.js'
 export default {
   data () {
     return {
-      foodList:[
-        {
-
-            "updateDate": new Date().getTime(),
-          "img":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3899577625,4026885041&fm=27&gp=0.jpg',
-            "name": "汤",
-            "id": 3,
-            "createDate": new Date().getTime(),
-            "status": 1
-        },
-        {
-          "updateDate": new Date().getTime(),
-          "img":'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2117009090,2227444365&fm=27&gp=0.jpg',
-            "name": "主食",
-            "id": 2,
-            "createDate": new Date().getTime(),
-            "status": 1
-        },
-        {
-          "updateDate": new Date().getTime(),
-          "img":'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1232354665,3213159192&fm=200&gp=0.jpg',
-            "name": "菜品",
-            "id": 1,
-            "createDate": new Date().getTime(),
-            "status": 1
-        },
-
-      ],
+      foodList:[],
       page:{
         dataTotal:3,
         currentPage:1,
@@ -131,15 +104,13 @@ export default {
       console.log("%c查询数据","color:#E1244E;font-size:14px;",this.search)
     },
     getfoodList(page,size,status){
-      var url = 'http://yapi.demo.qunar.com/mock/16780/get_food_tag' ;
+      var url = this.$request.getFoodCat ;
       var param = "";
         this.$http.get(url)
           .then( (res)=> {
-            if(res.data.code == 200){
-              var foodList = res.data.list
-                this.page.dataTotal = parseInt(foodList.length) ;
-                this.foodList = foodList ;
-            }
+            let foodList = res.data ;
+            this.page.dataTotal = parseInt(foodList.length) ;
+            this.foodList = foodList ;
           },(err)=>{
             console.error('get dataTable failed',err);
           })

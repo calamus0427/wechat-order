@@ -12,6 +12,20 @@ export default {
         return {
         }
     },
+    mounted(){
+      this.text()
+    },
+    methods:{
+      text(){
+        var url = 'http://localhost:8080/user/1' ;
+          this.$http.get(url)
+            .then( (res)=> {
+                console.log("success",res)
+            },(err)=>{
+              console.error('get dataTable failed',err);
+            })
+      },
+    }
 }
 </script>
 <style lang="scss" scoped>

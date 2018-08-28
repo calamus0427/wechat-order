@@ -231,21 +231,20 @@ export default {
         this.getList(this.page.start,this.page.length,this.currentStatus);
     },
     getList(start,size,status){
-      var url = 'http://yapi.demo.qunar.com/mock/16780/get_food' ;
+      var url = this.$request.getFood ;
       var param = "";
       var page = start * size ;
         this.$http.get(url)
           .then( (res)=> {
-              var foodList = res.data.list.filter((item,index,array)=>{
-                  return item.id == 1 ;
-              })[0].food
-              console.log("list",foodList)
+              var foodList = res.data.filter((item,index,array)=>{
+                  return item.cat != 2 ;
+              })
               this.data = foodList ;
               this.page.total = foodList.length;
           },(err)=>{
             console.error('get dataTable failed',err);
           })
-      },
+    },
       //页码切换
       changePage(res){
         this.page.start = res ;

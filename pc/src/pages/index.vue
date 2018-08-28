@@ -15,6 +15,7 @@
                       <MenuItem name="数据统计"><Icon type="stats-bars"></Icon><span>数据统计</span>
                       </MenuItem>
                       <MenuItem name="食堂人员管理"><Icon type="wrench"></Icon><span>食堂人员管理</span></MenuItem>
+                      <MenuItem name="人员角色管理"><Icon type="wrench"></Icon><span>人员角色管理</span></MenuItem>
                       <MenuItem name="食堂信息管理"><Icon type="wrench"></Icon><span>食堂信息管理</span></MenuItem>
                   </Menu>
               </Sider>

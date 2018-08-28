@@ -9,7 +9,7 @@
             <Col span="24">{{data.name}}（id：{{data.id}}）</Col>
         </Row>
         <Row>
-            <Col span="24"><Icon type="clock" />{{new Date(data.createDate).Format("yyyy-MM-dd")}}</Col>
+            <Col span="24"><Icon type="clock" />{{data.update_date}}</Col>
         </Row>
         <Row>
             <Col span="24">备注：{{data.des}}</Col>
