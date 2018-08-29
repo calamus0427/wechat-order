@@ -1,5 +1,5 @@
 <template>
-  <view class="foodList">
+  <view class="foodList" style="background-color:{{list.length > 0 ? 'white' : 'transparent'}}">
     <block wx:if="{{list.length > 0}}">
       <block wx:for="{{list}}" wx:key="index">
           <view class="foodList-des">
@@ -37,7 +37,7 @@
       </block>
     </block>
     <block wx:else>
-      <view class="weui-loadmore weui-loadmore_line">
+      <view class="weui-loadmore weui-loadmore_line nomore">
         <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无推荐</view>
       </view>
     </block>
@@ -142,22 +142,24 @@
         })
       },
       subtract(item){
-console.log("s",item)
+        console.log("s",item)
       },
       plus(item){
-console.log("p",item)
-
+        console.log("p",item)
       }
     }
   }
 </script>
 
 <style type="less" scoped>
+.weui-loadmore__tips_in-line{
+  background-color: transparent  !important ;
+}
 .weui-badge{
   background-color: #FF5577;
 }
 .foodList{
-  background-color: #fff;
+  /* background-color: #fff; */
   z-index:3;
 }
 .foodList-des{

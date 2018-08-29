@@ -74,7 +74,7 @@
 
           <scroll-view scroll-y class="goods-box">
             
-  <view class="foodList _0fdbfaa">
+  <view class="foodList _0fdbfaa" style="background-color:{{$foodList$list.length > 0 ? 'white' : 'transparent'}}">
     <block  wx:if="{{$foodList$list.length > 0}}" class="_0fdbfaa">
       <block wx:for="{{$foodList$list}}" wx:key="index" class="_0fdbfaa">
           <view class="foodList-des _0fdbfaa">
@@ -120,7 +120,7 @@
       </block>
     </block>
     <block  wx:else class="_0fdbfaa">
-      <view class="weui-loadmore weui-loadmore_line _0fdbfaa">
+      <view class="weui-loadmore weui-loadmore_line nomore _0fdbfaa">
         <view class="weui-loadmore__tips weui-loadmore__tips_in-line _0fdbfaa">暂无推荐</view>
       </view>
     </block>
@@ -154,7 +154,6 @@
                     <text class="iconfont icon-webicon310 _dc164a2"/>
                   </text>
                 </view>
-
             </view>
           </view>
         </view>

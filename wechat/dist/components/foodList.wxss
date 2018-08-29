@@ -1,9 +1,12 @@
 @import "./stars.wxss";
+.weui-loadmore__tips_in-line._0fdbfaa {
+  background-color: transparent  !important ;
+}
 .weui-badge._0fdbfaa {
   background-color: #FF5577;
 }
 .foodList._0fdbfaa {
-  background-color: #fff;
+  /* background-color: #fff; */
   z-index: 3;
 }
 .foodList-des._0fdbfaa {
