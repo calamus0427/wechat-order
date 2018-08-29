@@ -145,7 +145,13 @@
         console.log("s",item)
       },
       plus(item){
-        console.log("p",item)
+        console.log("p=>",item);
+        console.log("push=>",this.chooseList);
+
+        this.chooseList.push(item) ;
+        this.$apply();
+        console.log("push=>",this.chooseList);
+
       }
     }
   }

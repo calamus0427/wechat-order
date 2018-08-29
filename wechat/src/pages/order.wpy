@@ -21,7 +21,7 @@
           敬请期待
         </view>
       </view>
-      <Cart :flag.sync="cartShow" :list.sync="catList"></Cart>
+      <Cart :flag.sync="cartShow" :chooseList.sync="catList"></Cart>
     </view>
 </template>
 

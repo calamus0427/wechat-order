@@ -13,10 +13,10 @@
             <view class="foodItem" wx:for="{{list[index].food}}" wx:key="index">
                 <text class="name">{{item.name}}</text>
                 <view class="buybuybuy">
-                  <text class="iconfont icon-renminbi2"></text>{{item.price}}
+                  <text class="iconfont icon-renminbi2"></text>{{item.price * item.sum}}
                   <text>
                     <text class="iconfont icon-jian1"></text>
-                    <text>{{item.num || 1}}</text>
+                    <text>{{item.sum || 1}}</text>
                     <text class="iconfont icon-webicon310"></text>
                   </text>
                 </view>
@@ -27,10 +27,10 @@
       <view class="submit">
         <view @tap="showList()" class="cart-num">
           <text class="sp iconfont icon-gouwuchekong size-xl"></text>
-          <text class="weui-badge badge-top">22</text>
+          <text class="weui-badge badge-top">{{foodSummary}}</text>
         </view>
         <text class="iconfont icon-renminbi2 color-red size-xl"></text>
-        <text class="color-red size-xl">{{cart.price}}</text>
+        <text class="color-red size-xl">{{limis}}</text>
         <text class="sp size-xl color-ccc">|</text>
         <text class="size-s">差<text class="size-s iconfont icon-renminbi2"></text>{{limis}}起送</text>
         <text class="btn" @tap="account()">去结算</text>
@@ -50,44 +50,64 @@
         default: false,
         twoWay: true
         },
-    list: {
-        type: String,
-        default:[{
-        name:"单点菜品",
-        id:'1',
-        food:[{
-          'name':'酸辣鳕鱼',
-          'price':20.5
-        },{
-          'name':'酸辣鳕鱼',
-          'price':20.5
-        },{
-          'name':'酸辣鳕鱼',
-          'price':20.5
-        }]
-      },{
-        name:"套餐菜品",
-        id:'2',
-        food:[{
-          'name':'孕妇套餐',
-          'price':20.5
-        }]
-      }] ,
-        twoWay: true
-    }
+      chooseList:{
+          type: Object,
+          default: [],
+          twoWay: true
+      }
     }
 
     data = {
       cart:{
         price:39
       },
+      // foodSummary:2,
       colorList:['red','green']
     }
 
     computed = {
+       list(){       
+        var data = [{
+          name:"单点菜品",
+          id:'1',
+          food:[{
+            'name':'酸辣鳕鱼',
+            'id':'',
+            'price':20.5,
+            'sum':'3'
+          }]
+        },{
+          name:"套餐菜品",
+          id:'2',
+          food:[{
+            'name':'孕妇套餐',
+            'id':'',
+            'price':20.5,
+            'sum':'1'
+          }]
+        }] 
+        return data ;
+    },
+      foodSummary(){
+        if(this.chooseList){
+          return  this.chooseList.length;
+        }   
+        return  '0';
+      },
       limis(){
-        return this.cart.price
-      }
+        if(this.chooseList){
+          let arr = [] ;
+          this.chooseList.map((item)=>{
+            arr.push(item.price)
+          })
+          arr.reduce((result,item,index,arr) => {
+              return result+item //最终结果为10
+          })
+          console.log(arr)
+          return arr
+        }      
+        return "0"
+      },
     }
 
     methods = {
