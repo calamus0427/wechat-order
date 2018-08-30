@@ -1,21 +1,22 @@
 
     <view class="submit _98dfdb1">
       <view class="submit-content submit-address _98dfdb1">
-        <navigator url="address" class="address _98dfdb1">
+        <view bindtap="chooseAddress" class="address _98dfdb1">
           <view class="_98dfdb1">
             <view class="_98dfdb1">
               <text class="iconfont icon-weizhi _98dfdb1"/>
               {{message.address}}
             </view>
-            <view class="submit-user color-gray _98dfdb1">{{message.name}}  {{message.sex == 'female'?'女士':'先生'}}  {{message.tel}}</view>
+            <view class="submit-user color-gray _98dfdb1">{{message.name}}  {{message.sex == 'female'?'小姐姐':'小哥哥'}}  {{message.tel}}</view>
           </view>
           <view class="iconfont icon-gengduo _98dfdb1"/>
-        </navigator>
+        </view>
         <view class="time _98dfdb1" bindtap="chooseTime">
           <view class="_98dfdb1">
             <text class="iconfont icon-shijianzhongbiao2 _98dfdb1"/>
-            {{choosedTime}}--
-            <text  wx:if="{{choosedTime == '立即送出'}}" class="color-green size-s _98dfdb1">大约1点到</text>
+            {{choosedTime}}
+            <text  wx:if="{{choosedTime == '立即送出'}}" class="color-green size-s _98dfdb1">--大约1小时后到</text>
+            <text  wx:else class="_98dfdb1">送出</text>
           </view>
           <view class="iconfont icon-gengduo _98dfdb1"/>
         </view>
@@ -25,14 +26,14 @@
           <view class="size-l _98dfdb1">{{message.cantee}}</view>
         </view>
         <view class="order-foodList _98dfdb1">
-          <view class="order-foodList-item color-gray size-s _98dfdb1"  wx:for="{{message.foodList}}" wx:key="index">
+          <view class="order-foodList-item color-gray size-s _98dfdb1"  wx:for="{{foodList}}" wx:key="index">
             <text class="_98dfdb1">{{item.name}}</text>
             <view class="_98dfdb1">
-              <text class="iconfont icon-renminbi2 _98dfdb1"/>{{item.price}}
+               {{item.sum}} * <text class="iconfont icon-renminbi2 _98dfdb1"/>{{item.price}}
             </view>
           </view>
         </view>
-        <view class="order-price _98dfdb1">小计：<text class="color-red _98dfdb1"><text class="iconfont icon-renminbi2 _98dfdb1"/>{{message.price}}</text></view>
+        <view class="order-price _98dfdb1">小计：<text class="color-red _98dfdb1"><text class="iconfont icon-renminbi2 _98dfdb1"/>{{sumPrice}}</text></view>
       </view>
       <button bindtap="submit" class="_98dfdb1" data-wpysubmit-a="">确定</button>
       
@@ -46,4 +47,4 @@
   </scroll-view> 
   <text class="submit-btn _ce986dc" bindtap="$Time$submitTime" data-wpysubmittime-a="">确定</text>
 </view>
-</view>
+    </view>

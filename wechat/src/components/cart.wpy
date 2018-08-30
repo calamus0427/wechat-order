@@ -15,11 +15,11 @@
                             <text class="name">{{item.name}}</text>
                             <view class="buybuybuy">
                               <text class="iconfont icon-renminbi2"></text>{{item.price * item.sum}}
-                              <text>
-                                <text class="iconfont icon-jian1"></text>
+                              <view class="inline">
+                                <view class="inline iconfont icon-jian1" @tap="subtract({{index}},{{item}})" ></view>
                                 <text>{{item.sum}}</text>
-                                <text class="iconfont icon-webicon310"></text>
-                              </text>
+                                <view class="inline iconfont icon-webicon310" @tap="plus({{index}},{{item}})"></view>
+                              </view>
                             </view>
                         </view>
                       </block>
@@ -32,11 +32,11 @@
                           <text class="name">{{item.name}}</text>
                           <view class="buybuybuy">
                             <text class="iconfont icon-renminbi2"></text>{{item.price * item.sum}}
-                            <text>
-                              <text class="iconfont icon-jian1"></text>
-                              <text>{{item.sum}}</text>
-                              <text class="iconfont icon-webicon310"></text>
-                            </text>
+                            <view class="inline">
+                                <view class="inline iconfont icon-jian1" @tap="subtract({{index}},{{item}})" ></view>
+                                <text>{{item.sum}}</text>
+                                <view class="inline iconfont icon-webicon310" @tap="plus({{index}},{{item}})"></view>
+                              </view>
                           </view>
                       </view>
                     </block>
@@ -52,7 +52,7 @@
         <text class="iconfont icon-renminbi2 color-red size-xl"></text>
         <text class="color-red size-xl">{{sumPrice}}</text>
         <text class="sp size-xl color-ccc">|</text>
-        <text class="size-s">差<text class="size-s iconfont icon-renminbi2"></text>{{sumPrice}}起送</text>
+        <text class="size-s">差<text class="size-s iconfont icon-renminbi2"></text>{{finite}}起送</text>
         <text class="btn" @tap="account()">去结算</text>
       </view>
     </view>
@@ -91,8 +91,16 @@
       cart:{
         price:39
       },
+      finiteStart:80,
       // foodSummary:2,
-      colorList:['red','green']
+      colorList:['red','green'],
+      message:{
+        address:'西安软件园',
+        name:'兰正龙',
+        sex:'male',
+        tel:'0000000000',
+        cantee:'一食堂'
+      },
     }
 
     computed = {
@@ -119,10 +127,17 @@
         return data ;
     },
       foodSummary(){
-        if(this.chooseList){
-          return  this.chooseList.length;
-        }   
-        return  '0';
+        if(this.chooseList.length != 0 ){
+          let arr = [] ;
+          this.chooseList.map((item)=>{
+            arr.push(item.sum)
+          })
+          let sum = arr.reduce((result,item,index,arr) => {
+              return parseFloat(result)+parseFloat(item) 
+          })
+          return sum
+        }      
+        return "0"
       },
       sumPrice(){
         if(this.chooseList.length != 0 ){
@@ -131,11 +146,14 @@
             arr.push(item.price * item.sum)
           })
           let sum = arr.reduce((result,item,index,arr) => {
-              return parseFloat(result)+parseFloat(item) //最终结果为10
+              return parseFloat(result)+parseFloat(item) 
           })
           return sum
         }      
         return "0"
+      },
+      finite(){
+        return  this.finiteStart - this.sumPrice < 0 ? 0 :this.finiteStart - this.sumPrice ;
       },
     }
 
@@ -149,6 +167,73 @@
       },
       clearCat(){
         this.chooseList = [] ;
+      },
+            //减少商品
+      subtract(index,item){
+        console.log("s",index,item);
+        if(this.chooseList.length != 0){
+          for(let i = 0 ; i < this.chooseList.length ; i ++){
+            if(this.chooseList[i].id == item.id ){
+              if(this.chooseList[i].sum == 1){
+                this.chooseList.splice(i,1);
+              }else{
+                this.chooseList[i].sum -- ;
+              }
+            }
+          }
+        }
+      },
+      //增加商品
+      plus(index,item){
+        console.log("p=>",index,item);
+        if(this.chooseList.length == 0 ){
+          this.chooseList.push(item) ;
+                  this.chooseList.map((item)=>{
+                    item.price = parseFloat(item.price);
+                    item.sum = 1 ;
+                  })
+                  this.$apply();
+        }else{
+          for(let i = 0 ; i < this.chooseList.length ; i ++){
+            if(this.chooseList[i].id === item.id ){
+              this.chooseList[i].sum ++ ;
+            }else{
+              this.chooseList.push(item) ;
+                  this.chooseList.map((item)=>{
+                    item.price = parseFloat(item.price);
+                    item.sum = 1 ;
+                  })
+                  this.$apply();
+            }
+          }
+        }
+        
+        console.log("push=>",this.chooseList);
+
+      },
+      account(){
+        if(this.chooseList.length == 0){
+          wx.showToast({
+            title: '请至少选择一样菜品',
+            icon: 'none',
+            duration: 2000
+          })
+        }else if(this.finite > 0){
+          wx.showToast({
+            title: '购物菜单未满足起送价，请再挑选下单',
+            icon: 'none',
+            duration: 2000
+          })
+        }else{
+          var message = JSON.stringify(this.message)
+          var choosedTime = JSON.stringify("立即送出") ;
+          var sumPrice = JSON.stringify(this.sumPrice) ;
+          var foodList = JSON.stringify(this.chooseList);
+          wx.navigateTo({
+              url: "/pages/submit?message=" + message + "&choosedTime=" + choosedTime +"&sumPrice=" + sumPrice + "&foodList=" + foodList
+          })
+        }
+        
       }
     }
     nLoad() {
@@ -167,6 +252,9 @@
 </script>
 
 <style type="less" scoped>
+.inline{
+  display: inline;
+}
 .cart{
   width:100%;
   font-size:16px;

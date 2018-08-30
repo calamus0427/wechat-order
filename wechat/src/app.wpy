@@ -145,8 +145,8 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/order', 
-      'pages/submit',        
       'pages/address', 
+      'pages/submit',        
       'pages/status'
     ],
     window: {
@@ -154,34 +154,6 @@ export default class extends wepy.app {
       navigationBarBackgroundColor: '#13BA84',
       navigationBarTitleText: '医院订餐服务',
       navigationBarTextStyle: '#fff'
-    },
-    tabBar: {
-      color: '#AEADAD',
-      selectedColor: '#FF5577',
-      backgroundColor: '#fff',
-      borderStyle: 'black',
-        "list": [{
-        pagePath: 'pages/order',
-        selectedIconPath: './images/tabbars/active.jpg',
-        iconPath: './images/tabbars/icon-mark@2x.png',
-        text: '订餐服务'
-      },{
-        pagePath: 'pages/address',
-        selectedIconPath: './images/tabbars/active.jpg',
-        iconPath: './images/tabbars/icon-shelf@2x.png',
-        text: '新增收货地址'
-      }, {
-        pagePath: 'pages/status',
-        selectedIconPath: './images/tabbars/active.jpg',
-        iconPath: './images/tabbars/icon-smile@2x.png',
-        text: '订餐成功'
-      },{
-        pagePath: 'pages/submit',
-        selectedIconPath: './images/tabbars/active.jpg',
-        iconPath: './images/tabbars/icon-smile@2x.png',
-        text: '提交订单'
-      }
-        ]
     }
   }
 

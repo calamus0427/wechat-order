@@ -2,21 +2,22 @@
 <template>
     <view class="submit">
       <view class="submit-content submit-address">
-        <navigator url="address" class="address">
+        <view @tap="chooseAddress" class="address">
           <view>
             <view>
               <text class="iconfont icon-weizhi"></text>
               {{message.address}}
             </view>
-            <view class="submit-user color-gray">{{message.name}}  {{message.sex == 'female'?'女士':'先生'}}  {{message.tel}}</view>
+            <view class="submit-user color-gray">{{message.name}}  {{message.sex == 'female'?'小姐姐':'小哥哥'}}  {{message.tel}}</view>
           </view>
           <view class="iconfont icon-gengduo"></view>
-        </navigator>
+        </view>
         <view class="time" @tap="chooseTime">
           <view>
             <text class="iconfont icon-shijianzhongbiao2"></text>
-            {{choosedTime}}--
-            <text wx:if="{{choosedTime == '立即送出'}}" class="color-green size-s">大约1点到</text>
+            {{choosedTime}}
+            <text wx:if="{{choosedTime == '立即送出'}}" class="color-green size-s">--大约1小时后到</text>
+            <text wx:else>送出</text>
           </view>
           <view class="iconfont icon-gengduo"></view>
         </view>
@@ -26,18 +27,17 @@
           <view class="size-l">{{message.cantee}}</view>
         </view>
         <view class="order-foodList">
-          <view  class="order-foodList-item color-gray size-s" wx:for="{{message.foodList}}" wx:key="index">
+          <view  class="order-foodList-item color-gray size-s" wx:for="{{foodList}}" wx:key="index">
             <text>{{item.name}}</text>
             <view>
-              <text class="iconfont icon-renminbi2"></text>{{item.price}}
+               {{item.sum}} * <text class="iconfont icon-renminbi2"></text>{{item.price}}
             </view>
           </view>
         </view>
-        <view class="order-price">小计：<text class="color-red"><text class="iconfont icon-renminbi2"></text>{{message.price}}</text></view>
+        <view class="order-price">小计：<text class="color-red"><text class="iconfont icon-renminbi2"></text>{{sumPrice}}</text></view>
       </view>
       <button @tap="submit()">确定</button>
       <Time current="currentTime" :flag.sync="flag" :currentTime.sync="choosedTime"></Time>
-</view>
     </view>
 </template>
 
@@ -64,17 +64,15 @@
         sex:'male',
         tel:'0000000000',
         time:'立即送出',
-        cantee:'一食堂',
-        foodList:[{name:'红烧茄子',price:'7'},
-                  {name:'红烧茄子',price:'7'}],
-        price:'100'
+        cantee:'一食堂'
       },
+      foodList:[],
+      sumPrice:'',
       choosedTime:'立即送出',
       flag:false
     }
 
     computed = {
-
     }
 
     methods = {
@@ -85,11 +83,18 @@
 
     }
 
-    onLoad() {
+    onLoad(options) {
+        this.message = JSON.parse(options.message);
+        this.foodList = JSON.parse(options.foodList);
+        this.sumPrice = JSON.parse(options.sumPrice);
+        this.choosedTime = JSON.parse(options.choosedTime)
+        console.log("info",options);
     }
+
     onReady() {
       this.initPage()
     }
+
     initPage(){
 
     }
@@ -97,19 +102,24 @@
       console.log("选时间")
       this.flag = true ;
     }
-    submit(){
-      console.log("提交订单")
+    chooseAddress(){
+      var message = JSON.stringify(this.message);
+      var choosedTime = JSON.stringify(this.choosedTime) ;
+      var foodList = JSON.stringify(this.foodList) ;
+      var sumPrice = JSON.stringify(this.sumPrice) ;
       wx.navigateTo({
-        url: 'status',
-        success: function(res){
-          // success
-        },
-        fail: function() {
-          // fail
-        },
-        complete: function() {
-          // complete
-        }
+          url: "/pages/address?message=" + message + "&choosedTime=" + choosedTime +"&sumPrice=" + sumPrice + "&foodList=" + foodList
+      })
+    }
+    submit(){
+      var message = JSON.stringify(this.message);
+      var choosedTime = JSON.stringify(this.choosedTime) ;
+      var foodList = JSON.stringify(this.foodList) ;
+      var sumPrice = JSON.stringify(this.sumPrice) ;
+
+      console.log("submit",message)
+      wx.navigateTo({
+          url: "/pages/status?message=" + message + "&choosedTime=" + choosedTime +"&sumPrice=" + sumPrice + "&foodList=" + foodList
       })
     }
   }

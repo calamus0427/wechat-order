@@ -149,11 +149,11 @@
                             <text class="name _dc164a2">{{item.name}}</text>
                             <view class="buybuybuy _dc164a2">
                               <text class="iconfont icon-renminbi2 _dc164a2"/>{{item.price * item.sum}}
-                              <text class="_dc164a2">
-                                <text class="iconfont icon-jian1 _dc164a2"/>
+                              <view class="inline _dc164a2">
+                                <view class="inline iconfont icon-jian1 _dc164a2" bindtap="$Cart$subtract" data-wpysubtract-a="{{index}}" data-wpysubtract-b="{{item}}"/>
                                 <text class="_dc164a2">{{item.sum}}</text>
-                                <text class="iconfont icon-webicon310 _dc164a2"/>
-                              </text>
+                                <view class="inline iconfont icon-webicon310 _dc164a2" bindtap="$Cart$plus" data-wpyplus-a="{{index}}" data-wpyplus-b="{{item}}"/>
+                              </view>
                             </view>
                         </view>
                       </block>
@@ -166,11 +166,11 @@
                           <text class="name _dc164a2">{{item.name}}</text>
                           <view class="buybuybuy _dc164a2">
                             <text class="iconfont icon-renminbi2 _dc164a2"/>{{item.price * item.sum}}
-                            <text class="_dc164a2">
-                              <text class="iconfont icon-jian1 _dc164a2"/>
-                              <text class="_dc164a2">{{item.sum}}</text>
-                              <text class="iconfont icon-webicon310 _dc164a2"/>
-                            </text>
+                            <view class="inline _dc164a2">
+                                <view class="inline iconfont icon-jian1 _dc164a2" bindtap="$Cart$subtract" data-wpysubtract-a="{{index}}" data-wpysubtract-b="{{item}}"/>
+                                <text class="_dc164a2">{{item.sum}}</text>
+                                <view class="inline iconfont icon-webicon310 _dc164a2" bindtap="$Cart$plus" data-wpyplus-a="{{index}}" data-wpyplus-b="{{item}}"/>
+                              </view>
                           </view>
                       </view>
                     </block>
@@ -186,7 +186,7 @@
         <text class="iconfont icon-renminbi2 color-red size-xl _dc164a2"/>
         <text class="color-red size-xl _dc164a2">{{$Cart$sumPrice}}</text>
         <text class="sp size-xl color-ccc _dc164a2">|</text>
-        <text class="size-s _dc164a2">差<text class="size-s iconfont icon-renminbi2 _dc164a2"/>{{$Cart$sumPrice}}起送</text>
+        <text class="size-s _dc164a2">差<text class="size-s iconfont icon-renminbi2 _dc164a2"/>{{$Cart$finite}}起送</text>
         <text class="btn _dc164a2" bindtap="$Cart$account" data-wpyaccount-a="">去结算</text>
       </view>
     </view>

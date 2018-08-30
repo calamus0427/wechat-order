@@ -31,11 +31,21 @@
     }
 
     data = {
-      list:['立即送出','19:00','20:00','21:00'],
     }
 
     computed = {
-
+      list(){
+        let defaultTime = [];
+          defaultTime[0] = '立即送出';
+          for(let i = 1 ; i <=3 ; i ++){
+            if(new Date().getHours()+i >= 24){
+              defaultTime[i] = '次日' + (new Date().getHours()+i -16) + ':00';
+            }else{
+              defaultTime[i] = new Date().getHours()+i + ':00';
+            }
+          }
+        return defaultTime;
+      }
     }
 
     methods = {
@@ -47,6 +57,10 @@
       submitTime(){
         console.log(this.currentTime) 
         this.flag = false
+      },
+      timeFormate(d){
+        var time=d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds(); 
+        return time;
       }
     };
 

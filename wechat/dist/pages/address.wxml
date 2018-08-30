@@ -4,30 +4,30 @@
             <view class="weui-cell ">
                 <view class="weui-cell__bd">联系人：</view>
                 <view class="weui-cell__rt">
-                    <input placeholder="请填写收货地址"/>
+                    <input placeholder="请填写收货地址" value="{{message.name}}" bindinput="userNameInput"/>
                 </view>
             </view>
              <view class="weui-cell ">
                 <view class="weui-cell__bd">性别：</view>
                 <view class="weui-cell__rt">
-                  <radio-group class="radio-group" bindchange="radioChange">
+                  <radio-group class="radio-group" bindchange="radioChange" value="{{message.sex}}">
                     <label class="radio">
-                      <radio value="male" checked/>先生
-                       <radio value="female"/>女士
+                      <radio value="male" checked="{{message.sex == 'male'}} "/>小哥哥
+                      <radio value="female" checked="{{message.sex  == 'female'}}"/>小姐姐
                     </label>
                   </radio-group>
                 </view>
             </view>
-            <view class="weui-cell ">
+            <view class="weui-cell">
                 <view class="weui-cell__bd">手机号：</view>
                 <view class="weui-cell__rt">
-                    <input placeholder="请填写收货地址"/>
+                    <input placeholder="请填写手机号" value="{{message.tel}}" bindinput="userPhoneInput"/>
                 </view>
             </view>
             <view class="weui-cell">
                 <view class="weui-cell__bd">收货地址：</view>
                 <view class="weui-cell__rt">
-                    <input placeholder="请填写收货地址"/>
+                    <input placeholder="请填写收货地址" value="{{message.address}}" bindinput="userAddressInput"/>
                 </view>
             </view>
         </view>

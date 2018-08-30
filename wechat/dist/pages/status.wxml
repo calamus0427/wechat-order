@@ -7,12 +7,12 @@
         <view class="content _7bfdeea">
           <view class="content-item _7bfdeea">
             <text class="content-item-name _7bfdeea">付款金额</text>
-            <text class="content-item-detail color-red _7bfdeea"><text class="iconfont icon-renminbi2 _7bfdeea"/>{{message.price}}</text>
+            <text class="content-item-detail color-red _7bfdeea"><text class="iconfont icon-renminbi2 _7bfdeea"/>{{sumPrice}}</text>
           </view>
           <view class="hr _7bfdeea"/>
            <view class="content-item _7bfdeea">
             <text class="content-item-name _7bfdeea">收货人</text>
-            <text class="content-item-detail _7bfdeea">{{message.user}}</text>
+            <text class="content-item-detail _7bfdeea">{{message.name}}</text>
           </view>
            <view class="content-item _7bfdeea">
             <text class="content-item-name _7bfdeea">送货地址</text>
@@ -20,7 +20,7 @@
           </view>
            <view class="content-item _7bfdeea">
             <text class="content-item-name _7bfdeea">预计送餐时间</text>
-            <text class="content-item-detail _7bfdeea">{{message.time}}</text>
+            <text class="content-item-detail _7bfdeea">{{time}}</text>
           </view>
         </view>
         <button class="_7bfdeea">确定</button>
