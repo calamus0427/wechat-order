@@ -1,28 +1,4 @@
 <template>
-<block>
-<block wx:if="{{type=='tag'}}">
-  <view class="weui-search-bar" @tap="search">
-    <view class="weui-search-bar__form">
-      <view class="weui-search-bar__box">
-        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-        <input type="text" class="weui-search-bar__input" placeholder="{{placeholder}}" value="{{inputVal}}" focus="{{inputShowed}}" @input="inputTyping" @blur="showInput(false)" confirm-type="search" @confirm="search"/>
-        <block wx:if="{{inputVal.length > 0}}">
-          <view class="weui-icon-clear" @tap="clearInput">
-            <icon type="clear" size="14"></icon>
-          </view>
-        </block>
-      </view>
-      <label class="weui-search-bar__label" hidden="{{inputShowed}}" @tap="showInput(true)">
-        <icon class="weui-icon-search" type="search" size="14"></icon>
-        <view class="weui-search-bar__text">{{computedPlaceholder}}</view>
-      </label>
-    </view>
-    <view class="weui-search-bar__cancel-btn" >
-      <image style="width:20.7px;height:20px;padding-top:4px" src="../images/icon/search.png" mode="aspectFill"/>
-    </view>
-  </view>
-</block>
-<block wx:if="{{type=='result'}}">
   <view class="weui-search-bar">
     <view class="weui-search-bar__form">
       <view class="weui-search-bar__box">
@@ -43,8 +19,6 @@
       <image style="width:20.7px;height:20px;padding-top:4px" src="../images/icon/search.png" mode="aspectFill"/>
     </view>
   </view>
-</block>
-</block>
 
 
 </template>
@@ -60,11 +34,8 @@
       },
       inputVal:{
         type: String,
-        default:''
-      },
-      type:{
-        type:String,
-        default:'tag'
+        default:'',
+        twoWay: true
       }
     }
 
@@ -84,20 +55,18 @@
         this.$apply()
       },
       search () {
-            wx.navigateTo({
-              url: '/pages/searchTag?inputVal='+this.inputVal
-            })
+
       },
       searchResult () {
-            wx.navigateTo({
-              url: '/pages/search?inputVal='+this.inputVal
-            })
+            console.log(this.inputVal);
+            this.$emit('search', this.inputVal);
       },
       clearInput (cb) {
         setTimeout(() => {
           this.inputVal = ''
           this.$apply()
         })
+        this.$emit('clear', this.inputVal);
       },
       inputTyping (e) {
         this.inputVal = e.detail.value

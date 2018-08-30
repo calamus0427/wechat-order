@@ -4,7 +4,7 @@
 <template>
     <view>
       <view class="cart-control" @tap="closeList()">
-        <SearchBar type="tag"  :placeholder="searchText"></SearchBar>
+        <SearchBar type="tag"  :placeholder="searchText" @search.user="searchFood" @clear.user="clearSearch"></SearchBar>
         <view class="sort">
             <view @tap="sortStar" class="sort-item">好评优先 <text class="iconfont icon-dianzan"></text></view>
             <view @tap="sortPrice" class="sort-item">价格优先 <text class="iconfont icon-qian2"></text></view>
@@ -56,7 +56,7 @@
     data = {
       init:true,
       cartShow:false,
-      searchText:'请输入商品名称或分类',
+      searchText:'请输入商品名称',
       categories: {},
       categoriesList:[],
       foodList:[],
@@ -77,6 +77,20 @@
         console.log(selectedId)
         this.selectedId = selectedId;
         this.getFoodList();
+      },
+      searchFood(res){
+        console.log("search",res);
+        if(res){
+          this.foodList = this.foodList.filter((item)=>{
+            return item.name == res;
+          });
+        }else{
+          console.log("11111")
+          this.getFoodList()
+        }     
+      },
+      clearSearch(res){
+          this.getFoodList()
       },
       closeList(){
         this.cartShow = false;

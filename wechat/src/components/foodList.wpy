@@ -7,7 +7,7 @@
               <image src="{{item.img}}" mode="aspectFill"/>
             </view>
             <view class="foodList-item-content">
-              <text class="foodList-item-name">{{item.name}}--{{item.star}}</text>
+              <text class="foodList-item-name">{{item.name}}</text>
               <view class="stars">
                 <image src="{{item.star >= 1 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
                 <image src="{{item.star >= 2 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
