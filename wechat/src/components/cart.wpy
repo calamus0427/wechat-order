@@ -95,7 +95,7 @@
         return  '0';
       },
       limis(){
-        if(this.chooseList){
+        if(this.chooseList.length != 0 ){
           let arr = [] ;
           this.chooseList.map((item)=>{
             arr.push(item.price)
