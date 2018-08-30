@@ -101,9 +101,9 @@
               <text class="iconfont icon-renminbi2 _0fdbfaa"/>{{item.price}}
             </text>
             <view class="cart inline _0fdbfaa">
-              <view bindtap="$foodList$subtract" class="inline iconfont icon-jian1 _0fdbfaa" data-wpysubtract-a="{{item}}"/>
+              <view bindtap="$foodList$subtract" class="inline iconfont icon-jian1 _0fdbfaa" data-wpysubtract-a="{{index}}" data-wpysubtract-b="{{item}}"/>
               <view class="inline _0fdbfaa">{{item.num || 1}}</view>
-              <view bindtap="$foodList$plus" class="inline iconfont icon-webicon310 _0fdbfaa" data-wpyplus-a="{{item}}"/>
+              <view bindtap="$foodList$plus" class="inline iconfont icon-webicon310 _0fdbfaa" data-wpyplus-a="{{index}}" data-wpyplus-b="{{item}}"/>
             </view>
           </view>
       </block>
@@ -137,36 +137,56 @@
     <!-- <view bindtap="closeList()" class="cart-control">
     </view> -->
     <view class="cart-content _dc164a2">
-            <block  wx:if="{{$Cart$flag}}" class="_dc164a2">
-        <view wx:if="{{$Cart$list}}" class="foodList _dc164a2">
-          <view class="cat danddian _dc164a2" wx:for="{{$Cart$list}}" wx:key="index">
-            <view class="title bg-ddd _dc164a2" style="border-left:solid 3px {{$Cart$colorList[index]}}">
-              {{item.name}}
-              <text bindtap="$Cart$clearCat" class="clearCart _dc164a2" wx:if="{{index == 0}}" data-wpyclearcat-a=""><text class="iconfont icon-shanchu _dc164a2"/>清空购物车</text>
-            </view>
-            <view class="foodItem _dc164a2" wx:for="{{$Cart$list[index].food}}" wx:key="index">
-                <text class="name _dc164a2">{{item.name}}</text>
-                <view class="buybuybuy _dc164a2">
-                  <text class="iconfont icon-renminbi2 _dc164a2"/>{{item.price * item.sum}}
-                  <text class="_dc164a2">
-                    <text class="iconfont icon-jian1 _dc164a2"/>
-                    <text class="_dc164a2">{{item.sum || 1}}</text>
-                    <text class="iconfont icon-webicon310 _dc164a2"/>
-                  </text>
+            <block  wx:if="{{$Cart$flag &&  $Cart$chooseList.length !=0 }}" class="_dc164a2">
+              <view class="foodList _dc164a2">
+                <view class="cat danddian _dc164a2">        
+                    <view class="title bg-ddd _dc164a2" style="border-left:solid 3px {{$Cart$colorList[0]}}">
+                      单品
+                    <text bindtap="$Cart$clearCat" class="clearCart _dc164a2" data-wpyclearcat-a=""><text class="iconfont icon-shanchu _dc164a2"/>清空购物车</text>
+                    </view>
+                     <block wx:for="{{$Cart$chooseList}}" wx:key="index" wx:if="{{item.cat !=2}}" class="_dc164a2">
+                        <view class="foodItem _dc164a2">
+                            <text class="name _dc164a2">{{item.name}}</text>
+                            <view class="buybuybuy _dc164a2">
+                              <text class="iconfont icon-renminbi2 _dc164a2"/>{{item.price * item.sum}}
+                              <text class="_dc164a2">
+                                <text class="iconfont icon-jian1 _dc164a2"/>
+                                <text class="_dc164a2">{{item.sum}}</text>
+                                <text class="iconfont icon-webicon310 _dc164a2"/>
+                              </text>
+                            </view>
+                        </view>
+                      </block>
+                  
+                    <view class="title bg-ddd _dc164a2" style="border-left:solid 3px {{$Cart$colorList[1]}}">
+                      套餐
+                    </view>
+                    <block wx:for="{{$Cart$chooseList}}" wx:key="index" wx:if="{{item.cat == 2}}" class="_dc164a2">
+                      <view class="foodItem _dc164a2">
+                          <text class="name _dc164a2">{{item.name}}</text>
+                          <view class="buybuybuy _dc164a2">
+                            <text class="iconfont icon-renminbi2 _dc164a2"/>{{item.price * item.sum}}
+                            <text class="_dc164a2">
+                              <text class="iconfont icon-jian1 _dc164a2"/>
+                              <text class="_dc164a2">{{item.sum}}</text>
+                              <text class="iconfont icon-webicon310 _dc164a2"/>
+                            </text>
+                          </view>
+                      </view>
+                    </block>
                 </view>
-            </view>
-          </view>
-        </view>
-      </block>
+              </view>
+            </block>
+
       <view class="submit _dc164a2">
         <view bindtap="$Cart$showList" class="cart-num _dc164a2" data-wpyshowlist-a="">
           <text class="sp iconfont icon-gouwuchekong size-xl _dc164a2"/>
           <text class="weui-badge badge-top _dc164a2">{{$Cart$foodSummary}}</text>
         </view>
         <text class="iconfont icon-renminbi2 color-red size-xl _dc164a2"/>
-        <text class="color-red size-xl _dc164a2">{{$Cart$limis}}</text>
+        <text class="color-red size-xl _dc164a2">{{$Cart$sumPrice}}</text>
         <text class="sp size-xl color-ccc _dc164a2">|</text>
-        <text class="size-s _dc164a2">差<text class="size-s iconfont icon-renminbi2 _dc164a2"/>{{$Cart$limis}}起送</text>
+        <text class="size-s _dc164a2">差<text class="size-s iconfont icon-renminbi2 _dc164a2"/>{{$Cart$sumPrice}}起送</text>
         <text class="btn _dc164a2" bindtap="$Cart$account" data-wpyaccount-a="">去结算</text>
       </view>
     </view>

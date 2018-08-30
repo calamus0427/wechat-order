@@ -13,7 +13,7 @@
         <view wx:if="{{init}}" class="main-box row">
           <SideTab :tab.sync="categories"  @change.user="switchTab"/>
           <scroll-view scroll-y class="goods-box">
-            <foodList  :list.sync="foodList" :chooseList.sync="catList"></foodList>
+            <foodList  :list.sync="foodList" :chooseList.sync="choosedList" :catList.sync="categoriesList" :dealList.sync="dealList"></foodList>
           </scroll-view>
         </view>
 
@@ -21,7 +21,7 @@
           敬请期待
         </view>
       </view>
-      <Cart :flag.sync="cartShow" :chooseList.sync="catList"></Cart>
+      <Cart :flag.sync="cartShow" :chooseList.sync="choosedList" :catList.sync="categoriesList"  :dealList.sync="dealList"></Cart>
     </view>
 </template>
 
@@ -56,11 +56,13 @@
     data = {
       init:true,
       cartShow:false,
-      searchText:'请输入商家或者商品名称',
+      searchText:'请输入商品名称或分类',
       categories: {},
+      categoriesList:[],
       foodList:[],
       selectedId:1,
-      catList:[] //购物车选中的菜品
+      choosedList:[], //购物车选中的菜品
+      dealList:[] //deal cart data
     }
 
     computed = {
@@ -111,6 +113,7 @@
       wepy.request(url).then((res) => {
         console.log("11",res)
         this.categories.list = res.data;
+        this.categoriesList = res.data ;
         this.categories.selectedId = this.selectedId;
         this.$apply();
       })

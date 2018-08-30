@@ -18,9 +18,9 @@
               <text class="iconfont icon-renminbi2"></text>{{item.price}}
             </text>
             <view class="cart inline">
-              <view   @tap="subtract({{item}})"  class="inline iconfont icon-jian1"></view>
+              <view   @tap="subtract({{index}},{{item}})"  class="inline iconfont icon-jian1"></view>
               <view class="inline">{{item.num || 1}}</view>
-              <view  @tap="plus({{item}})" class="inline iconfont icon-webicon310"></view>
+              <view  @tap="plus({{index}},{{item}})" class="inline iconfont icon-webicon310"></view>
             </view>
           </view>
       </block>
@@ -88,6 +88,16 @@
       type: {
         type: String,
         default: 'list'
+      },
+      catList:{
+        type: Object,
+        default: [],
+        twoWay: true
+      },
+      dealList:{
+        type: Object,
+        default: [],
+        twoWay: true
       }
     }
 
@@ -104,52 +114,46 @@
     }
 
     methods = {
-      toStar(book, index) {
-        // 将要发生的收藏动作
-        const isCollect = Boolean(book && +book.collected)
-        const newType = isCollect ? 0 : 1
-        const newTypeText = newType ? '添加' : '取消'
-        // 收藏本书
-        this.$post({
-          url: '',
-          data: {
-            book_ids: [book.id],
-            type: newType
-          }
-        }, {
-          success: ({code, data}) => {
-            // 重置本书收藏状态
-            if (this.isObject(this.list[index])) {
-              this.list[index].collected = newType
+      //减少商品
+      subtract(index,item){
+        console.log("s",index,item);
+        if(this.chooseList.length != 0){
+          for(let i = 0 ; i < this.chooseList.length ; i ++){
+            if(this.chooseList[i].id == item.id ){
+              if(this.chooseList[i].sum == 1){
+                this.chooseList.splice(i,1);
+              }else{
+                this.chooseList[i].sum -- ;
+              }
             }
-            wx.showToast({
-              title: `${newTypeText}收藏！`,
-              icon: 'success',
-              duration: 1000
-            })
-          },
-          fail: ({code, data}) => {
-            // =============================== 调试代码 ===============================
-            // this.book.collected = newType
-            // =============================== 调试代码 ===============================
-            wx.showToast({
-              title: `${newTypeText}收藏失败！`,
-              icon: 'loading',
-              image: '/images/icon/icon-cancel.png',
-              duration: 1000
-            })
           }
-        })
+        }
       },
-      subtract(item){
-        console.log("s",item)
-      },
-      plus(item){
-        console.log("p=>",item);
-        console.log("push=>",this.chooseList);
-
-        this.chooseList.push(item) ;
-        this.$apply();
+      //增加商品
+      plus(index,item){
+        console.log("p=>",index,item);
+        if(this.chooseList.length == 0 ){
+          this.chooseList.push(item) ;
+                  this.chooseList.map((item)=>{
+                    item.price = parseFloat(item.price);
+                    item.sum = 1 ;
+                  })
+                  this.$apply();
+        }else{
+          for(let i = 0 ; i < this.chooseList.length ; i ++){
+            if(this.chooseList[i].id === item.id ){
+              this.chooseList[i].sum ++ ;
+            }else{
+              this.chooseList.push(item) ;
+                  this.chooseList.map((item)=>{
+                    item.price = parseFloat(item.price);
+                    item.sum = 1 ;
+                  })
+                  this.$apply();
+            }
+          }
+        }
+        
         console.log("push=>",this.chooseList);
 
       }
