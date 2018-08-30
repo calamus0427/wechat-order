@@ -6,8 +6,8 @@
       <view class="cart-control" @tap="closeList()">
         <SearchBar type="tag"  :placeholder="searchText"></SearchBar>
         <view class="sort">
-            <view class="sort-item">好评优先 <text class="iconfont icon-dianzan"></text></view>
-            <view class="sort-item">价格优先 <text class="iconfont icon-qian2"></text></view>
+            <view @tap="sortStar" class="sort-item">好评优先 <text class="iconfont icon-dianzan"></text></view>
+            <view @tap="sortPrice" class="sort-item">价格优先 <text class="iconfont icon-qian2"></text></view>
         </view>
       <!--主内容区域-->
         <view wx:if="{{init}}" class="main-box row">
@@ -62,7 +62,9 @@
       foodList:[],
       selectedId:1,
       choosedList:[], //购物车选中的菜品
-      dealList:[] //deal cart data
+      dealList:[], //deal cart data
+      currentPriceSort:1,
+      currentStarSort:1
     }
 
     computed = {
@@ -79,7 +81,23 @@
       closeList(){
         this.cartShow = false;
       },
+      sortPrice(){
+        let flag = this.currentPriceSort ;
+        console.log("1",this.currentPriceSort)
+        this.foodList = this.foodList.sort((a,b)=>{
+          return flag == 1 ? a.price > b.price : a.price < b.price;
+        });
+        this.currentPriceSort = (flag == 1) ? 2 : 1 ;
+        console.log("2",this.currentPriceSort)
 
+      },
+      sortStar(){
+        let flag = this.currentStarSort ;
+        this.foodList = this.foodList.sort((a,b)=>{
+          return flag == 1 ? a.star < b.star :a.star > b.star;
+        });
+        this.currentStarSort = flag == 1 ? 2 : 1 ;
+      }
     }
 
     events = {

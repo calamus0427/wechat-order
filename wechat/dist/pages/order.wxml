@@ -52,8 +52,8 @@
 
 
         <view class="sort">
-            <view class="sort-item">好评优先 <text class="iconfont icon-dianzan"/></view>
-            <view class="sort-item">价格优先 <text class="iconfont icon-qian2"/></view>
+            <view bindtap="sortStar" class="sort-item">好评优先 <text class="iconfont icon-dianzan"/></view>
+            <view bindtap="sortPrice" class="sort-item">价格优先 <text class="iconfont icon-qian2"/></view>
         </view>
       <!--主内容区域-->
         <view  wx:if="{{init}}" class="main-box row">
@@ -82,16 +82,16 @@
               <image src="{{item.img}}" mode="aspectFill" class="_0fdbfaa"/>
             </view>
             <view class="foodList-item-content _0fdbfaa">
-              <text class="foodList-item-name _0fdbfaa">{{item.name}}</text>
-              
-  <view class="stars _1bf4c96 _0fdbfaa">
-    <image src="{{$foodList$Stars$star >= 1 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _1bf4c96" mode="aspectFit"/>
-    <image src="{{$foodList$Stars$star >= 2 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _1bf4c96" mode="aspectFit"/>
-    <image src="{{$foodList$Stars$star >= 3 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _1bf4c96" mode="aspectFit"/>
-    <image src="{{$foodList$Stars$star >= 4 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _1bf4c96" mode="aspectFit"/>
-    <image src="{{$foodList$Stars$star >= 5 ? $foodList$Stars$icon_star_active:$foodList$Stars$icon_star}}" class="staricon _1bf4c96" mode="aspectFit"/>
-    <text class="_1bf4c96">   {{$foodList$Stars$star}}.0分</text>
-  </view>
+              <text class="foodList-item-name _0fdbfaa">{{item.name}}--{{item.star}}</text>
+              <view class="stars _0fdbfaa">
+                <image src="{{item.star >= 1 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
+                <image src="{{item.star >= 2 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
+                <image src="{{item.star >= 3 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
+                <image src="{{item.star >= 4 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
+                <image src="{{item.star >= 5 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
+                <text class="_0fdbfaa">   {{item.star}}.0分</text>
+              </view>
+
               <text class="_0fdbfaa">月销量：{{item.shoped}}笔</text>
             </view>
           </view>

@@ -7,8 +7,16 @@
               <image src="{{item.img}}" mode="aspectFill"/>
             </view>
             <view class="foodList-item-content">
-              <text class="foodList-item-name">{{item.name}}</text>
-              <Stars :star="item.star"></Stars>
+              <text class="foodList-item-name">{{item.name}}--{{item.star}}</text>
+              <view class="stars">
+                <image src="{{item.star >= 1 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+                <image src="{{item.star >= 2 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+                <image src="{{item.star >= 3 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+                <image src="{{item.star >= 4 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+                <image src="{{item.star >= 5 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+                <text>   {{item.star}}.0分</text>
+              </view>
+
               <text>月销量：{{item.shoped}}笔</text>
             </view>
           </view>
@@ -103,8 +111,11 @@
 
     data = {
       ceshi:'111',
+      star1:1,
       icon_eye: '/images/icon/addBefore.jpg',
-      icon_eye_active: '/images/icon/addAfter.jpg'
+      icon_eye_active: '/images/icon/addAfter.jpg',
+      icon_star: '/images/icon/icon-star@2x.png',
+      icon_star_active: '/images/icon/icon-star-active@2x.png'
     }
 
     computed = {
@@ -162,6 +173,13 @@
 </script>
 
 <style type="less" scoped>
+.staricon{
+  width:10px;
+  height:10px;
+}
+text{
+  font-size:14px;
+}
 .weui-loadmore__tips_in-line{
   background-color: transparent  !important ;
 }

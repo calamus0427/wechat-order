@@ -1,4 +1,11 @@
 @import "./stars.wxss";
+.staricon._0fdbfaa {
+  width: 10px;
+  height: 10px;
+}
+text._0fdbfaa {
+  font-size: 14px;
+}
 .weui-loadmore__tips_in-line._0fdbfaa {
   background-color: transparent  !important ;
 }
