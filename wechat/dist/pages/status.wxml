@@ -23,5 +23,5 @@
             <text class="content-item-detail _7bfdeea">{{time}}</text>
           </view>
         </view>
-        <button class="_7bfdeea">确定</button>
+        <button bindtap="back" class="_7bfdeea">确定</button>
     </view>

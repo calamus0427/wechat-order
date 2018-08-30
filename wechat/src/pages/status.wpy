@@ -24,7 +24,7 @@
             <text class="content-item-detail">{{time}}</text>
           </view>
         </view>
-        <button>确定</button>
+        <button @tap="back">确定</button>
     </view>
 </template>
 
@@ -65,6 +65,12 @@
       this.message = JSON.parse(options.message);
       this.time = JSON.parse(options.choosedTime);
       this.sumPrice = JSON.parse(options.sumPrice);
+    }
+
+    back(){
+      wx.navigateTo({
+          url: "/pages/order"
+      })
     }
   }
 </script>
