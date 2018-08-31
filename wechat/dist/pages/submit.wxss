@@ -20,9 +20,11 @@ button._98dfdb1 {
   padding: 15px 10px;
 }
 .address._98dfdb1,
-.order-name._98dfdb1,
-.order-foodList._98dfdb1 {
+.order-name._98dfdb1 {
   border-bottom: 1px solid #ccc;
+}
+.order-foodList._98dfdb1 {
+  border-bottom: 1px dashed #ccc;
 }
 .submit-user._98dfdb1 {
   padding-left: 18px;
@@ -43,4 +45,25 @@ button._98dfdb1 {
 .order-price._98dfdb1 {
   padding: 10px;
   text-align: right;
+  position: relative;
+}
+.order-price._98dfdb1::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #efeff4;
+  top: -8px;
+  left: -8px;
+}
+.order-price._98dfdb1::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #efeff4;
+  top: -8px;
+  right: -8px;
 }

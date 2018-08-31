@@ -22,6 +22,8 @@
           <view class="iconfont icon-gengduo"></view>
         </view>
       </view>
+
+      <!-- 订单信息 -->
       <view class="submit-content submit-order">
         <view class="order-name">
           <view class="size-l">{{hospital.name}}</view>
@@ -36,6 +38,8 @@
         </view>
         <view class="order-price">小计：<text class="color-red"><text class="iconfont icon-renminbi2"></text>{{sumPrice}}</text></view>
       </view>
+
+      
       <button @tap="submit()">确定</button>
       <Time current="currentTime" :flag.sync="flag" :currentTime.sync="choosedTime"></Time>
     </view>
@@ -68,7 +72,25 @@
         tel:'0000000000',
         time:'立即送出'
       },
-      foodList:[],
+      foodList:[{
+          name: "热推辣货",
+          id: '1',
+          food: [{
+            'name': '酸辣鳕鱼',
+            'id': '',
+            'price': 20.5,
+            'sum': '3'
+          }]
+        }, {
+          name: "套餐菜品",
+          id: '2',
+          food: [{
+            'name': '孕妇套餐',
+            'id': '',
+            'price': 20.5,
+            'sum': '1'
+          }]
+        }],
       sumPrice:'',
       choosedTime:'立即送出',
       flag:false
@@ -154,8 +176,11 @@ button{
   justify-content:space-between;
   padding:15px 10px;
 }
-.address,.order-name,.order-foodList{
+.address,.order-name{
   border-bottom:1px solid #ccc;
+}
+.order-foodList{
+  border-bottom:1px dashed #ccc;
 }
 .submit-user{
   padding-left:18px;
@@ -183,6 +208,29 @@ button{
 .order-price{
   padding:10px;
   text-align:right;
+  position:relative;
 }
+
+.order-price::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #efeff4;
+            top: -8px;
+            left: -8px;
+        }
+        
+  .order-price::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: #efeff4;
+      top: -8px;
+      right: -8px;
+  }
 </style>
 
