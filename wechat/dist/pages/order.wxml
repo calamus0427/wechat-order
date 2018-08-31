@@ -26,8 +26,8 @@
 
 
         <view class="sort">
-            <view bindtap="sortStar" class="sort-item">好评优先 <text class="iconfont icon-dianzan"/></view>
-            <view bindtap="sortPrice" class="sort-item">价格优先 <text class="iconfont icon-qian2"/></view>
+            <view bindtap="sortStar" class="sort-item {{currentSortRule == 'star' ? 'selectSort' : ''}}">好评优先 <text class="iconfont {{starSortIcon}}"/></view>
+            <view bindtap="sortPrice" class="sort-item {{currentSortRule == 'price' ? 'selectSort' : ''}}">价格优先 <text class="iconfont {{priceSortIcon}}"/></view>
         </view>
       <!--主内容区域-->
         <view  wx:if="{{init}}" class="main-box row">

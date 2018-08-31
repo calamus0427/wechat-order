@@ -32,7 +32,7 @@
           <view  class="order-foodList-item color-gray size-s" wx:for="{{foodList}}" wx:key="index">
             <text>{{item.name}}</text>
             <view>
-               {{item.sum}} * <text class="iconfont icon-renminbi2"></text>{{item.price}}
+               {{item.sum}} x     <text class="iconfont icon-renminbi2"></text>{{item.price}}
             </view>
           </view>
         </view>

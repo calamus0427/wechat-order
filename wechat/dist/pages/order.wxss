@@ -34,3 +34,6 @@
   flex: 1;
   height: 100%;
 }
+.selectSort {
+  color: #13BA84;
+}

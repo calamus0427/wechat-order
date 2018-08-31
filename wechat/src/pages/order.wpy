@@ -6,8 +6,8 @@
       <view class="cart-control" @tap="closeList()">
         <SearchBar type="tag"  :placeholder="searchText" @search.user="searchFood" @clear.user="clearSearch"></SearchBar>
         <view class="sort">
-            <view @tap="sortStar" class="sort-item">好评优先 <text class="iconfont icon-dianzan"></text></view>
-            <view @tap="sortPrice" class="sort-item">价格优先 <text class="iconfont icon-qian2"></text></view>
+            <view @tap="sortStar" class="sort-item {{currentSortRule == 'star' ? 'selectSort' : ''}}">好评优先 <text class="iconfont {{starSortIcon}}"></text></view>
+            <view @tap="sortPrice" class="sort-item {{currentSortRule == 'price' ? 'selectSort' : ''}}">价格优先 <text class="iconfont {{priceSortIcon}}"></text></view>
         </view>
       <!--主内容区域-->
         <view wx:if="{{init}}" class="main-box row">
@@ -64,7 +64,10 @@
       choosedList:[], //购物车选中的菜品
       dealList:[], //deal cart data
       currentPriceSort:1,
-      currentStarSort:1
+      currentStarSort:1,
+      currentSortRule:'',
+      priceSortIcon:'icon-paixu-shuliangshengxu',
+      starSortIcon:'icon-dianzan'
     }
 
     computed = {
@@ -82,7 +85,7 @@
         console.log("search",res);
         if(res){
           this.foodList = this.foodList.filter((item)=>{
-            return item.name == res;
+            return item.name.indexOf(res) > -1;
           });
         }else{
           console.log("11111")
@@ -102,7 +105,10 @@
         this.foodList = this.foodList.sort((a,b)=>{
           return flag == 1 ? a.price > b.price : a.price < b.price;
         });
+        this.priceSortIcon = flag == 1 ? 'icon-paixu-shuliangshengxu' : 'icon-paixu-shuliangjiangxu' ;
         this.currentPriceSort = (flag == 1) ? 2 : 1 ;
+        this.currentSortRule = 'price';
+
         console.log("2",this.currentPriceSort)
 
       },
@@ -112,7 +118,10 @@
         this.foodList = this.foodList.sort((a,b)=>{
           return flag == 1 ? a.star < b.star :a.star > b.star;
         });
+        this.starSortIcon = flag == 1 ? 'icon-dianzan' : 'icon-z-nolike' ;
         this.currentStarSort = flag == 1 ? 2 : 1 ;
+        this.currentSortRule = 'star';
+
       }
     }
 
@@ -137,7 +146,7 @@
     async getFoodList(){
       var url = "http://localhost:8080/food/get_food"
       wepy.request(url).then((res) => {
-        console.log("food=>>",res.data)
+        console.log("food=>>",res.data);
         this.foodList = res.data.filter((item)=>{return item.cat == this.selectedId});
         this.$apply();
       })
@@ -185,5 +194,8 @@
     height: 100%;
   }
   }
+.selectSort{
+  color:#13BA84;
+}
 </style>
 
