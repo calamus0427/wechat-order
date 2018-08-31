@@ -184,6 +184,7 @@
       },
       clearCat(){
         this.chooseList = [] ;
+        this.$emit('clear');        
       },
             //减少商品
       subtract(index,item){

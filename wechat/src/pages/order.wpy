@@ -19,7 +19,7 @@
           敬请期待
         </view>
       </view>
-      <Cart :flag.sync="cartShow" :chooseList.sync="choosedList"  :list.sync="foodList" :catList.sync="categoriesList"  :dealList.sync="dealList"></Cart>
+      <Cart @clear.user="clear" :flag.sync="cartShow" :chooseList.sync="choosedList"  :list.sync="foodList" :catList.sync="categoriesList"  :dealList.sync="dealList"></Cart>
     </view>
 </template>
 
@@ -80,7 +80,6 @@
       switchTab(selectedId) {
         console.log(selectedId)
         this.selectedId = selectedId;
-        this.getFoodList();
       },
       searchFood(res){
         console.log("search",res);
@@ -94,6 +93,9 @@
         }     
       },
       clearSearch(res){
+          this.getFoodList()
+      },
+      clear(){
           this.getFoodList()
       },
       closeList(){
@@ -152,7 +154,9 @@
           item.sum = 0 ;
         })
         this.foodList = res.data
-
+        this.foodList = this.foodList.sort((a,b)=>{
+          return a.cat > b.cat;
+        })
         // this.foodList = res.data.filter((item)=>{return item.cat == this.selectedId});
         this.$apply();
       })
