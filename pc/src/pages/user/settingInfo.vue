@@ -8,6 +8,12 @@
 <Tabs>
         <TabPane label="食堂信息">
 <Form :model="form" ref="form" label-position="left" :label-width="100">
+     <div class="ra-setting">
+        <div class="ra-setting-title">食堂信息</div>
+        <FormItem label="食堂名：">
+          {{form.resname}}
+        </FormItem>
+      </div>
       <div class="ra-setting">
         <div class="ra-setting-title">院区信息</div>
         <FormItem label="所属医院：">
@@ -44,6 +50,7 @@ export default {
       value:'',
       form: {
         "id": 38,
+        "resname":'',
         "hospital":"",
         "district":"",
         "address":""

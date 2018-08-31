@@ -1,1 +1,1 @@
-{"pages":["pages/order","pages/address","pages/submit","pages/status"],"window":{"backgroundTextStyle":"light","navigationBarBackgroundColor":"#13BA84","navigationBarTitleText":"医院订餐服务","navigationBarTextStyle":"#fff"}}
+{"pages":["pages/submit","pages/order","pages/address","pages/status"],"window":{"backgroundTextStyle":"light","navigationBarBackgroundColor":"#13BA84","navigationBarTitleText":"医院订餐服务","navigationBarTextStyle":"#fff"}}

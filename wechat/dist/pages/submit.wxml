@@ -23,7 +23,7 @@
       </view>
       <view class="submit-content submit-order _98dfdb1">
         <view class="order-name _98dfdb1">
-          <view class="size-l _98dfdb1">{{message.cantee}}</view>
+          <view class="size-l _98dfdb1">{{hospital.name}}</view>
         </view>
         <view class="order-foodList _98dfdb1">
           <view class="order-foodList-item color-gray size-s _98dfdb1"  wx:for="{{foodList}}" wx:key="index">
