@@ -72,25 +72,7 @@
         tel:'0000000000',
         time:'立即送出'
       },
-      foodList:[{
-          name: "热推辣货",
-          id: '1',
-          food: [{
-            'name': '酸辣鳕鱼',
-            'id': '',
-            'price': 20.5,
-            'sum': '3'
-          }]
-        }, {
-          name: "套餐菜品",
-          id: '2',
-          food: [{
-            'name': '孕妇套餐',
-            'id': '',
-            'price': 20.5,
-            'sum': '1'
-          }]
-        }],
+      foodList:[],
       sumPrice:'',
       choosedTime:'立即送出',
       flag:false
