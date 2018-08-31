@@ -49,7 +49,7 @@
           
   <view class="foodList _0fdbfaa goods-box" style="background-color:{{$foodList$list.length > 0 ? 'white' : 'transparent'}}">
     <block  wx:if="{{$foodList$list.length > 0}}" class="_0fdbfaa">
-          <scroll-view style="height: 100%;" scroll-y scroll-into-view="{{$foodList$toView}}" class="_0fdbfaa">
+          <scroll-view style="height: 100%;" scroll-y bindscroll="$foodList$scroll" scroll-into-view="{{$foodList$toView}}" class="_0fdbfaa">
             <block wx:for="{{$foodList$list}}" wx:key="index" class="_0fdbfaa">
               <view id="{{'a'+item.id}}" class="_0fdbfaa">
                 <view class="foodList-des _0fdbfaa">

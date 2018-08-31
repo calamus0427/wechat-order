@@ -1,7 +1,7 @@
 <template>
   <view class="foodList" style="background-color:{{list.length > 0 ? 'white' : 'transparent'}}">
     <block wx:if="{{list.length > 0}}">
-          <scroll-view style="height: 100%;" scroll-y  scroll-into-view="{{toView}}">
+          <scroll-view style="height: 100%;" scroll-y  bindscroll="scroll" scroll-into-view="{{toView}}">
             <block wx:for="{{list}}" wx:key="index">
               <view id="{{'a'+item.id}}">
                 <view class="foodList-des">
@@ -135,6 +135,9 @@
     }
 
     methods = {
+      scroll(e){
+console.log(e)
+      },
       //减少商品
       subtract(index,item){
         console.log("s",index,item);
