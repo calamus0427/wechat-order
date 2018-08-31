@@ -134,7 +134,7 @@
                         </view>
                       </block>
                   
-                    <view class="title bg-ddd _dc164a2" style="border-left:solid 3px {{$Cart$colorList[1]}}">
+                    <view class="title bg-ddd _dc164a2" style="margin-top:20px;border-left:solid 3px {{$Cart$colorList[1]}}">
                       套餐
                     </view>
                     <block wx:for="{{$Cart$chooseList}}" wx:key="index" wx:if="{{item.cat == 2}}" class="_dc164a2">

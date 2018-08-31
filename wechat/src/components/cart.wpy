@@ -24,7 +24,7 @@
                         </view>
                       </block>
                   
-                    <view class="title bg-ddd" style="border-left:solid 3px {{colorList[1]}}">
+                    <view class="title bg-ddd" style="margin-top:20px;border-left:solid 3px {{colorList[1]}}">
                       套餐
                     </view>
                     <block wx:for="{{chooseList}}" wx:key="index" wx:if="{{item.cat == 2}}">
@@ -113,6 +113,14 @@
     }
 
     computed = {
+      //是否有单品加入购物车
+      cartDefaultLen(){
+        let len = this.chooseList.filter((item)=>{
+          return item.cat != 2 ;
+        }).length
+        console.log("1111",len)
+        return len > 0
+      },
        defaultList(){       
           var data = [{
             name:"热推辣货",
