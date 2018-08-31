@@ -28,7 +28,7 @@
   width: 100%;
   position: absolute;
   top: 95px;
-  bottom: 0px;
+  bottom: 50px;
 }
 .main-box .goods-box {
   flex: 1;

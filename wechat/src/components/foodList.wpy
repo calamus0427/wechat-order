@@ -1,48 +1,52 @@
 <template>
   <view class="foodList" style="background-color:{{list.length > 0 ? 'white' : 'transparent'}}">
     <block wx:if="{{list.length > 0}}">
-      <block wx:for="{{list}}" wx:key="index">
-          <view class="foodList-des">
-            <view class="foodList-item-image">
-              <image src="{{item.img}}" mode="aspectFill"/>
-            </view>
-            <view class="foodList-item-content">
-              <text class="foodList-item-name">{{item.name}}</text>
-              <view class="stars">
-                <image src="{{item.star >= 1 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
-                <image src="{{item.star >= 2 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
-                <image src="{{item.star >= 3 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
-                <image src="{{item.star >= 4 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
-                <image src="{{item.star >= 5 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
-                <text>   {{item.star}}.0分</text>
-              </view>
+          <scroll-view style="height: 100%;" scroll-y  scroll-into-view="{{toView}}">
+            <block wx:for="{{list}}" wx:key="index">
+              <view id="{{'a'+item.id}}">
+                <view class="foodList-des">
+                  <view class="foodList-item-image">
+                    <image src="{{item.img}}" mode="aspectFill"/>
+                  </view>
+                  <view class="foodList-item-content">
+                    <text class="foodList-item-name">{{item.name}}</text>
+                    <view class="stars">
+                      <image src="{{item.star >= 1 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+                      <image src="{{item.star >= 2 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+                      <image src="{{item.star >= 3 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+                      <image src="{{item.star >= 4 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+                      <image src="{{item.star >= 5 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
+                      <text>   {{item.star}}.0分</text>
+                    </view>
 
-              <text>月销量：{{item.shoped}}笔</text>
-            </view>
-          </view>
-          <view class="foodList-item-description">{{item.des}}</view>
-          <view class="buybuybuy">
-            <text class="money">
-              <text class="iconfont icon-renminbi2"></text>{{item.price}}
-            </text>
-            <view class="cart inline">
-              <view   @tap="subtract({{index}},{{item}})"  class="inline iconfont icon-jian1"></view>
-              <view class="inline">{{item.num || 1}}</view>
-              <view  @tap="plus({{index}},{{item}})" class="inline iconfont icon-webicon310"></view>
-            </view>
-          </view>
-      </block>
-      <block wx:if="{{loading}}">
-        <view class="weui-loadmore">
-          <view class="weui-loading"></view>
-          <view class="weui-loadmore__tips">正在加载</view>
-        </view>
-      </block>
-      <block wx:elif="{{noMore}}">
-        <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
-          <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"></view>
-        </view>
-      </block>
+                    <text>月销量：{{item.shoped}}笔</text>
+                  </view>
+                </view>
+                <view class="foodList-item-description">{{item.des}}</view>
+                <view class="buybuybuy">
+                  <text class="money">
+                    <text class="iconfont icon-renminbi2"></text>{{item.price}}
+                  </text>
+                  <view class="cart inline">
+                    <view   @tap="subtract({{index}},{{item}})"  class="inline iconfont icon-jian1"></view>
+                    <view class="inline">{{item.sum}}</view>
+                    <view  @tap="plus({{index}},{{item}})" class="inline iconfont icon-webicon310"></view>
+                  </view>
+                </view>
+              </view>
+            </block>
+            <block wx:if="{{loading}}">
+              <view id="loading" class="weui-loadmore">
+                <view class="weui-loading"></view>
+                <view class="weui-loadmore__tips">正在加载</view>
+              </view>
+            </block>
+            <block wx:elif="{{noMore}}">
+              <view id="noMore" class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+                <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"></view>
+              </view>
+            </block>
+          </scroll-view>
     </block>
     <block wx:else>
       <view class="weui-loadmore weui-loadmore_line nomore">
@@ -50,6 +54,7 @@
       </view>
     </block>
   </view>
+
 </template>
 
 <script>
@@ -106,6 +111,11 @@
         type: Object,
         default: [],
         twoWay: true
+      },
+      toView:{
+        type: String,
+        default: '',
+        twoWay: true
       }
     }
 
@@ -128,28 +138,40 @@
       //减少商品
       subtract(index,item){
         console.log("s",index,item);
-        if(this.chooseList.length != 0){
-          for(let i = 0 ; i < this.chooseList.length ; i ++){
-            if(this.chooseList[i].id == item.id ){
-              if(this.chooseList[i].sum == 1){
-                this.chooseList.splice(i,1);
-              }else{
-                this.chooseList[i].sum -- ;
-              }
-            }
+        var i = this.findElem(this.chooseList,"id",item.id);
+        var j = this.findElem(this.list,"id",item.id);
+        console.log("j",j)
+        if(j >= 0){
+          if(this.list[j].sum < 1){
+            this.list[j].sum == 0
+          }else{
+            this.list[i].sum -- ;
+          }
+        }
+        if(i >= 0){
+          if(this.chooseList[i].sum == 1){
+            this.chooseList.splice(i,1);
+          }else{
+            this.chooseList[i].sum -- ;
           }
         }
       },
       //增加商品
       plus(index,item){
+
         item.price = parseFloat(item.price);
         item.sum = 1 ;
         var i = this.findElem(this.chooseList,"id",item.id);
-          if(i < 0){
-            this.chooseList.push(item);
-          }else{
-            this.chooseList[i].sum ++ ;
-          }
+        var j = this.findElem(this.list,"id",item.id);
+        console.log("j",j)
+        if(j >= 0){
+          this.list[j].sum ++
+        }
+        if(i < 0){
+          this.chooseList.push(item);
+        }else{
+          this.chooseList[i].sum ++ ;
+        }
       }
     }
   }

@@ -12,16 +12,14 @@
       <!--主内容区域-->
         <view wx:if="{{init}}" class="main-box row">
           <SideTab :tab.sync="categories"  @change.user="switchTab"/>
-          <scroll-view scroll-y class="goods-box">
-            <foodList  :list.sync="foodList" :chooseList.sync="choosedList" :catList.sync="categoriesList" :dealList.sync="dealList"></foodList>
-          </scroll-view>
+          <foodList :toView.sync="selectView" class="goods-box"   :list.sync="foodList" :chooseList.sync="choosedList" :catList.sync="categoriesList" :dealList.sync="dealList"></foodList>
         </view>
 
         <view wx:else>
           敬请期待
         </view>
       </view>
-      <Cart :flag.sync="cartShow" :chooseList.sync="choosedList" :catList.sync="categoriesList"  :dealList.sync="dealList"></Cart>
+      <Cart :flag.sync="cartShow" :chooseList.sync="choosedList"  :list.sync="foodList" :catList.sync="categoriesList"  :dealList.sync="dealList"></Cart>
     </view>
 </template>
 
@@ -71,7 +69,10 @@
     }
 
     computed = {
-
+      selectView(){
+        let text =  'a'+this.selectedId 
+        return text;
+      }
     }
 
     methods = {
@@ -147,7 +148,12 @@
       var url = "http://localhost:8080/food/get_food"
       wepy.request(url).then((res) => {
         console.log("food=>>",res.data);
-        this.foodList = res.data.filter((item)=>{return item.cat == this.selectedId});
+        res.data.map((item)=>{
+          item.sum = 0 ;
+        })
+        this.foodList = res.data
+
+        // this.foodList = res.data.filter((item)=>{return item.cat == this.selectedId});
         this.$apply();
       })
     }
@@ -188,7 +194,7 @@
   width: 100%;
   position: absolute;
   top: 95px;
-  bottom: 0px;
+  bottom: 50px;
   .goods-box{
     flex: 1;
     height: 100%;

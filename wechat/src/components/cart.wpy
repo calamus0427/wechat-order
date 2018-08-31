@@ -79,6 +79,11 @@
           default: [],
           twoWay: true
       },
+      list:{
+        type: Object,
+        default: [],
+        twoWay: true
+      },
       catList:{
         type: Object,
         default: [],
@@ -108,7 +113,7 @@
     }
 
     computed = {
-       list(){       
+       defaultList(){       
           var data = [{
             name:"热推辣货",
             id:'1',
@@ -129,7 +134,7 @@
             }]
           }]
         return data ;
-    },
+      },
       foodSummary(){
         if(this.chooseList.length != 0 ){
           let arr = [] ;
@@ -175,15 +180,21 @@
             //减少商品
       subtract(index,item){
         console.log("s",index,item);
-        if(this.chooseList.length != 0){
-          for(let i = 0 ; i < this.chooseList.length ; i ++){
-            if(this.chooseList[i].id == item.id ){
-              if(this.chooseList[i].sum == 1){
-                this.chooseList.splice(i,1);
-              }else{
-                this.chooseList[i].sum -- ;
-              }
-            }
+        var i = this.findElem(this.chooseList,"id",item.id);
+        var j = this.findElem(this.list,"id",item.id);
+        console.log("j",j)
+        if(j >= 0){
+          if(this.list[j].sum < 1){
+            this.list[j].sum == 0
+          }else{
+            this.list[i].sum -- ;
+          }
+        }
+        if(i >= 0){
+          if(this.chooseList[i].sum == 1){
+            this.chooseList.splice(i,1);
+          }else{
+            this.chooseList[i].sum -- ;
           }
         }
       },
@@ -192,11 +203,16 @@
         item.price = parseFloat(item.price);
         item.sum = 1 ;
         var i = this.findElem(this.chooseList,"id",item.id);
-          if(i < 0){
-            this.chooseList.push(item);
-          }else{
-            this.chooseList[i].sum ++ ;
-          }
+        var j = this.findElem(this.list,"id",item.id);
+        console.log("j",j)
+        if(j >= 0){
+          this.list[j].sum ++
+        }
+        if(i < 0){
+          this.chooseList.push(item);
+        }else{
+          this.chooseList[i].sum ++ ;
+        }
       },
       account(){
         if(this.chooseList.length == 0){
@@ -260,7 +276,7 @@
   position: fixed;
   bottom:0px;
   width:100%; 
-  z-index:2;
+  z-index:3;
 }
 .foodList .title{
   padding-left:5px;

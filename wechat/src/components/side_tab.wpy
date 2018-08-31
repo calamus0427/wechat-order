@@ -1,7 +1,7 @@
 <template>
-  <scroll-view class="side-tab" scroll-y>
+  <scroll-view class="side-tab" scroll-y scroll-into-view="{{toView}}">
     <block wx:for="{{tab.list}}" wx:key="id">
-      <view class="tab-item {{item.id == tab.selectedId ? 'tab-item-seleted' : ''}}" @tap="switchTab({{item.id}})" >
+      <view id="{{'a' + item.id}}" class="tab-item {{item.id == tab.selectedId ? 'tab-item-seleted' : ''}}" @tap="switchTab({{item.id}})" >
         <text class="inline">{{item.title}}</text>
         <view class="weui-badge tab-num" wx:if="{{item.count > 0}}">{{item.count}}</view>
       </view>
@@ -23,7 +23,9 @@
         twoWay: true
       }
     };
-    data = {};
+    data = {
+      toView:'a10'
+    };
     methods = {
       switchTab(selectedId) {
         this.tab.selectedId = selectedId;

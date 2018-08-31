@@ -32,9 +32,9 @@
       <!--主内容区域-->
         <view  wx:if="{{init}}" class="main-box row">
           
-  <scroll-view class="side-tab" scroll-y>
+  <scroll-view class="side-tab" scroll-y scroll-into-view="{{$SideTab$toView}}">
     <block  wx:for="{{$SideTab$tab.list}}" wx:key="id">
-      <view class="tab-item {{item.id == $SideTab$tab.selectedId ? 'tab-item-seleted' : ''}}" bindtap="$SideTab$switchTab" data-wpyswitchtab-a="{{item.id}}">
+      <view id="{{'a' + item.id}}" class="tab-item {{item.id == $SideTab$tab.selectedId ? 'tab-item-seleted' : ''}}" bindtap="$SideTab$switchTab" data-wpyswitchtab-a="{{item.id}}">
         <text class="inline">{{item.title}}</text>
         <view class="weui-badge tab-num" wx:if="{{item.count > 0}}">{{item.count}}</view>
       </view>
@@ -46,52 +46,55 @@
     </block>
   </scroll-view>
 
-          <scroll-view scroll-y class="goods-box">
-            
-  <view class="foodList _0fdbfaa" style="background-color:{{$foodList$list.length > 0 ? 'white' : 'transparent'}}">
+          
+  <view class="foodList _0fdbfaa goods-box" style="background-color:{{$foodList$list.length > 0 ? 'white' : 'transparent'}}">
     <block  wx:if="{{$foodList$list.length > 0}}" class="_0fdbfaa">
-      <block wx:for="{{$foodList$list}}" wx:key="index" class="_0fdbfaa">
-          <view class="foodList-des _0fdbfaa">
-            <view class="foodList-item-image _0fdbfaa">
-              <image src="{{item.img}}" mode="aspectFill" class="_0fdbfaa"/>
-            </view>
-            <view class="foodList-item-content _0fdbfaa">
-              <text class="foodList-item-name _0fdbfaa">{{item.name}}</text>
-              <view class="stars _0fdbfaa">
-                <image src="{{item.star >= 1 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
-                <image src="{{item.star >= 2 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
-                <image src="{{item.star >= 3 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
-                <image src="{{item.star >= 4 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
-                <image src="{{item.star >= 5 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
-                <text class="_0fdbfaa">   {{item.star}}.0分</text>
-              </view>
+          <scroll-view style="height: 100%;" scroll-y scroll-into-view="{{$foodList$toView}}" class="_0fdbfaa">
+            <block wx:for="{{$foodList$list}}" wx:key="index" class="_0fdbfaa">
+              <view id="{{'a'+item.id}}" class="_0fdbfaa">
+                <view class="foodList-des _0fdbfaa">
+                  <view class="foodList-item-image _0fdbfaa">
+                    <image src="{{item.img}}" mode="aspectFill" class="_0fdbfaa"/>
+                  </view>
+                  <view class="foodList-item-content _0fdbfaa">
+                    <text class="foodList-item-name _0fdbfaa">{{item.name}}</text>
+                    <view class="stars _0fdbfaa">
+                      <image src="{{item.star >= 1 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
+                      <image src="{{item.star >= 2 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
+                      <image src="{{item.star >= 3 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
+                      <image src="{{item.star >= 4 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
+                      <image src="{{item.star >= 5 ? $foodList$icon_star_active:$foodList$icon_star}}" class="staricon _0fdbfaa" mode="aspectFit"/>
+                      <text class="_0fdbfaa">   {{item.star}}.0分</text>
+                    </view>
 
-              <text class="_0fdbfaa">月销量：{{item.shoped}}笔</text>
-            </view>
-          </view>
-          <view class="foodList-item-description _0fdbfaa">{{item.des}}</view>
-          <view class="buybuybuy _0fdbfaa">
-            <text class="money _0fdbfaa">
-              <text class="iconfont icon-renminbi2 _0fdbfaa"/>{{item.price}}
-            </text>
-            <view class="cart inline _0fdbfaa">
-              <view bindtap="$foodList$subtract" class="inline iconfont icon-jian1 _0fdbfaa" data-wpysubtract-a="{{index}}" data-wpysubtract-b="{{item}}"/>
-              <view class="inline _0fdbfaa">{{item.num || 1}}</view>
-              <view bindtap="$foodList$plus" class="inline iconfont icon-webicon310 _0fdbfaa" data-wpyplus-a="{{index}}" data-wpyplus-b="{{item}}"/>
-            </view>
-          </view>
-      </block>
-      <block wx:if="{{$foodList$loading}}" class="_0fdbfaa">
-        <view class="weui-loadmore _0fdbfaa">
-          <view class="weui-loading _0fdbfaa"/>
-          <view class="weui-loadmore__tips _0fdbfaa">正在加载</view>
-        </view>
-      </block>
-      <block wx:elif="{{$foodList$noMore}}" class="_0fdbfaa">
-        <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot _0fdbfaa">
-          <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot _0fdbfaa"/>
-        </view>
-      </block>
+                    <text class="_0fdbfaa">月销量：{{item.shoped}}笔</text>
+                  </view>
+                </view>
+                <view class="foodList-item-description _0fdbfaa">{{item.des}}</view>
+                <view class="buybuybuy _0fdbfaa">
+                  <text class="money _0fdbfaa">
+                    <text class="iconfont icon-renminbi2 _0fdbfaa"/>{{item.price}}
+                  </text>
+                  <view class="cart inline _0fdbfaa">
+                    <view bindtap="$foodList$subtract" class="inline iconfont icon-jian1 _0fdbfaa" data-wpysubtract-a="{{index}}" data-wpysubtract-b="{{item}}"/>
+                    <view class="inline _0fdbfaa">{{item.sum}}</view>
+                    <view bindtap="$foodList$plus" class="inline iconfont icon-webicon310 _0fdbfaa" data-wpyplus-a="{{index}}" data-wpyplus-b="{{item}}"/>
+                  </view>
+                </view>
+              </view>
+            </block>
+            <block wx:if="{{$foodList$loading}}" class="_0fdbfaa">
+              <view id="loading" class="weui-loadmore _0fdbfaa">
+                <view class="weui-loading _0fdbfaa"/>
+                <view class="weui-loadmore__tips _0fdbfaa">正在加载</view>
+              </view>
+            </block>
+            <block wx:elif="{{$foodList$noMore}}" class="_0fdbfaa">
+              <view id="noMore" class="weui-loadmore weui-loadmore_line weui-loadmore_dot _0fdbfaa">
+                <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot _0fdbfaa"/>
+              </view>
+            </block>
+          </scroll-view>
     </block>
     <block  wx:else class="_0fdbfaa">
       <view class="weui-loadmore weui-loadmore_line nomore _0fdbfaa">
@@ -99,7 +102,6 @@
       </view>
     </block>
   </view>
-          </scroll-view>
         </view>
 
         <view  wx:else>
