@@ -142,31 +142,14 @@
       },
       //增加商品
       plus(index,item){
-        console.log("p=>",index,item);
-        if(this.chooseList.length == 0 ){
-          this.chooseList.push(item) ;
-                  this.chooseList.map((item)=>{
-                    item.price = parseFloat(item.price);
-                    item.sum = 1 ;
-                  })
-                  this.$apply();
-        }else{
-          for(let i = 0 ; i < this.chooseList.length ; i ++){
-            if(this.chooseList[i].id === item.id ){
-              this.chooseList[i].sum ++ ;
-            }else{
-              this.chooseList.push(item) ;
-                  this.chooseList.map((item)=>{
-                    item.price = parseFloat(item.price);
-                    item.sum = 1 ;
-                  })
-                  this.$apply();
-            }
+        item.price = parseFloat(item.price);
+        item.sum = 1 ;
+        var i = this.findElem(this.chooseList,"id",item.id);
+          if(i < 0){
+            this.chooseList.push(item);
+          }else{
+            this.chooseList[i].sum ++ ;
           }
-        }
-        
-        console.log("push=>",this.chooseList);
-
       }
     }
   }

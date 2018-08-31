@@ -95,6 +95,7 @@
       closeList(){
         this.cartShow = false;
       },
+      // 价格优先
       sortPrice(){
         let flag = this.currentPriceSort ;
         console.log("1",this.currentPriceSort)
@@ -105,6 +106,7 @@
         console.log("2",this.currentPriceSort)
 
       },
+      // 好评优先
       sortStar(){
         let flag = this.currentStarSort ;
         this.foodList = this.foodList.sort((a,b)=>{
@@ -136,7 +138,7 @@
       var url = "http://localhost:8080/food/get_food"
       wepy.request(url).then((res) => {
         console.log("food=>>",res.data)
-        this.foodList = res.data.filter((item)=>{return item.id == this.selectedId});
+        this.foodList = res.data.filter((item)=>{return item.cat == this.selectedId});
         this.$apply();
       })
     }
