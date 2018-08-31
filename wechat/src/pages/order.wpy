@@ -132,10 +132,15 @@
 
     }
 
-    onLoad() {
+    onLoad(options) {
+      console.log(options,options.list)
+      if(options.list){
+        
+      }else{
+        this.initPage()
+      }
     }
     onReady() {
-      this.initPage()
     }
     initPage(){
       this.getFoodList();

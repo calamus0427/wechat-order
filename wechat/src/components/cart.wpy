@@ -241,8 +241,11 @@
           var choosedTime = JSON.stringify("立即送出") ;
           var sumPrice = JSON.stringify(this.sumPrice) ;
           var foodList = JSON.stringify(this.chooseList);
+          var list = JSON.stringify(this.list);
+
           wx.navigateTo({
-              url: "/pages/submit?message=" + message + "&choosedTime=" + choosedTime +"&sumPrice=" + sumPrice + "&foodList=" + foodList
+              url: "/pages/submit?message=" + message + "&choosedTime=" + choosedTime +"&sumPrice=" + sumPrice + "&foodList=" + foodList +  "&list=" + list
+          })
           })
         }
         
