@@ -12,7 +12,14 @@
       <!--主内容区域-->
         <view wx:if="{{init}}" class="main-box row">
           <SideTab :tab.sync="categories"  @change.user="switchTab"/>
-          <foodList :toView.sync="selectView" class="goods-box"   :list.sync="foodList" :chooseList.sync="choosedList" :catList.sync="categoriesList" :dealList.sync="dealList"></foodList>
+          <foodList 
+            :toView.sync="selectView" class="goods-box"   
+            :list.sync="foodList" 
+            @scroll.user="scrollSit"
+            :chooseList.sync="choosedList" 
+            :catList.sync="categoriesList" 
+            :dealList.sync="dealList">
+          </foodList>
         </view>
 
         <view wx:else>
@@ -65,30 +72,28 @@
       currentStarSort:1,
       currentSortRule:'',
       priceSortIcon:'icon-paixu-shuliangshengxu',
-      starSortIcon:'icon-dianzan'
+      starSortIcon:'icon-dianzan',
+      selectView:'a1'
     }
 
     computed = {
-      selectView(){
-        let text =  'a'+this.selectedId 
-        return text;
-      }
     }
 
     methods = {
       // 点击分类
       switchTab(selectedId) {
-        console.log(selectedId)
         this.selectedId = selectedId;
+        this.selectView =   'a'+selectedId 
+      },
+      scrollSit(res){
+        this.categories.selectedId = this.foodList[res].cat;
       },
       searchFood(res){
-        console.log("search",res);
         if(res){
           this.foodList = this.foodList.filter((item)=>{
             return item.name.indexOf(res) > -1;
           });
         }else{
-          console.log("11111")
           this.getFoodList()
         }     
       },
@@ -104,15 +109,13 @@
       // 价格优先
       sortPrice(){
         let flag = this.currentPriceSort ;
-        console.log("1",this.currentPriceSort)
         this.foodList = this.foodList.sort((a,b)=>{
           return flag == 1 ? a.price > b.price : a.price < b.price;
         });
         this.priceSortIcon = flag == 1 ? 'icon-paixu-shuliangshengxu' : 'icon-paixu-shuliangjiangxu' ;
         this.currentPriceSort = (flag == 1) ? 2 : 1 ;
         this.currentSortRule = 'price';
-
-        console.log("2",this.currentPriceSort)
+        this.categories.selectedId = this.foodList[0].cat;
 
       },
       // 好评优先
@@ -124,6 +127,7 @@
         this.starSortIcon = flag == 1 ? 'icon-dianzan' : 'icon-z-nolike' ;
         this.currentStarSort = flag == 1 ? 2 : 1 ;
         this.currentSortRule = 'star';
+        this.categories.selectedId = this.foodList[0].cat;
 
       }
     }

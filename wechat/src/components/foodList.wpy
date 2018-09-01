@@ -1,7 +1,12 @@
 <template>
   <view class="foodList" style="background-color:{{list.length > 0 ? 'white' : 'transparent'}}">
     <block wx:if="{{list.length > 0}}">
-          <scroll-view style="height: 100%;" scroll-y  bindscroll="scroll" scroll-into-view="{{toView}}">
+          <scroll-view style="height: 100%;"
+            scroll-y  
+            scroll-with-animation="{{animationScroll}}" 
+            bindscroll="scroll" 
+            enable-back-to-top="{{enableBackToTop}}"
+            scroll-into-view="{{toView}}">
             <block wx:for="{{list}}" wx:key="index">
               <view id="{{'a'+item.id}}">
                 <view class="foodList-des">
@@ -125,7 +130,9 @@
       icon_eye: '/images/icon/addBefore.jpg',
       icon_eye_active: '/images/icon/addAfter.jpg',
       icon_star: '/images/icon/icon-star@2x.png',
-      icon_star_active: '/images/icon/icon-star-active@2x.png'
+      icon_star_active: '/images/icon/icon-star-active@2x.png',
+      animationScroll:true,
+      enableBackToTop:true
     }
 
     computed = {
@@ -136,7 +143,10 @@
 
     methods = {
       scroll(e){
-console.log(e)
+          // console.log(e)
+          let sit = parseInt(e.detail.scrollTop / 180) ;
+        this.$emit('scroll', sit);
+          
       },
       //减少商品
       subtract(index,item){
@@ -236,7 +246,7 @@ text{
   color:#999;
   font-size:14px;
   display:-webkit-box;
-  -webkit-line-clamp:2;
+  -webkit-line-clamp:1;
   -webkit-box-orient:vertical;
   overflow:hidden;
   word-break:break-all;
