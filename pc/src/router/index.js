@@ -19,8 +19,6 @@ import ducument from '../pages/document/index.vue'
 import Classification from '../pages/food/cat.vue'
 // 菜品管理
 import food from '../pages/food/index.vue'
-import addCat from '../pages/food/addCat.vue'
-import editCat from '../pages/food/editCat.vue'
 
 
 // 套餐管理
@@ -56,20 +54,6 @@ export default new Router({
                     path: '/Classification',
                     name: '菜品分类管理',
                     component: Classification,
-                    meta: {
-                        requireAuth: true
-                    }
-                }, {
-                    path: '/addCat',
-                    name: '添加菜品分类',
-                    component: addCat,
-                    meta: {
-                        requireAuth: true
-                    }
-                }, {
-                    path: '/editCat/:id',
-                    name: '编辑菜品分类',
-                    component: editCat,
                     meta: {
                         requireAuth: true
                     }

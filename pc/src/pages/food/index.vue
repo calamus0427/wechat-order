@@ -4,7 +4,7 @@
           <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索" style="width: 200px"></Input>
           <br/>
           <br/>
-          <Button type="primary" size="small" @click="addFood()" ><Icon type="md-add-circle" />添加菜品</Button>
+          <Button type="primary" size="small" @click="addFood()" ><Icon type="ios-add" />添加菜品</Button>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
           <Button type="warning" size="small" @click="refresh"><Icon type="ios-download-outline"></Icon> 刷新</Button>
           <br>
@@ -50,19 +50,28 @@
               </ul>
             </div>
           </Modal>
+
+          <!-- add food -->
+            <add-food 
+                :visible="addFoodVisible"
+                @close="claseAdd">
+            </add-food>
     </div>
 </template>
 <script>
 import foodDetail from './components/foodDetail.vue';
+import addFood from './components/foodAdd.vue';
+
 import { getFoodList } from '@/api/food'
 
 
 export default {
-  components: { foodDetail },
+  components: { foodDetail,addFood },
   data () {
     return {
       search:'',
       showDetailFlag:false,
+      addFoodVisible:false,
       detailTitle:'',
       pageOptions:[10, 20, 50, 100],
       currentStatus:'all',
@@ -288,7 +297,12 @@ export default {
       this.showDetailFlag = true ;
     },
     addFood(){
-        console.log("add food")
+        console.log("add food",this.addFoodVisible);
+        this.addFoodVisible = true ;
+    },
+    claseAdd(){
+        console.log("close")
+        this.addFoodVisible = false ;
     }
   }
 }

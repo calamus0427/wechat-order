@@ -4,6 +4,7 @@
           <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索" style="width: 200px"></Input>
           <br/>
           <br/>
+          <Button type="primary" size="small" @click="addUser()" ><Icon type="ios-add" />添加人员</Button>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
           <Button type="warning" size="small" @click="refresh"><Icon type="ios-download-outline"></Icon> 刷新</Button>
           <br>
@@ -157,6 +158,9 @@ export default {
       this.detailTitle = name ;
       this.showDetailFlag = true ;
     },
+    addUser(){
+        
+    }
   }
 }
 </script>
