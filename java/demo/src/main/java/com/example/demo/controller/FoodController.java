@@ -87,12 +87,22 @@ public class FoodController {
 
     //TODO：添加菜品
 
-    //TODO：修改菜品
+    //TODO：修改菜品信息
+
+    //TODO：修改菜品状态
+
+    //TODO：删除菜品
+
 
 
     //TODO：添加菜品分类
+    
 
-    //TODO：修改菜品分类
+    //TODO：修改菜品分类信息
+
+    //TODO：修改菜品分类状态
+
+    //TODO：删除菜品分类
 
 
 

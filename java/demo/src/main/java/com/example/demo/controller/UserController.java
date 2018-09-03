@@ -86,13 +86,22 @@ public class UserController {
     }
 
 
-    //TODO：添加菜品
+    //TODO：添加用户
 
-    //TODO：修改菜品
+    //TODO：修改用户信息
+
+    //TODO：修改用户状态
+
+    //TODO：删除用户
 
 
-    //TODO：添加菜品分类
 
-    //TODO：修改菜品分类
+    //TODO：添加用户分类
+
+    //TODO：修改用户分类信息
+
+    //TODO：修改用户分类状态
+
+    //TODO：删除用户分类
 
 }

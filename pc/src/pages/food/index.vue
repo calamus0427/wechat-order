@@ -4,6 +4,7 @@
           <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索" style="width: 200px"></Input>
           <br/>
           <br/>
+          <Button type="primary" size="small" @click="addFood()" ><Icon type="md-add-circle" />添加菜品</Button>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
           <Button type="warning" size="small" @click="refresh"><Icon type="ios-download-outline"></Icon> 刷新</Button>
           <br>
@@ -46,10 +47,6 @@
                 <li class="cl-binding"><span>触达接受数：</span>1</li>
                 <li class="cl-binding"><span>消息下发总数：</span>1</li>
                 <li class="cl-binding"><span>客户端收到总量：</span>1</li>
-                <li class="cl-binding"><span>消息弹出量：</span>1</li>
-                <li class="cl-binding"><span>弹窗点击量：</span>1</li>
-                <li class="cl-binding"><span>快捷-消息点击：</span>1</li>
-                <li class="cl-binding"><span>消息-消息点击：</span>1</li>
               </ul>
             </div>
           </Modal>
@@ -116,7 +113,7 @@ export default {
                     },
                     {
                         "title": "菜品分类",
-                        "key": "cat",
+                        "key": "cat_ame",
                         "width": 150
                     },
                     {
@@ -127,7 +124,7 @@ export default {
                     },
                     {
                         "title": "菜品评价",
-                        "key": "status",
+                        "key": "star",
                         "width": 120,
                         "sortable": true
                     },
@@ -146,7 +143,7 @@ export default {
                                 props: {
                                     color: params.row.status== 1 ? 'green' :'red'
                                 }
-                            },params.row.status == 1 ? '已上线' : '仓库中')
+                            },params.row.status == 1 ? '已上架' : '仓库中')
                         }
                     },
                       {
@@ -165,13 +162,25 @@ export default {
                         "title": "操作",
                         "key": "action",
                         'fixed': 'right',
-                        "width": 180,
+                        "width": 200,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
                                     props: {
                                         type: 'text',
                                         size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                           console.log(params)
+                                        }
+                                    }
+                                }, '编辑'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small',
+                                        disabled: params.row.status == 1 ? true : false 
                                     },
                                     on: {
                                         click: () => {
@@ -182,7 +191,8 @@ export default {
                                 h('Button', {
                                     props: {
                                         type: 'text',
-                                        size: 'small'
+                                        size: 'small',
+                                        disabled:params.row.status == 1 ? false  :  true
                                     },
                                     on: {
                                         click: () => {
@@ -277,6 +287,9 @@ export default {
       this.detailTitle = name ;
       this.showDetailFlag = true ;
     },
+    addFood(){
+        console.log("add food")
+    }
   }
 }
 </script>
