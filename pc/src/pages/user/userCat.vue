@@ -32,6 +32,8 @@
     </div>
 </template>
 <script>
+import { getUserCatList } from '@/api/user'
+
 
 export default {
   data () {
@@ -115,17 +117,11 @@ export default {
         this.getList(this.page.start,this.page.length,this.currentStatus);
     },
     getList(start,size,status){
-      var url = this.$request.getUserCat;
-      var param = "";
-      var page = start * size ;
-        this.$http.get(url)
-          .then( (res)=> {
-              console.log(res.data.list)
-              this.data = res.data ;
-              this.page.total = res.data.length;
-          },(err)=>{
-            console.error('get dataTable failed',err);
-          })
+      getUserCatList().then(res => {
+            console.info("userCatList======>",res)
+            this.data = res ;
+            this.page.total = res.length;
+        })
       },
       //页码切换
       changePage(res){

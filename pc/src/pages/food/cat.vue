@@ -27,6 +27,8 @@
 </template>
 <script>
 import '../../components/card/overview.js'
+import { getFoodCatList } from '@/api/food'
+
 
 export default {
   data () {
@@ -104,16 +106,12 @@ export default {
       console.log("%c查询数据","color:#E1244E;font-size:14px;",this.search)
     },
     getfoodList(page,size,status){
-      var url = this.$request.getFoodCat ;
-      var param = "";
-        this.$http.get(url)
-          .then( (res)=> {
-            let foodList = res.data ;
-            this.page.dataTotal = parseInt(foodList.length) ;
+      getFoodCatList().then(res => {
+            console.info("FoodList======>",res);
+            var foodList = res
             this.foodList = foodList ;
-          },(err)=>{
-            console.error('get dataTable failed',err);
-          })
+            this.page.total = parseInt(foodList.length)
+        })
       },
       getCount(){
         this.getfoodList(1,10000000,'all');

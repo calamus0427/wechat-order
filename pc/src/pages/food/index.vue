@@ -57,6 +57,9 @@
 </template>
 <script>
 import foodDetail from './components/foodDetail.vue';
+import { getFoodList } from '@/api/food'
+
+
 export default {
   components: { foodDetail },
   data () {
@@ -231,19 +234,14 @@ export default {
         this.getList(this.page.start,this.page.length,this.currentStatus);
     },
     getList(start,size,status){
-      var url = this.$request.getFood ;
-      var param = "";
-      var page = start * size ;
-        this.$http.get(url)
-          .then( (res)=> {
-              var foodList = res.data.filter((item,index,array)=>{
+        getFoodList().then(res => {
+            console.info("FoodList======>",res);
+            var foodList = res.filter((item,index,array)=>{
                   return item.cat != 2 ;
               })
-              this.data = foodList ;
-              this.page.total = foodList.length;
-          },(err)=>{
-            console.error('get dataTable failed',err);
-          })
+            this.data = foodList ;
+            this.page.total = foodList.length;
+        })
     },
       //页码切换
       changePage(res){

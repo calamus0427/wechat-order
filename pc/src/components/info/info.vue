@@ -29,7 +29,7 @@
     },
     data(){
       return {
-        document:this.$request.api
+        document:"https://www.calamus.xyz"
       }
     },
     mounted(){

@@ -57,6 +57,8 @@
 </template>
 <script>
 import foodDetail from './components/foodDetail.vue';
+import { getFoodList } from '@/api/food'
+
 export default {
   components: { foodDetail },
   data () {
@@ -202,19 +204,7 @@ export default {
                         }
                     }
                 ],
-      data: [
-      {
-              "title": "泡馍",
-              "id": 1,
-              'des':'我最爱吃的',
-              'cat':'主食',
-              'price':25,
-              'star':'5',
-              'img':'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1899144149,2796372996&fm=27&gp=0.jpg',
-              'createTime':'2018-07-06',
-              'status':1
-          }
-      ]
+      data: []
     }
   },
   mounted(){
@@ -231,19 +221,14 @@ export default {
         this.getList(this.page.start,this.page.length,this.currentStatus);
     },
     getList(start,size,status){
-      var url = this.$request.getFood ;
-      var param = "";
-      var page = start * size ;
-        this.$http.get(url)
-          .then( (res)=> {
-              var foodList = res.data.filter((item,index,array)=>{
+        getFoodList().then(res => {
+            console.info("FoodList======>",res);
+            var foodList = res.filter((item,index,array)=>{
                   return item.cat == 2 ;
               })
-              this.data = foodList ;
-              this.page.total = foodList.length;
-          },(err)=>{
-            console.error('get dataTable failed',err);
-          })
+            this.data = foodList ;
+            this.page.total = foodList.length;
+        })
     },
       //页码切换
       changePage(res){
