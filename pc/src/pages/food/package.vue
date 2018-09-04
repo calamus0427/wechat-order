@@ -4,7 +4,7 @@
           <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索" style="width: 200px"></Input>
           <br/>
           <br/>
-          <Button type="primary" size="small" @click="addFood()" ><Icon type="ios-add" />添加套餐</Button>
+          <Button type="primary" size="small" @click="handleAddFood('add')" ><Icon type="ios-add" />添加套餐</Button>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
           <Button type="warning" size="small" @click="refresh"><Icon type="ios-aperture" />刷新</Button>
           <br>
@@ -58,9 +58,10 @@
                     <!-- add food -->
             <add-food 
                 :visible="addFoodVisible"
-                :type="addFoodType"
+                :foodType="addFoodType"
                 :foodCatList="foodCatList"
                 @close="claseAdd"
+                :data="foodData"
             >
             </add-food>
     </div>
@@ -68,7 +69,7 @@
 <script>
 import foodDetail from './components/foodDetail.vue';
 import { getFoodList,getFoodCatList } from '@/api/food'
-import addFood from './components/foodAdd.vue';
+import addFood from './components/packageAdd.vue';
 
 
 export default {
@@ -78,7 +79,7 @@ export default {
       search:'',
       showDetailFlag:false,
       addFoodVisible:false,
-      addFoodType:"packge",
+      addFoodType:"package",
       detailTitle:'',
       pageOptions:[10, 20, 50, 100],
       currentStatus:'all',
@@ -129,7 +130,7 @@ export default {
                     },
                     {
                         "title": "菜品分类",
-                        "key": "cat",
+                        "key": "cat_name",
                         "width": 150
                     },
                     {
@@ -178,9 +179,20 @@ export default {
                         "title": "操作",
                         "key": "action",
                         'fixed': 'right',
-                        "width": 180,
+                        "width": 200,
                         render: (h, params) => {
                             return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                           this.handleAddFood(params.row)
+                                        }
+                                    }
+                                }, '编辑'),
                                 h('Button', {
                                     props: {
                                         type: 'text',
@@ -251,7 +263,8 @@ export default {
                     }
                 ],
       data: [],
-      foodCatList:[]
+      foodCatList:[],
+      foodData:null
     }
   },
   mounted(){
@@ -318,8 +331,13 @@ export default {
       this.detailTitle = name ;
       this.showDetailFlag = true ;
     },
-    addFood(){
+    handleAddFood(res){
+        if(res != 'add'){
+            console.log(res)
+            this.foodData = res ;
+        }
         console.log("add food",this.addFoodVisible);
+
         this.addFoodVisible = true ;
     },
     claseAdd(){

@@ -71,7 +71,7 @@ import { getFoodCatList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '
         },
         computed:{
             title(){
-                let title = this.foodType == 'package' ? "添加套餐" : "添加菜品"
+                let title = "添加套餐" ;
                 return title ;
             }
              
@@ -95,7 +95,7 @@ import { getFoodCatList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '
                     star:3,
                     price:'',
                     shoped:0,
-                    cat:1,
+                    cat:2,
                     cat_name:'',
                     status:'1',
                     des:''

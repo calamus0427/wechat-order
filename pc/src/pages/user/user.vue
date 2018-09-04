@@ -141,9 +141,20 @@ export default {
                         "title": "操作",
                         "key": "action",
                         'fixed': 'right',
-                        "width": 180,
+                        "width": 200,
                         render: (h, params) => {
                             return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                           console.log(params)
+                                        }
+                                    }
+                                }, '编辑'),
                                 h('Button', {
                                     props: {
                                         type: 'text',
