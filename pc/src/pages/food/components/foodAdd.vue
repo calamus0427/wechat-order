@@ -150,7 +150,6 @@ import { getFoodCatList,AddFood,EditFood,UpdateFood,DelFood } from '@/api/food'
                         this.$Message.error('添加/修改菜品失败!');
                     }
                 })
-                this.$Message.success('添加菜品成功!');
                 this.closeModal() ;
             },
             cancel(){

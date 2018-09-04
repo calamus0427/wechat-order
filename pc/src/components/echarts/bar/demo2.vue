@@ -58,7 +58,7 @@ export default {
     },
     series: [
         {
-            name:'访问来源',
+            name:'评价来源',
             type:'pie',
             selectedMode: 'single',
             radius: [0, '30%'],
@@ -80,7 +80,7 @@ export default {
             ]
         },
         {
-            name:'访问来源',
+            name:'评价来源',
             type:'pie',
             radius: ['40%', '55%'],
             label: {

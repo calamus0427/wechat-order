@@ -8,5 +8,5 @@ const baseUrl = {
   }
   //
   // export const BASE_PER_FIX_URL = process.env.NODE_ENV === 'production' ? baseUrl.prod : baseUrl.dev
-export const BASE_PER_FIX_URL = baseUrl.dev
+export const BASE_PER_FIX_URL = baseUrl.localhost
   
