@@ -21,8 +21,8 @@
                         <span slot="close">否</span>
                     </i-switch>
                 </FormItem>
-                <FormItem label="描述：" prop="desc">
-                    <Input v-model="form.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入菜品描述"></Input>
+                <FormItem label="描述：" prop="des">
+                    <Input v-model="form.des" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入菜品描述"></Input>
                 </FormItem>
             </Form>
         </Modal>
@@ -38,12 +38,22 @@ import { getUserCatList,AddUserCat,EditUserCat,UpdateUserCat,DelUserCat } from '
             visible:{
                 type:Boolean,
                 default:false
+            },
+            data:{
+                type:Object,
+                default:null
             }
         },
         watch:{
             visible(isShow){
                 console.log("watch",isShow)
                 this.isShow = isShow 
+            },
+            data(item){
+                if(item){
+                    console.log("item",item)
+                    this.form = item;
+                }
             }
         },
         data(){
@@ -70,14 +80,14 @@ import { getUserCatList,AddUserCat,EditUserCat,UpdateUserCat,DelUserCat } from '
                 this.$refs.form.validate((valid) => {
                     if (valid) {
                         const params = Object.assign({}, this.form)
-                        AddFood(params).then(res => {
+                        EditUserCat(params).then(res => {
                             if (!res.error) {
-                                this.$Message.success('添加身份成功!');
+                                this.$Message.success('添加/修改身份成功!');
                                 this.handleReset('form') ;
                             }
                         })
                     } else {
-                        this.$Message.error('添加身份失败!');
+                        this.$Message.error('添加/修改身份失败!');
                     }
                 })
                 this.closeModal() ;

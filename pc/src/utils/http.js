@@ -53,13 +53,14 @@ function checkResponseStatus (response) {
   return response
 }
 function cactchError (error) {
-  if (error.status === 400 || error.status === 404 || error.status === 500) {
-    return Message({
-      message: `服务器访问出错. Error:${error.error},Message:${error.message}`,
-      type: 'error',
-      duration: 5000
-    })
-  }
+  // if (error.status === 400 || error.status === 404 || error.status === 500) {
+  //   return Message({
+  //     message: `服务器访问出错. Error:${error.error},Message:${error.message}`,
+  //     type: 'error',
+  //     duration: 5000
+  //   })
+  // }
+  return error
 }
 
 // check server response

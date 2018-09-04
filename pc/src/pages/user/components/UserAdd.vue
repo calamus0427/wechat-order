@@ -19,7 +19,7 @@
                     <Input v-model="form.img" placeholder="请输入图片链接"></Input>
                 </FormItem>
                 <FormItem label="分类" prop="cat">
-                    <Select v-model="form.cat" placeholder="请选择菜品分类">
+                    <Select v-model="form.cat" placeholder="请选择人员分类">
                         <Option v-for="item in catList" :key="item.id" :value="item.id">{{item.name}}</Option>
                     </Select>
                 </FormItem>
@@ -36,14 +36,14 @@
                     </i-switch>
                 </FormItem>
                 <FormItem label="描述：" prop="remarks">
-                    <Input v-model="form.remarks" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入菜品描述"></Input>
+                    <Input v-model="form.remarks" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入人员描述"></Input>
                 </FormItem>
             </Form>
         </Modal>
     </div>
 </template>
 <script>
-import { getUserCatList,AddUserCat,EditUserCat,UpdateUserCat,DelUserCat } from '@/api/user'
+import { getUserCatList,AddUser,EditUser,UpdateUser,DelUser } from '@/api/user'
 import isvalidPhone from '@/utils/Validate/Validate'
 
     export default {
@@ -57,12 +57,20 @@ import isvalidPhone from '@/utils/Validate/Validate'
             catList:{
                 type:Array,
                 required:true
+            },
+            data:{
+                type:Object,
+                default:null
             }
         },
         watch:{
             visible(isShow){
-                console.log("watch",isShow)
                 this.isShow = isShow 
+            },
+            data(item){
+                if(item){
+                    this.form = item;
+                }
             }
         },
         data(){
@@ -81,7 +89,7 @@ import isvalidPhone from '@/utils/Validate/Validate'
                         { required: true, message: '请输入身份分类名称', trigger: 'change' }
                     ],
                     cat: [
-                        { required: true, message: '请选择人员身份', trigger: 'change' }
+                        { type:'number',required: true, message: '请选择人员身份', trigger: 'change' }
                     ],
                     email: [
                         { type: 'email', message: '请输入正确的邮箱', trigger: 'change' }
@@ -97,14 +105,14 @@ import isvalidPhone from '@/utils/Validate/Validate'
                 this.$refs.form.validate((valid) => {
                     if (valid) {
                         const params = Object.assign({}, this.form)
-                        AddFood(params).then(res => {
+                        EditUser(params).then(res => {
                             if (!res.error) {
-                                this.$Message.success('添加身份成功!');
+                                this.$Message.success('添加/修改身份成功!');
                                 this.handleReset('form') ;
                             }
                         })
                     } else {
-                        this.$Message.error('添加身份失败!');
+                        this.$Message.error('添加/修改身份失败!');
                     }
                 })
                 this.closeModal() ;

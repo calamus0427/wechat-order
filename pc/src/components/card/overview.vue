@@ -35,6 +35,8 @@
   </div>
 </template>
 <script>
+import { getFoodList,getFoodCatList,DelFoodCat,UpdateFoodCat } from '@/api/food'
+
 export default {
   name:'ClAppOverview',
   props:{
@@ -80,7 +82,9 @@ export default {
                 cancelText: '取消',
                 onOk:() => {
                     console.log("ok")
-                    this.$Message.success('删除成功!');
+                    UpdateFoodCat(this.data).then(res => {
+                        this.$Message.success("修改状态成功");
+                    })
                 }
             });
     },
@@ -96,6 +100,9 @@ export default {
           onOk:() => {
               console.log("ok")
               this.$Message.success('删除成功!');
+              DelFoodCat(this.data).then(res => {
+                        this.$Message.success("修改状态成功");
+                    })
 
           }
       });

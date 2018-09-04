@@ -13,7 +13,7 @@
             draggable>
             <Form ref="form" :model="form" :rules="ruleValidate" :label-width="80">
                 <FormItem label="分类名称:" prop="name">
-                    <Input v-model="form.name" placeholder="Enter your name" />
+                    <Input v-model="form.name" placeholder="请输入分类名称" />
                 </FormItem>
                 <FormItem label="图片" prop="img">
                     <Input v-model="form.img" placeholder="请输入图片链接地址" />
@@ -84,14 +84,14 @@ import { getFoodList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '@/a
                 this.$refs.form.validate((valid) => {
                     if (valid) {
                         const params = Object.assign({}, this.form)
-                        AddFoodCat(params).then(res => {
+                        EditFoodCat(params).then(res => {
                             if (!res.error) {
-                                this.$Message.success('添加菜品成功!');
+                                this.$Message.success('添加/修改菜品分类成功!');
                                 this.handleReset('form') ;
                             }
                         })
                     } else {
-                        this.$Message.error('添加菜品失败!');
+                        this.$Message.error('添加/修改菜品失败!');
                     }
                 })
                 this.closeModal() ;

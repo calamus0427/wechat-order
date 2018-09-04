@@ -25,7 +25,7 @@
                     <Input v-model="form.img" placeholder="请输入图片链接"></Input>
                 </FormItem>
                 <FormItem label="分类" prop="cat">
-                    <Select v-model="form.cat" :disabled="foodType == 'package' ? true : false" placeholder="请选择菜品分类">
+                    <Select v-model="selected" :disabled="foodType == 'package' ? true : false" placeholder="请选择菜品分类">
                         <Option v-for="item in foodCatList" 
                             :key="item.id" 
                             :value="item.id"
@@ -46,7 +46,7 @@
     </div>
 </template>
 <script>
-import { getFoodCatList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '@/api/food'
+import { getFoodCatList,AddFood,EditFood,UpdateFood,DelFood } from '@/api/food'
 
     export default {
         name:"FoodAdd",
@@ -70,6 +70,15 @@ import { getFoodCatList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '
             }
         },
         computed:{
+            selected(){
+                if(this.foodType){
+                    let title = this.foodType == 'package' ? 2 : 1 ;
+                return title ;
+                }else{
+                    return 1 ;
+                }
+                
+            },
             title(){
                 let title = this.foodType == 'package' ? "添加套餐" : "添加菜品"
                 return title ;
@@ -84,13 +93,18 @@ import { getFoodCatList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '
             data(item){
                 if(item){
                     this.form = item;
+                    this.type = 'edit';
+                }else{
+                    this.type = 'add' ;
                 }
             }
         },
         data(){
             return {
                 isShow:false,
+                type:'add',
                 form:{
+                    id:'',
                     name:'',
                     star:3,
                     price:'',
@@ -121,17 +135,22 @@ import { getFoodCatList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '
             submit(){
                 this.$refs.form.validate((valid) => {
                     if (valid) {
+                        this.form.cat = this.selected ;
                         const params = Object.assign({}, this.form)
-                        AddFood(params).then(res => {
-                            if (!res.error) {
-                                this.$Message.success('添加菜品成功!');
-                                this.handleReset('form') ;
-                            }
-                                })
-                            } else {
-                                this.$Message.error('添加菜品失败!');
-                            }
+                        EditFood(params).then(res => {
+                        if (!res.error) {
+                            this.$Message.success('添加/修改菜品成功!');
+                            this.handleReset('form') ;
+                        }else{
+                            this.$Message.error('添加/修改菜品失败!');
+                        }})
+                    } else {
+                            console.log("addFood222",res)
+
+                        this.$Message.error('添加/修改菜品失败!');
+                    }
                 })
+                this.$Message.success('添加菜品成功!');
                 this.closeModal() ;
             },
             cancel(){

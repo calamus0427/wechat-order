@@ -56,7 +56,7 @@
                 :visible="addFoodVisible"
                 foodType="food"
                 :foodCatList="foodCatList"
-                @close="claseAdd"
+                @close="closeAdd"
                 :data="foodData">
             </add-food>
     </div>
@@ -64,8 +64,8 @@
 <script>
 import foodDetail from './components/foodDetail.vue';
 import addFood from './components/foodAdd.vue';
+import { getFoodList,getFoodCatList,DelFood,UpdateFood } from '@/api/food'
 
-import { getFoodList,getFoodCatList } from '@/api/food'
 
 
 export default {
@@ -203,9 +203,8 @@ export default {
                                                 okText: '确认',
                                                 cancelText: '取消',
                                                 onOk:() => {
-                                                    console.log("ok")
-                                                    this.$Message.success('上架成功!');
-
+                                                    let text = "上架成功!";
+                                                    this.handleUpdate(params.row,text);
                                                 }
                                             });
                                         }
@@ -225,9 +224,8 @@ export default {
                                                 okText: '确认',
                                                 cancelText: '取消',
                                                 onOk:() => {
-                                                    console.log("ok")
-                                                    this.$Message.success('下架成功!');
-
+                                                    let text = "下架成功!";
+                                                    this.handleUpdate(params.row,text);
                                                 }
                                             });
                                         }
@@ -246,9 +244,7 @@ export default {
                                                 okText: '删除',
                                                 cancelText: '取消',
                                                 onOk:() => {
-                                                    console.log("ok")
-                                                    this.$Message.success('删除成功!');
-
+                                                    this.handleDel(params.row.id)                                                 
                                                 }
                                             });
                                         }
@@ -327,6 +323,16 @@ export default {
       this.detailTitle = name ;
       this.showDetailFlag = true ;
     },
+    handleDel(params){
+        DelFood(params).then(res => {
+            this.$Message.success('删除成功!');
+        })
+    },
+    handleUpdate(params,text){
+        UpdateFood(params).then(res => {
+            this.$Message.success(text);
+        })
+    },
     handleAddFood(res){
         if(res != 'add'){
             console.log(res)
@@ -336,7 +342,7 @@ export default {
 
         this.addFoodVisible = true ;
     },
-    claseAdd(){
+    closeAdd(){
         console.log("close")
         this.addFoodVisible = false ;
         this.getList(this.page.start,this.page.length,this.currentStatus);        

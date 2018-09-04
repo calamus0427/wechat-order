@@ -4,7 +4,7 @@
           <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索" style="width: 200px"></Input>
           <br/>
           <br/>
-          <Button type="primary" size="small" @click="addUser()" ><Icon type="ios-add" />添加人员</Button>
+          <Button type="primary" size="small" @click="handleAddUser('add')" ><Icon type="ios-add" />添加人员</Button>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
           <Button type="warning" size="small" @click="refresh"><Icon type="ios-aperture" /> 刷新</Button>
           <br>
@@ -32,14 +32,15 @@
              <!-- add food -->
             <add-user
                 :visible="addUserVisible"
-                @close="claseAdd"
-                :catList="catList">
+                @close="closeAdd"
+                :catList="catList"
+                :data="UserData">
             </add-user>
     </div>
 </template>
 
 <script>
-import { getUserList,getUserCatList } from '@/api/user'
+import { getUserList,getUserCatList,DelUser,UpdateUser } from '@/api/user'
 import addUser from './components/userAdd.vue';
 
 export default {
@@ -151,7 +152,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                           console.log(params)
+                                           this.handleAddUser(params.row)
                                         }
                                     }
                                 }, '编辑'),
@@ -169,9 +170,8 @@ export default {
                                                 okText: '确认',
                                                 cancelText: '取消',
                                                 onOk:() => {
-                                                    console.log("ok")
-                                                    this.$Message.success('启用成功!');
-
+                                                    let text = "启用成功!";
+                                                    this.handleUpdate(params.row,text)
                                                 }
                                             });
                                         }
@@ -191,9 +191,8 @@ export default {
                                                 okText: '确认',
                                                 cancelText: '取消',
                                                 onOk:() => {
-                                                    console.log("ok")
-                                                    this.$Message.success('禁用成功!');
-
+                                                    let text = "禁用成功!";
+                                                    this.handleUpdate(params.row,text);
                                                 }
                                             });
                                         }
@@ -212,9 +211,7 @@ export default {
                                                 okText: '确认',
                                                 cancelText: '取消',
                                                 onOk:() => {
-                                                    console.log("ok")
-                                                    this.$Message.success('启用成功!');
-
+                                                    this.handleDel(params.row.id)
                                                 }
                                             });
                                         }
@@ -225,7 +222,8 @@ export default {
                     }
                 ],
       data: [],
-      catList:[]
+      catList:[],
+      UserData:null
     }
   },
   mounted(){
@@ -289,13 +287,28 @@ export default {
       this.detailTitle = name ;
       this.showDetailFlag = true ;
     },
-    addUser(){
-        console.log("add food",this.addFoodVisible);
-        this.addUserVisible = true ;
+    handleDel(params){
+        DelUser(params).then(res => {
+            this.$Message.success('删除成功!');
+        })
     },
-    claseAdd(){
+    handleUpdate(params,text){
+        UpdateUser(params).then(res => {
+            this.$Message.success(text);
+        })
+    },
+    handleAddUser(res){
+        this.addUserVisible = true ;
+
+        if(res != 'add'){
+            console.log(res)
+            this.UserData = res ;
+        }
+    },
+    closeAdd(){
         console.log("close")
         this.addUserVisible = false ;
+        this.getList(this.page.start,this.page.length,this.currentStatus);
     }
   }
 }
