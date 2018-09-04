@@ -10,7 +10,7 @@
           <br>
           <br>
           <Table
-            :columns="columns8"
+            :columns="columns"
             border
             :data="data"
             size="small"
@@ -87,7 +87,7 @@ export default {
           'start':1,
           'length':10,
       },
-      columns8: [
+      columns: [
                     {
                         "title": "菜品Id",
                         "key": "id",
@@ -276,7 +276,7 @@ export default {
         } else if (type === 3) {
             this.$refs.table.exportCsv({
                 filename: 'Custom data',
-                columns: this.columns8.filter((col, index) => index < 4),
+                columns: this.columns.filter((col, index) => index < 4),
                 data: this.data.filter((data, index) => index < 4)
             });
         }

@@ -9,69 +9,54 @@
             v-model="isShow"
             title="添加人员"
             @on-ok="submit"
-            @on-cancel="cancel">
-            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-                <FormItem label="Name:" prop="name">
-                    <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
+            @on-cancel="cancel"
+            draggable>
+            <Form ref="form" :model="form" :rules="ruleValidate" :label-width="100">
+                <FormItem label="名称:" prop="name">
+                    <Input v-model="form.name" placeholder="请输入身份名称" />
                 </FormItem>
-                <FormItem label="E-mail" prop="mail">
-                    <Input v-model="formValidate.mail" placeholder="Enter your e-mail"></Input>
+                <FormItem label="图片" prop="img">
+                    <Input v-model="form.img" placeholder="请输入图片链接"></Input>
                 </FormItem>
-                <FormItem label="City" prop="city">
-                    <Select v-model="formValidate.city" placeholder="Select your city">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
+                <FormItem label="分类" prop="cat">
+                    <Select v-model="form.cat" placeholder="请选择菜品分类">
+                        <Option v-for="item in catList" :key="item.id" :value="item.id">{{item.name}}</Option>
                     </Select>
                 </FormItem>
-                <FormItem label="Date">
-                    <Row>
-                        <Col span="11">
-                            <FormItem prop="date">
-                                <DatePicker type="date" placeholder="Select date" v-model="formValidate.date"></DatePicker>
-                            </FormItem>
-                        </Col>
-                        <Col span="2" style="text-align: center">-</Col>
-                        <Col span="11">
-                            <FormItem prop="time">
-                                <TimePicker type="time" placeholder="Select time" v-model="formValidate.time"></TimePicker>
-                            </FormItem>
-                        </Col>
-                    </Row>
+                <FormItem label="电话:" prop="tel">
+                    <Input v-model="form.tel" placeholder="请输入联系电话" />
                 </FormItem>
-                <FormItem label="Gender" prop="gender">
-                    <RadioGroup v-model="formValidate.gender">
-                        <Radio label="male">Male</Radio>
-                        <Radio label="female">Female</Radio>
-                    </RadioGroup>
+                <FormItem label="邮箱:" prop="email">
+                    <Input v-model="form.email" placeholder="请输入联系邮箱" />
                 </FormItem>
-                <FormItem label="Hobby" prop="interest">
-                    <CheckboxGroup v-model="formValidate.interest">
-                        <Checkbox label="Eat"></Checkbox>
-                        <Checkbox label="Sleep"></Checkbox>
-                        <Checkbox label="Run"></Checkbox>
-                        <Checkbox label="Movie"></Checkbox>
-                    </CheckboxGroup>
+                <FormItem label="是否启用" prop="status">
+                    <i-switch true-value="1" false-value="0" v-model="form.status"   size="large">
+                        <span slot="open">是</span>
+                        <span slot="close">否</span>
+                    </i-switch>
                 </FormItem>
-                <FormItem label="Desc" prop="desc">
-                    <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
-                </FormItem>
-                <FormItem>
-                    <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
-                    <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
+                <FormItem label="描述：" prop="remarks">
+                    <Input v-model="form.remarks" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入菜品描述"></Input>
                 </FormItem>
             </Form>
         </Modal>
     </div>
 </template>
 <script>
+import { getUserCatList,AddUserCat,EditUserCat,UpdateUserCat,DelUserCat } from '@/api/user'
+import isvalidPhone from '@/utils/Validate/Validate'
+
     export default {
-        name:"FoodAdd",
+        name:"UserCatAdd",
         props: {
             row: Object,
             visible:{
                 type:Boolean,
                 default:false
+            },
+            catList:{
+                type:Array,
+                required:true
             }
         },
         watch:{
@@ -83,83 +68,60 @@
         data(){
             return {
                 isShow:false,
-                formValidate: {
-                    name: '',
-                    mail: '',
-                    city: '',
-                    gender: '',
-                    interest: [],
-                    date: '',
-                    time: '',
-                    desc: '',
-                                        'id':'',
-                    'name':'',
-                    'star':'',
-                    'price':'',
-                    'shoped':0,
-                    'cat':1,
-                    'cat_name':'',
-                    'create_date':'',
-                    'update_date':'',
-                    'status':'1',
-                    'des':''
-                },
                 form: {
-                    'id':'',
-                    'name':'',
-                    'star':'',
-                    'price':'',
-                    'shoped':0,
-                    'cat':1,
-                    'cat_name':'',
-                    'create_date':'',
-                    'update_date':'',
-                    'status':'1',
-                    'des':''
+                    name: '',
+                    status: '1',
+                    remarks:'',
+                    email:'',
+                    tel:'',
+                    cat:'1'
                 },
                 ruleValidate: {
                     name: [
-                        { required: true, message: 'The name cannot be empty', trigger: 'blur' }
+                        { required: true, message: '请输入身份分类名称', trigger: 'change' }
                     ],
-                    mail: [
-                        { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
-                        { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
+                    cat: [
+                        { required: true, message: '请选择人员身份', trigger: 'change' }
                     ],
-                    city: [
-                        { required: true, message: 'Please select the city', trigger: 'change' }
+                    email: [
+                        { type: 'email', message: '请输入正确的邮箱', trigger: 'change' }
                     ],
-                    gender: [
-                        { required: true, message: 'Please select gender', trigger: 'change' }
-                    ],
-                    interest: [
-                        { required: true, type: 'array', min: 1, message: 'Choose at least one hobby', trigger: 'change' },
-                        { type: 'array', max: 2, message: 'Choose two hobbies at best', trigger: 'change' }
-                    ],
-                    date: [
-                        { required: true, type: 'date', message: 'Please select the date', trigger: 'change' }
-                    ],
-                    time: [
-                        { required: true, type: 'string', message: 'Please select time', trigger: 'change' }
-                    ],
-                    desc: [
-                        { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
-                        { type: 'string', min: 20, message: 'Introduce no less than 20 words', trigger: 'blur' }
-                    ]
+                    tel: [{ validator: isvalidPhone.cellPhone, message: '请输入正确的手机号', trigger: 'change' }]
+
                 }
 
             }
         },
         methods:{
             submit(){
+                this.$refs.form.validate((valid) => {
+                    if (valid) {
+                        const params = Object.assign({}, this.form)
+                        AddFood(params).then(res => {
+                            if (!res.error) {
+                                this.$Message.success('添加身份成功!');
+                                this.handleReset('form') ;
+                            }
+                        })
+                    } else {
+                        this.$Message.error('添加身份失败!');
+                    }
+                })
                 this.closeModal() ;
             },
             cancel(){
-
+                this.handleReset('form') ;
                 this.closeModal() ;
             },
             closeModal(){
                 this.isShow = false ;
                 this.$emit('close')
+            },
+            changeStatus(status){
+                console.log(status)
+            },
+            handleReset (name) {
+                this.$refs[name].resetFields();
             }
         }
     };

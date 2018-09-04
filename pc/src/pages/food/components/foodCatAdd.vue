@@ -64,7 +64,7 @@ import { getFoodList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '@/a
                 },
                 ruleValidate: {
                     name: [
-                        { required: true, message: 'The name cannot be empty', trigger: 'blur' }
+                        { required: true, message: 'The name cannot be empty', trigger: 'change' }
                     ]
                 }
 

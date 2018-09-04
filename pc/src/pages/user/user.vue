@@ -10,7 +10,7 @@
           <br>
           <br>
           <Table
-            :columns="columns8"
+            :columns="columns"
             border
             :data="data"
             size="small"
@@ -32,13 +32,14 @@
              <!-- add food -->
             <add-user
                 :visible="addUserVisible"
-                @close="claseAdd">
+                @close="claseAdd"
+                :catList="catList">
             </add-user>
     </div>
 </template>
 
 <script>
-import { getUserList } from '@/api/user'
+import { getUserList,getUserCatList } from '@/api/user'
 import addUser from './components/userAdd.vue';
 
 export default {
@@ -56,7 +57,7 @@ export default {
           'start':1,
           'length':10,
       },
-      columns8: [
+      columns: [
                     {
                         "title": "Id",
                         "key": "id",
@@ -182,11 +183,13 @@ export default {
                         }
                     }
                 ],
-      data: []
+      data: [],
+      catList:[]
     }
   },
   mounted(){
     this.getList(this.page.start,this.page.length,this.currentStatus);
+    this.getCatList();
   },
   methods:{
     refresh(){
@@ -197,6 +200,12 @@ export default {
     statusChange(res){
         this.currentStatus = res ;
         this.getList(this.page.start,this.page.length,this.currentStatus);
+    },
+    getCatList(){
+      getUserCatList().then(res => {
+            console.info("userCatList======>",res)
+            this.catList = res ;
+        })
     },
     getList(start,size,status){
       getUserList().then(res => {
@@ -227,7 +236,7 @@ export default {
         } else if (type === 3) {
             this.$refs.table.exportCsv({
                 filename: 'Custom data',
-                columns: this.columns8.filter((col, index) => index < 4),
+                columns: this.columns.filter((col, index) => index < 4),
                 data: this.data.filter((data, index) => index < 4)
             });
         }

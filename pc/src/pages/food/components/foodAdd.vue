@@ -9,7 +9,8 @@
             v-model="isShow"
             :title="title"
             @on-ok="submit"
-            @on-cancel="cancel">
+            @on-cancel="cancel"
+            draggable>
             <Form ref="form" :model="form" :rules="ruleValidate" :label-width="100">
                 <FormItem label="菜品名称:" prop="name">
                     <Input v-model="form.name" placeholder="请输入菜品名称"></Input>
@@ -93,16 +94,16 @@ import { getFoodCatList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '
                 },
                 ruleValidate: {
                     name: [
-                        { required: true, message: '请输入菜品名称', trigger: 'blur' }
+                        { required: true, message: '请输入菜品名称', trigger: 'change' }
                     ],
                     price: [
-                        { required: true, message: '请选择菜品价格', trigger: 'blur' }
+                        { required: true, message: '请选择菜品价格', trigger: 'change' }
                     ],
                     cat: [
-                        { required: true, message: '请选择菜品分类', trigger: 'blur' }
+                        { required: true, message: '请选择菜品分类', trigger: 'change' }
                     ],
                     des: [
-                        { required: true, message: '请输入菜品描述', trigger: 'blur' }
+                        { required: true, message: '请输入菜品描述', trigger: 'change' }
                     ]
                 }
 

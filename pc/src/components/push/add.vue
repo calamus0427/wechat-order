@@ -203,7 +203,7 @@
           </FormItem>
         </div>
         <div v-if="form.poicyType == '3'">
-          <FormItem label="机型机芯" prop="chipAndModes" :rules="{required: true, message: '请选择机芯机型', trigger: 'blur'}">
+          <FormItem label="机型机芯" prop="chipAndModes" :rules="{required: true, message: '请选择机芯机型', trigger: 'change'}">
             <Button size="small" type="ghost" shape="circle" @click="chooseModel('model',3)">选择机型</Button>
             <div v-if="form.chipAndModes" class="cl-choosed-mode">
               <p>视频源：{{form.sourceId}}</p>
@@ -326,7 +326,7 @@ export default {
           ],
           msgExpiryTime: [
               { type:'date',required: true, message: '请输入消息有效期', trigger: 'change' }
-              // { validator: checkExpiryTime, trigger: 'blur' }
+              // { validator: checkExpiryTime, trigger: 'change' }
           ],
           isMsgBox: [
               { required: true, message: '请选择是否进入消息盒子', trigger: 'change' },
@@ -349,7 +349,7 @@ export default {
               { required: true, message: '请选择弹窗UI样式', trigger: 'change' },
           ],
           iconPath: [
-              { required: true, message: '请上传图片', trigger: 'blur' },
+              { required: true, message: '请上传图片', trigger: 'change' },
           ],
           tipTime: [
               { type:'number',required: true, message: '请输入消息提示时长', trigger: 'change' },
@@ -367,7 +367,7 @@ export default {
               { required: true, message: '请选择策略类型', trigger: 'change' },
           ],
           userTypeId: [
-              { required: true, message: '请选择人群', trigger: 'blur' },
+              { required: true, message: '请选择人群', trigger: 'change' },
           ],
           macTypeId: [
               { required: true, message: '请选择MAC参数', trigger: 'change' },
@@ -404,11 +404,11 @@ export default {
           ],
           msgPushTime: [
               { type:'date',required: true, message: '请输入推送时间', trigger: 'change' },
-              // { validator: checkMsgPushTime, trigger: 'blur' }
+              // { validator: checkMsgPushTime, trigger: 'change' }
           ],
           ttl: [
               { type:'date',required: true, message: '请输入消息缓存有效期', trigger: 'change' },
-              // { validator: checkTtl, trigger: 'blur' }
+              // { validator: checkTtl, trigger: 'change' }
           ]}
     }
   },
