@@ -7,16 +7,16 @@
               <cl-header></cl-header>
             </Header>
             <Layout style="margin-top:64px;">
-              <Sider hide-trigger width="220" ref="subsider" collapsible :collapsed-width="150" v-model="isCollapsed">
+              <Sider hide-trigger width="220" ref="subsider" collapsible :collapsed-width="50" v-model="isCollapsed">
                   <Menu @on-select="redirectTo" accordion :open-names="['setting','应用列表','app','应用']" :active-name="activeMenu" theme="dark" width="auto" :class="menuitemClasses" >
-                      <MenuItem name="菜品分类管理"><Icon type="wrench"></Icon><span>菜品分类管理</span></MenuItem>
-                      <MenuItem name="菜品管理"><Icon type="compose"></Icon><span>菜品管理</span></MenuItem>
-                      <MenuItem name="套餐管理"><Icon type="settings"></Icon><span>套餐管理</span></MenuItem>
-                      <MenuItem name="数据统计"><Icon type="stats-bars"></Icon><span>数据统计</span>
+                      <MenuItem name="菜品分类管理"><Icon type="ios-american-football" /><span>菜品分类管理</span></MenuItem>
+                      <MenuItem name="菜品管理"><Icon type="ios-pizza-outline" /><span>菜品管理</span></MenuItem>
+                      <MenuItem name="套餐管理"><Icon type="md-appstore" /><span>套餐管理</span></MenuItem>
+                      <MenuItem name="数据统计"><Icon type="ios-stats-outline" /><span>数据统计</span>
                       </MenuItem>
-                      <MenuItem name="食堂人员管理"><Icon type="wrench"></Icon><span>食堂人员管理</span></MenuItem>
-                      <MenuItem name="人员角色管理"><Icon type="wrench"></Icon><span>人员角色管理</span></MenuItem>
-                      <MenuItem name="食堂信息管理"><Icon type="wrench"></Icon><span>食堂信息管理</span></MenuItem>
+                      <MenuItem name="食堂人员管理"><Icon type="md-contact" /><span>食堂人员管理</span></MenuItem>
+                      <MenuItem name="人员角色管理"><Icon type="ios-contacts" /><span>人员角色管理</span></MenuItem>
+                      <MenuItem name="食堂信息管理"><Icon type="md-copy" /><span>食堂信息管理</span></MenuItem>
                   </Menu>
               </Sider>
               <a :style="buttonTogger" class="cl-submenu-toggle" @click="collapsedSider">
@@ -59,7 +59,7 @@ import '../components/header/header'
         watch:{
           isCollapsed(cur,old){
             if(cur){
-              this.buttonTogger = {'margin-left':'150px'}
+              this.buttonTogger = {'margin-left':'50px'}
             }else{
               this.contentStyle = {padding: '0 16px 16px'}
               this.buttonTogger = {'margin-left':'220px'}
@@ -105,6 +105,9 @@ import '../components/header/header'
     }
 </script>
 <style lang="scss">
+.ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title {
+    padding: 14px 10px !important;
+}
 .cl-submenu-toggle{
   display: block;
   width:14px;
@@ -128,6 +131,7 @@ import '../components/header/header'
 </style>
 
 <style scoped>
+
 .subSider{
   background-color:#fff;
   /* margin-top:16px; */

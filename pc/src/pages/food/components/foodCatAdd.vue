@@ -17,6 +17,7 @@
                 </FormItem>
                 <FormItem label="图片" prop="img">
                     <Input v-model="form.img" placeholder="请输入图片链接地址" />
+                    <img class="previewImg" :src="form.img" />
                 </FormItem>
                 <FormItem label="启用状态" prop="status">
                     <i-switch true-value="1" false-value="0" v-model="form.status" @on-change="changeStatus"  size="large">
@@ -45,12 +46,20 @@ import { getFoodList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '@/a
             visible:{
                 type:Boolean,
                 default:false
+            },
+            data:{
+                type:Object,
+                default:null
             }
         },
         watch:{
             visible(isShow){
                 console.log("watch",isShow)
                 this.isShow = isShow 
+            },
+            data(item){
+                console.log("editCat",item)
+                this.form = Object.assign({}, item)
             }
         },
         data(){
@@ -119,6 +128,10 @@ ul {
       color: #696969;
     }
   }
+}
+.previewImg{
+    width:150px;
+    padding-top:10px;
 }
 </style>
 

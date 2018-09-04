@@ -1,7 +1,7 @@
 <template>
   <div class="cl-info" :style="styleObject">
-    <a class="getHelp" :href="document">
-      <Icon class="icon" type="help" />
+    <a class="getHelp" :href="document" target="_blank">
+      <Icon type="md-help" class="icon" />
       <span class="child">查看<br>文档</span>
     </a>
   </div>
@@ -29,7 +29,7 @@
     },
     data(){
       return {
-        document:"https://www.calamus.xyz"
+        document:"https://calamus0427.github.io/wechat-jc/#/"
       }
     },
     mounted(){
@@ -53,7 +53,7 @@
   .getHelp{
     display:block;
     height: 40px;
-    width:45px;
+    width:48px;
     text-align:center;
     color:#dcdcdc;
     &:hover{

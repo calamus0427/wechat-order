@@ -189,7 +189,17 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                           console.log("查看详情")
+                                           this.$Modal.confirm({
+                                                title: '状态更改',
+                                                content: '确认要上架该菜品么？',
+                                                okText: '确认',
+                                                cancelText: '取消',
+                                                onOk:() => {
+                                                    console.log("ok")
+                                                    this.$Message.success('上架成功!');
+
+                                                }
+                                            });
                                         }
                                     }
                                 }, '上架'),
@@ -201,7 +211,17 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                           console.log("查看详情")
+                                           this.$Modal.confirm({
+                                                title: '状态更改',
+                                                content: '确认要下架该菜品么？',
+                                                okText: '确认',
+                                                cancelText: '取消',
+                                                onOk:() => {
+                                                    console.log("ok")
+                                                    this.$Message.success('下架成功!');
+
+                                                }
+                                            });
                                         }
                                     }
                                 }, '下架'),
@@ -212,7 +232,17 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                           console.log("查看详情")
+                                           this.$Modal.confirm({
+                                                title: '删除',
+                                                content: '确认要删除该菜品么？',
+                                                okText: '删除',
+                                                cancelText: '取消',
+                                                onOk:() => {
+                                                    console.log("ok")
+                                                    this.$Message.success('删除成功!');
+
+                                                }
+                                            });
                                         }
                                     }
                                 }, '删除')

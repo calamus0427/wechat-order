@@ -2,13 +2,13 @@
 <div>
   <Input v-model="search" @on-enter="searchfoodList" @on-click="searchfoodList" icon="ios-search" placeholder="搜索应用" style="width: 200px"></Input>
         <div class="cl-foodList-container">
-            <a @click="handleAddCat">
+            <a @click="handleAddCat('add')">
               <cl-overview type="add"></cl-overview>
             </a>
-            <router-link v-for="item in foodList" :key="item.id"  :to="'/editCat/'+item.id">
-              <cl-overview v-if="item.status == 1" type="enable" :data="item"></cl-overview>
-              <cl-overview v-if="item.status == 2" type="disable" :data="item"></cl-overview>
-            </router-link>
+            <a href="javascript:;" v-for="item in foodList" :key="item.id"  :to="'/editCat/'+item.id">
+              <cl-overview  @edit="handleAddCat" v-if="item.status == 1" type="enable" :data="item"></cl-overview>
+              <cl-overview  @edit="handleAddCat" v-if="item.status == 2" type="disable" :data="item"></cl-overview>
+            </a>
         </div>
   <Page
     :total="page.dataTotal"
@@ -26,7 +26,8 @@
             <!-- add food -->
             <add-food-cat
                 :visible="addFoodCatVisible"
-                @close="claseAdd">
+                @close="claseAdd"
+                :data="catData">
             </add-food-cat>
 </div>
 
@@ -48,6 +49,7 @@ export default {
         pageSize:10,
         pageOptions:[10, 20, 50, 100]
       },
+      catData:null,
       currentStatus:'all',
       search:'',
       countAll:'0',
@@ -138,7 +140,11 @@ export default {
         this.page.currentPage = 1 ;
         this.getfoodList(this.page.currentPage,this.page.pageSize,this.currentStatus);
       },
-      handleAddCat(){
+      handleAddCat(res){
+        console.log("catData",res)
+        if(res != 'add'){
+          this.catData = res ;
+        }
         this.addFoodCatVisible = true ;
       },
       claseAdd(){

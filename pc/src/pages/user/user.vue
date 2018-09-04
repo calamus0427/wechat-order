@@ -152,7 +152,17 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                           console.log("查看详情")
+                                           this.$Modal.confirm({
+                                                title: '状态修改',
+                                                content: '确认要启用该人员么？',
+                                                okText: '确认',
+                                                cancelText: '取消',
+                                                onOk:() => {
+                                                    console.log("ok")
+                                                    this.$Message.success('启用成功!');
+
+                                                }
+                                            });
                                         }
                                     }
                                 }, '启用'),
@@ -164,7 +174,17 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                           console.log("查看详情")
+                                           this.$Modal.confirm({
+                                                title: '状态修改',
+                                                content: '确认要禁用该人员么？',
+                                                okText: '确认',
+                                                cancelText: '取消',
+                                                onOk:() => {
+                                                    console.log("ok")
+                                                    this.$Message.success('禁用成功!');
+
+                                                }
+                                            });
                                         }
                                     }
                                 }, '禁用'),
@@ -175,7 +195,17 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                           console.log("查看详情")
+                                           this.$Modal.confirm({
+                                                title: '删除',
+                                                content: '确认要删除该人员么？',
+                                                okText: '确认',
+                                                cancelText: '取消',
+                                                onOk:() => {
+                                                    console.log("ok")
+                                                    this.$Message.success('启用成功!');
+
+                                                }
+                                            });
                                         }
                                     }
                                 }, '删除')

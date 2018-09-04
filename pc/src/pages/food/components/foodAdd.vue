@@ -119,10 +119,10 @@ import { getFoodCatList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '
                                 this.$Message.success('添加菜品成功!');
                                 this.handleReset('form') ;
                             }
-                        })
-                    } else {
-                        this.$Message.error('添加菜品失败!');
-                    }
+                                })
+                            } else {
+                                this.$Message.error('添加菜品失败!');
+                            }
                 })
                 this.closeModal() ;
             },

@@ -1,4 +1,0 @@
-<!--start.wxml-->
-<view class="container">
-  <image bindtap="home" class="bgImages" src="{{bgImage}}" />
-</view>

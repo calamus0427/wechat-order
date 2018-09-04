@@ -1,8 +1,0 @@
-/* login.wxss */
-.weui-label {
-  width: 5em;
-}
-.weui-vcode-btn {
-  min-width: 4em;
-  text-align: center;
-}

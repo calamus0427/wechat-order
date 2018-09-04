@@ -11,8 +11,6 @@ import signin from '../pages/login/signin.vue'
 import index from '../pages/index.vue'
 //错误页面
 import code404 from '../pages/error/404.vue'
-//文档页面
-import ducument from '../pages/document/index.vue'
 
 //菜品管理
 //分类管理
@@ -123,11 +121,6 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
-        },
-        {
-            path: '/ducument',
-            name: 'ducument',
-            component: ducument
         },
         {
             path: '/error',

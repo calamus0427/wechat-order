@@ -1,18 +1,30 @@
 <template>
   <div>
-    <div v-if="type=='enable'" class="cl-overview cl-overview-enable">
+    <div v-if="type=='enable'" class="cl-overview cl-overview-enable" :class="data.status == 1 ? 'enable' : 'disable'">
       <div class="cl-overview-avator" v-bind:style="{backgroundImage:'url(' + data.img + ')'}">
 
       </div>
       <div class="cl-overview-detail">
         <Row>
-            <Col span="24">{{data.name}}（id：{{data.id}}）</Col>
+          <Tooltip max-width="200" :content="data.des || data.name">
+              <Col span="24" style="color:#515a6e;font-weight:bold">{{data.name}}（id：{{data.id}}）</Col>
+          </Tooltip>
         </Row>
         <Row>
             <Col span="24"><Icon type="ios-time-outline" />{{data.update_date}}</Col>
         </Row>
         <Row>
-            <Col span="24">备注：{{data.des}}</Col>
+            <ButtonGroup size="small">
+              <Tooltip max-width="200" content="编辑">
+                <Button icon="md-brush" size="small" @click="handleEdit"></Button>                
+              </Tooltip>
+              <Tooltip max-width="200" :content="data.status == 1 ? '禁用' : '启用'">
+                <Button @click="handleUpdate" :icon="data.status == 1 ? 'md-eye-off' : 'md-eye'" size="small"></Button>                
+              </Tooltip>
+              <Tooltip max-width="200" content="删除">
+                <Button icon="md-trash" @click="handleDel" size="small"></Button>                
+              </Tooltip>
+            </ButtonGroup>
         </Row>
       </div>
     </div>
@@ -57,6 +69,36 @@ export default {
   methods:{
     goRoute(res){
       this.$router.push({path:res})
+    },
+    handleUpdate(){
+      let status = this.data.status ;
+      let text = status == 1 ? '禁用' :'启用' ;
+      this.$Modal.confirm({
+                title: '状态修改',
+                content: '确认要 '+ text  +' 该分类么？',
+                okText: '确认',
+                cancelText: '取消',
+                onOk:() => {
+                    console.log("ok")
+                    this.$Message.success('删除成功!');
+                }
+            });
+    },
+    handleEdit(){
+      this.$emit('edit',this.data)
+    },
+    handleDel(){
+      this.$Modal.confirm({
+          title: '删除',
+          content: '确认要删除该分类么？',
+          okText: '删除',
+          cancelText: '取消',
+          onOk:() => {
+              console.log("ok")
+              this.$Message.success('删除成功!');
+
+          }
+      });
     }
   }
 }
@@ -99,7 +141,9 @@ a div,span,text{
     }
   }
 }
-
+.disable{
+  background-color: #8080808c;
+}
 .cl-overview-add{
   display: flex;
   align-items: center;
