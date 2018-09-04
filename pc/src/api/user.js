@@ -9,7 +9,7 @@ import http from '@/utils/http'
  * @param {any} params
  * @returns
  */
-export function orderUser () {
+export function orderUser (params) {
     return http.post(
       '/order_user'
     )
@@ -23,9 +23,10 @@ export function orderUser () {
  * @param {any} params
  * @returns
  */
-export function getUserList () {
+export function getUserList (params) {
     return http.post(
-      '/user/get_users'
+      '/user/get_users',
+      params
     )
   }
 
@@ -37,9 +38,10 @@ export function getUserList () {
  * @param {any} params
  * @returns
  */
-export function getUserCatList () {
+export function getUserCatList (params) {
     return http.post(
-      '/user/get_user_cat'
+      '/user/get_user_cat',
+      params
     )
   }
 
@@ -51,9 +53,10 @@ export function getUserCatList () {
  * @param {any} params
  * @returns
  */
-export function EditUser () {
+export function EditUser (params) {
     return http.post(
-      '/user/edit'
+      '/user/edit',
+      params
     )
   }
 
@@ -64,9 +67,10 @@ export function EditUser () {
  * @param {any} params
  * @returns
  */
-export function UpdateUser () {
+export function UpdateUser (params) {
     return http.post(
-      '/user/update'
+      '/user/update',
+      params
     )
   }
 
@@ -78,9 +82,10 @@ export function UpdateUser () {
  * @param {any} params
  * @returns
  */
-export function AddUser () {
+export function AddUser (params) {
     return http.post(
-      '/user/add'
+      '/user/add',
+      params
     )
   }
 
@@ -92,9 +97,10 @@ export function AddUser () {
  * @param {any} params
  * @returns
  */
-export function DelUser () {
+export function DelUser (params) {
     return http.post(
-      '/user/del'
+      '/user/del',
+      params
     )
   }
 
@@ -106,9 +112,10 @@ export function DelUser () {
  * @param {any} params
  * @returns
  */
-export function AddUserCat () {
+export function AddUserCat (params) {
     return http.post(
-      '/user/cat/add'
+      '/user/cat/add',
+      params
     )
   }
 
@@ -120,9 +127,10 @@ export function AddUserCat () {
  * @param {any} params
  * @returns
  */
-export function EditUserCat () {
+export function EditUserCat (params) {
     return http.post(
-      '/user/cat/edit'
+      '/user/cat/edit',
+      params
     )
   }
 
@@ -133,9 +141,10 @@ export function EditUserCat () {
  * @param {any} params
  * @returns
  */
-export function UpdateUserCat () {
+export function UpdateUserCat (params) {
     return http.post(
-      '/user/cat/update'
+      '/user/cat/update',
+      params
     )
   }
 
@@ -146,8 +155,9 @@ export function UpdateUserCat () {
  * @param {any} params
  * @returns
  */
-export function DelUserCat () {
+export function DelUserCat (params) {
     return http.post(
-      '/user/cat/del'
+      '/user/cat/del',
+      params
     )
   }

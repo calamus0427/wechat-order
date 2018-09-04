@@ -4,8 +4,9 @@
           <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索" style="width: 200px"></Input>
           <br/>
           <br/>
+          <Button type="primary" size="small" @click="addFood()" ><Icon type="ios-add" />添加套餐</Button>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
-          <Button type="warning" size="small" @click="refresh"><Icon type="ios-download-outline"></Icon> 刷新</Button>
+          <Button type="warning" size="small" @click="refresh"><Icon type="ios-aperture" />刷新</Button>
           <br>
           <br>
           <Table
@@ -53,18 +54,31 @@
               </ul>
             </div>
           </Modal>
+
+                    <!-- add food -->
+            <add-food 
+                :visible="addFoodVisible"
+                :type="addFoodType"
+                :foodCatList="foodCatList"
+                @close="claseAdd"
+            >
+            </add-food>
     </div>
 </template>
 <script>
 import foodDetail from './components/foodDetail.vue';
-import { getFoodList } from '@/api/food'
+import { getFoodList,getFoodCatList } from '@/api/food'
+import addFood from './components/foodAdd.vue';
+
 
 export default {
-  components: { foodDetail },
+  components: { foodDetail,addFood },
   data () {
     return {
       search:'',
       showDetailFlag:false,
+      addFoodVisible:false,
+      addFoodType:"packge",
       detailTitle:'',
       pageOptions:[10, 20, 50, 100],
       currentStatus:'all',
@@ -170,7 +184,8 @@ export default {
                                 h('Button', {
                                     props: {
                                         type: 'text',
-                                        size: 'small'
+                                        size: 'small',
+                                        disabled: params.row.status == 1 ? true : false 
                                     },
                                     on: {
                                         click: () => {
@@ -181,7 +196,8 @@ export default {
                                 h('Button', {
                                     props: {
                                         type: 'text',
-                                        size: 'small'
+                                        size: 'small',
+                                        disabled: params.row.status == 1 ? false : true 
                                     },
                                     on: {
                                         click: () => {
@@ -204,11 +220,13 @@ export default {
                         }
                     }
                 ],
-      data: []
+      data: [],
+      foodCatList:[]
     }
   },
   mounted(){
     this.getList(this.page.start,this.page.length,this.currentStatus);
+    this.getCatList();
   },
   methods:{
     refresh(){
@@ -220,6 +238,12 @@ export default {
         this.currentStatus = res ;
         this.getList(this.page.start,this.page.length,this.currentStatus);
     },
+    getCatList(){
+      getFoodCatList().then(res => {
+            var foodCatList = res
+            this.foodCatList = foodCatList ;
+        })
+      },
     getList(start,size,status){
         getFoodList().then(res => {
             console.info("FoodList======>",res);
@@ -264,6 +288,14 @@ export default {
       this.detailTitle = name ;
       this.showDetailFlag = true ;
     },
+    addFood(){
+        console.log("add food",this.addFoodVisible);
+        this.addFoodVisible = true ;
+    },
+    claseAdd(){
+        console.log("close")
+        this.addFoodVisible = false ;
+    }
   }
 }
 </script>

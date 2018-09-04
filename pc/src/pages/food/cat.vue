@@ -2,9 +2,9 @@
 <div>
   <Input v-model="search" @on-enter="searchfoodList" @on-click="searchfoodList" icon="ios-search" placeholder="搜索应用" style="width: 200px"></Input>
         <div class="cl-foodList-container">
-            <router-link to="/addCat">
+            <a @click="handleAddCat">
               <cl-overview type="add"></cl-overview>
-            </router-link>
+            </a>
             <router-link v-for="item in foodList" :key="item.id"  :to="'/editCat/'+item.id">
               <cl-overview v-if="item.status == 1" type="enable" :data="item"></cl-overview>
               <cl-overview v-if="item.status == 2" type="disable" :data="item"></cl-overview>
@@ -22,15 +22,23 @@
     show-elevator
     show-sizer>
   </Page>
+
+            <!-- add food -->
+            <add-food-cat
+                :visible="addFoodCatVisible"
+                @close="claseAdd">
+            </add-food-cat>
 </div>
 
 </template>
 <script>
 import '../../components/card/overview.js'
 import { getFoodCatList } from '@/api/food'
+import addFoodCat from './components/foodCatAdd.vue';
 
 
 export default {
+  components: { addFoodCat },
   data () {
     return {
       foodList:[],
@@ -45,6 +53,7 @@ export default {
       countAll:'0',
       countAble:'0',
       countDisable:'0',
+      addFoodCatVisible:false,
       allLabel: (h) => {
                    return h('div', [
                         h('Badge',{
@@ -110,7 +119,7 @@ export default {
             console.info("FoodList======>",res);
             var foodList = res
             this.foodList = foodList ;
-            this.page.total = parseInt(foodList.length)
+            this.page.dataTotal = parseInt(foodList.length)
         })
       },
       getCount(){
@@ -128,6 +137,12 @@ export default {
         this.currentStatus = res ;
         this.page.currentPage = 1 ;
         this.getfoodList(this.page.currentPage,this.page.pageSize,this.currentStatus);
+      },
+      handleAddCat(){
+        this.addFoodCatVisible = true ;
+      },
+      claseAdd(){
+        this.addFoodCatVisible = false ;
       }
   }
 }

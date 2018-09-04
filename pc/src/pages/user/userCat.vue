@@ -6,7 +6,7 @@
           <br/>
           <Button type="primary" size="small" @click="addUser()" ><Icon type="ios-add" />添加人员</Button>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
-          <Button type="warning" size="small" @click="refresh"><Icon type="ios-download-outline"></Icon> 刷新</Button>
+          <Button type="warning" size="small" @click="refresh"><Icon type="ios-aperture" />刷新</Button>
           <br>
           <br>
           <Table
@@ -29,14 +29,20 @@
               show-elevator
               show-sizer>
             </Page>
-    </Tabs>
+              <!-- add user cat -->
+            <add-user-cat
+                :visible="addUserVisible"
+                @close="claseAdd">
+            </add-user-cat>
     </div>
 </template>
 <script>
 import { getUserCatList } from '@/api/user'
+import addUserCat from './components/userCatAdd.vue';
 
 
 export default {
+  components: { addUserCat },
   data () {
     return {
       search:'',
@@ -44,6 +50,7 @@ export default {
       detailTitle:'',
       pageOptions:[10, 20, 50, 100],
       currentStatus:'all',
+      addUserVisible:false,
       page:{
           'total':0,
           'start':1,
@@ -71,7 +78,7 @@ export default {
                                 props: {
                                     color: params.row.status== 1 ? 'green' :'red'
                                 }
-                            },params.row.status == 1 ? '正常' : '禁用')
+                            },params.row.status == 1 ? '正常' : '已禁用')
                         }
                     },
                     {
@@ -83,9 +90,33 @@ export default {
                         "title": "操作",
                         "key": "action",
                         'fixed': 'right',
-                        "width": 100,
+                        "width": 180,
                         render: (h, params) => {
                             return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small',
+                                        disabled: params.row.status == 1 ? true : false 
+                                    },
+                                    on: {
+                                        click: () => {
+                                           console.log("查看详情")
+                                        }
+                                    }
+                                }, '启用'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small',
+                                        disabled: params.row.status == 1 ? false : true 
+                                    },
+                                    on: {
+                                        click: () => {
+                                           console.log("查看详情")
+                                        }
+                                    }
+                                }, '禁用'),
                                 h('Button', {
                                     props: {
                                         type: 'text',
@@ -159,7 +190,12 @@ export default {
       this.showDetailFlag = true ;
     },
     addUser(){
-        
+        console.log("add food",this.addFoodVisible);
+        this.addUserVisible = true ;
+    },
+    claseAdd(){
+        console.log("close")
+        this.addUserVisible = false ;
     }
   }
 }

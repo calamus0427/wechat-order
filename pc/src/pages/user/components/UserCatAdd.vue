@@ -7,7 +7,7 @@
     <div>
        <Modal
             v-model="isShow"
-            title="添加菜品"
+            title="添加人员分类"
             @on-ok="submit"
             @on-cancel="cancel">
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">

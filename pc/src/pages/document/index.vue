@@ -1,7 +1,7 @@
 <template>
   <div class="cl-flex-center">
     <cl-canvasBg1></cl-canvasBg1>
-    <router-link to="/" class="cl-welcome-title">酷开推送</router-link>
+    <router-link to="/" class="cl-welcome-title">说明文档</router-link>
   </div>
 </template>
 

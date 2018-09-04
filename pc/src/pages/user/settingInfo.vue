@@ -7,43 +7,45 @@
 
 <Tabs>
         <TabPane label="食堂信息">
-<Form :model="form" ref="form" label-position="left" :label-width="100">
-     <div class="ra-setting">
-        <div class="ra-setting-title">食堂信息</div>
-        <FormItem label="食堂名：">
-          {{form.resname}}
-        </FormItem>
-      </div>
-      <div class="ra-setting">
-        <div class="ra-setting-title">院区信息</div>
-        <FormItem label="所属医院：">
-          {{form.hospital}}
-            <!-- <Input v-model="form.type"></Input> -->
-        </FormItem>
-        <FormItem label="院区：">
-          {{form.district}}
-            <!-- <Input v-model="form.loginName"></Input> -->
-        </FormItem>
-      </div>
-      <div class="ra-setting">
-        <div class="ra-setting-title">位置信息</div>
-        <FormItem label="详细地址：">
-          {{form.address}}
-          <!-- Todo:添加地图 -->
-            <!-- <Input v-model="form.phone"></Input> -->
-        </FormItem>
-      </div>
-      <!-- <FormItem>
-            <Button type="primary" @click="updateUserInfo('form')">确定</Button>
-            <Button type="ghost" style="margin-left: 8px">取消</Button>
-      </FormItem> -->
-    </Form>
+          <Form :model="form" ref="form" label-position="left" :label-width="100">
+            <div class="ra-setting">
+                <div class="ra-setting-title">食堂信息</div>
+                <FormItem label="食堂名：">
+                  {{form.resname}}
+                </FormItem>
+              </div>
+              <div class="ra-setting">
+                <div class="ra-setting-title">院区信息</div>
+                <FormItem label="所属医院：">
+                  {{form.hospital}}
+                    <!-- <Input v-model="form.type"></Input> -->
+                </FormItem>
+                <FormItem label="院区：">
+                  {{form.district}}
+                    <!-- <Input v-model="form.loginName"></Input> -->
+                </FormItem>
+              </div>
+              <div class="ra-setting">
+                <div class="ra-setting-title">位置信息</div>
+                <FormItem label="详细地址：">
+                  {{form.address}}
+                  <!-- Todo:添加地图 -->
+                    <!-- <Input v-model="form.phone"></Input> -->
+                </FormItem>
+              </div>
+              <!-- <FormItem>
+                    <Button type="primary" @click="updateUserInfo('form')">确定</Button>
+                    <Button type="ghost" style="margin-left: 8px">取消</Button>
+              </FormItem> -->
+            </Form>
         </TabPane>
 </Tabs>
 
   </div>
 </template>
 <script>
+import { getHospitalInfo } from '@/api/common'
+
 export default {
   data () {
     return {
@@ -62,12 +64,11 @@ export default {
   },
   methods:{
     getInfo(){
-      let url =this.$request.getInfo;
-          this.$http.get(url)
+          getHospitalInfo()
             .then( (res)=> {
-              this.form = res.data[0];
+              this.form = res[0];
             },(err)=>{
-              console.error('获取用户信息失败',err);
+              console.error('获取信息失败',err);
             })
     }
   }

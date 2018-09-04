@@ -7,64 +7,43 @@
     <div>
        <Modal
             v-model="isShow"
-            title="添加菜品"
+            :title="title"
             @on-ok="submit"
             @on-cancel="cancel">
-            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-                <FormItem label="Name:" prop="name">
-                    <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
+            <Form ref="form" :model="form" :rules="ruleValidate" :label-width="100">
+                <FormItem label="菜品名称:" prop="name">
+                    <Input v-model="form.name" placeholder="请输入菜品名称"></Input>
                 </FormItem>
-                <FormItem label="E-mail" prop="mail">
-                    <Input v-model="formValidate.mail" placeholder="Enter your e-mail"></Input>
+                <FormItem label="评价:" prop="star">
+                    <Rate show-text v-model="form.star" />
                 </FormItem>
-                <FormItem label="City" prop="city">
-                    <Select v-model="formValidate.city" placeholder="Select your city">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
+                <FormItem label="价格:" prop="price">
+                    <Input v-model="form.price" placeholder="请输入菜品价格"></Input>
+                </FormItem>
+                <FormItem label="图片" prop="img">
+                    <Input v-model="form.img" placeholder="请输入图片链接"></Input>
+                </FormItem>
+                <FormItem label="分类" prop="cat">
+                    <Select v-model="form.cat" placeholder="请选择菜品分类">
+                        <Option v-for="item in foodCatList" :key="item.id" :value="item.id">{{item.name}}</Option>
                     </Select>
                 </FormItem>
-                <FormItem label="Date">
-                    <Row>
-                        <Col span="11">
-                            <FormItem prop="date">
-                                <DatePicker type="date" placeholder="Select date" v-model="formValidate.date"></DatePicker>
-                            </FormItem>
-                        </Col>
-                        <Col span="2" style="text-align: center">-</Col>
-                        <Col span="11">
-                            <FormItem prop="time">
-                                <TimePicker type="time" placeholder="Select time" v-model="formValidate.time"></TimePicker>
-                            </FormItem>
-                        </Col>
-                    </Row>
+                <FormItem label="是否立即上架" prop="status">
+                    <i-switch true-value="1" false-value="0" v-model="form.status"   size="large">
+                        <span slot="open">是</span>
+                        <span slot="close">否</span>
+                    </i-switch>
                 </FormItem>
-                <FormItem label="Gender" prop="gender">
-                    <RadioGroup v-model="formValidate.gender">
-                        <Radio label="male">Male</Radio>
-                        <Radio label="female">Female</Radio>
-                    </RadioGroup>
-                </FormItem>
-                <FormItem label="Hobby" prop="interest">
-                    <CheckboxGroup v-model="formValidate.interest">
-                        <Checkbox label="Eat"></Checkbox>
-                        <Checkbox label="Sleep"></Checkbox>
-                        <Checkbox label="Run"></Checkbox>
-                        <Checkbox label="Movie"></Checkbox>
-                    </CheckboxGroup>
-                </FormItem>
-                <FormItem label="Desc" prop="desc">
-                    <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
-                </FormItem>
-                <FormItem>
-                    <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
-                    <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
+                <FormItem label="描述：" prop="desc">
+                    <Input v-model="form.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入菜品描述"></Input>
                 </FormItem>
             </Form>
         </Modal>
     </div>
 </template>
 <script>
+import { getFoodCatList,AddFoodCat,EditFoodCat,UpdateFoodCat,DelFoodCat } from '@/api/food'
+
     export default {
         name:"FoodAdd",
         props: {
@@ -72,78 +51,58 @@
             visible:{
                 type:Boolean,
                 default:false
+            },
+            type:{
+                type:String,
+                default:''
+            },
+            foodCatList:{
+                type:Array,
+                default:[]
+            }
+        },
+        computed:{
+            title(){
+                return this.type == 'package' ? "添加套餐" : "添加菜品"
             }
         },
         watch:{
             visible(isShow){
-                console.log("watch",isShow)
                 this.isShow = isShow 
+            },
+            type(newType,oldType){
+                console.log("typr",newType)
+                    if(newType){
+                        this.title =  newType== 'package' ? "添加套餐" : "添加菜品";
+                        this.form.cat = newType== 'package' ? 1 : 2;
+                    }
             }
         },
         data(){
             return {
                 isShow:false,
-                formValidate: {
-                    name: '',
-                    mail: '',
-                    city: '',
-                    gender: '',
-                    interest: [],
-                    date: '',
-                    time: '',
-                    desc: '',
-                                        'id':'',
-                    'name':'',
-                    'star':'',
-                    'price':'',
-                    'shoped':0,
-                    'cat':1,
-                    'cat_name':'',
-                    'create_date':'',
-                    'update_date':'',
-                    'status':'1',
-                    'des':''
-                },
                 form: {
-                    'id':'',
-                    'name':'',
-                    'star':'',
-                    'price':'',
-                    'shoped':0,
-                    'cat':1,
-                    'cat_name':'',
-                    'create_date':'',
-                    'update_date':'',
-                    'status':'1',
-                    'des':''
+                    name:'',
+                    star:3,
+                    price:'',
+                    shoped:0,
+                    cat:1,
+                    cat_name:'',
+                    status:'1',
+                    des:''
                 },
                 ruleValidate: {
                     name: [
-                        { required: true, message: 'The name cannot be empty', trigger: 'blur' }
+                        { required: true, message: '请输入菜品名称', trigger: 'blur' }
                     ],
-                    mail: [
-                        { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
-                        { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
+                    price: [
+                        { required: true, message: '请选择菜品价格', trigger: 'blur' }
                     ],
-                    city: [
-                        { required: true, message: 'Please select the city', trigger: 'change' }
+                    cat: [
+                        { required: true, message: '请选择菜品分类', trigger: 'blur' }
                     ],
-                    gender: [
-                        { required: true, message: 'Please select gender', trigger: 'change' }
-                    ],
-                    interest: [
-                        { required: true, type: 'array', min: 1, message: 'Choose at least one hobby', trigger: 'change' },
-                        { type: 'array', max: 2, message: 'Choose two hobbies at best', trigger: 'change' }
-                    ],
-                    date: [
-                        { required: true, type: 'date', message: 'Please select the date', trigger: 'change' }
-                    ],
-                    time: [
-                        { required: true, type: 'string', message: 'Please select time', trigger: 'change' }
-                    ],
-                    desc: [
-                        { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
-                        { type: 'string', min: 20, message: 'Introduce no less than 20 words', trigger: 'blur' }
+                    des: [
+                        { required: true, message: '请输入菜品描述', trigger: 'blur' }
                     ]
                 }
 
@@ -151,15 +110,34 @@
         },
         methods:{
             submit(){
+                this.$refs.form.validate((valid) => {
+                    if (valid) {
+                        const params = Object.assign({}, this.form)
+                        AddFood(params).then(res => {
+                            if (!res.error) {
+                                this.$Message.success('添加菜品成功!');
+                                this.handleReset('form') ;
+                            }
+                        })
+                    } else {
+                        this.$Message.error('添加菜品失败!');
+                    }
+                })
                 this.closeModal() ;
             },
             cancel(){
-
+                this.handleReset('form') ;
                 this.closeModal() ;
             },
             closeModal(){
                 this.isShow = false ;
                 this.$emit('close')
+            },
+            changeStatus(status){
+                console.log(status)
+            },
+            handleReset (name) {
+                this.$refs[name].resetFields();
             }
         }
     };

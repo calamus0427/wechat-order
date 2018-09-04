@@ -6,7 +6,7 @@
           <br/>
           <Button type="primary" size="small" @click="addFood()" ><Icon type="ios-add" />添加菜品</Button>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
-          <Button type="warning" size="small" @click="refresh"><Icon type="ios-download-outline"></Icon> 刷新</Button>
+          <Button type="warning" size="small" @click="refresh"><Icon type="ios-aperture" />刷新</Button>
           <br>
           <br>
           <Table
@@ -54,6 +54,7 @@
           <!-- add food -->
             <add-food 
                 :visible="addFoodVisible"
+                :foodCatList="foodCatList"
                 @close="claseAdd">
             </add-food>
     </div>
@@ -62,7 +63,7 @@
 import foodDetail from './components/foodDetail.vue';
 import addFood from './components/foodAdd.vue';
 
-import { getFoodList } from '@/api/food'
+import { getFoodList,getFoodCatList } from '@/api/food'
 
 
 export default {
@@ -224,23 +225,13 @@ export default {
                         }
                     }
                 ],
-      data: [
-      {
-              "title": "泡馍",
-              "id": 1,
-              'des':'我最爱吃的',
-              'cat':'主食',
-              'price':25,
-              'star':'5',
-              'img':'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1899144149,2796372996&fm=27&gp=0.jpg',
-              'createTime':'2018-07-06',
-              'status':1
-          }
-      ]
+      data: [],
+      foodCatList:[]
     }
   },
   mounted(){
     this.getList(this.page.start,this.page.length,this.currentStatus);
+    this.getCatList();
   },
   methods:{
     refresh(){
@@ -262,6 +253,12 @@ export default {
             this.page.total = foodList.length;
         })
     },
+    getCatList(){
+      getFoodCatList().then(res => {
+            var foodCatList = res
+            this.foodCatList = foodCatList ;
+        })
+      },
       //页码切换
       changePage(res){
         this.page.start = res ;
@@ -303,6 +300,7 @@ export default {
     claseAdd(){
         console.log("close")
         this.addFoodVisible = false ;
+        this.getList(this.page.start,this.page.length,this.currentStatus);        
     }
   }
 }

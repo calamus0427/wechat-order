@@ -9,9 +9,10 @@ import http from '@/utils/http'
  * @param {any} params
  * @returns
  */
-export function orderFood () {
+export function orderFood (params) {
     return http.post(
-      '/order_food'
+      '/order_food',
+      params
     )
   }
 
@@ -23,9 +24,10 @@ export function orderFood () {
  * @param {any} params
  * @returns
  */
-export function getFoodList () {
+export function getFoodList (params) {
     return http.post(
-      '/food/get_food'
+      '/food/get_food',
+      params
     )
   }
 
@@ -37,9 +39,10 @@ export function getFoodList () {
  * @param {any} params
  * @returns
  */
-export function getFoodCatList () {
+export function getFoodCatList (params) {
     return http.post(
-      '/food/get_food_cat'
+      '/food/get_food_cat',
+      params
     )
   }
 
@@ -51,9 +54,10 @@ export function getFoodCatList () {
  * @param {any} params
  * @returns
  */
-export function EditFood () {
+export function EditFood (params) {
     return http.post(
-      '/food/edit'
+      '/food/edit',
+      params
     )
   }
 
@@ -64,9 +68,10 @@ export function EditFood () {
  * @param {any} params
  * @returns
  */
-export function UpdateFood () {
+export function UpdateFood (params) {
     return http.post(
-      '/food/update'
+      '/food/update',
+      params
     )
   }
 
@@ -78,9 +83,10 @@ export function UpdateFood () {
  * @param {any} params
  * @returns
  */
-export function AddFood () {
+export function AddFood (params) {
     return http.post(
-      '/food/add'
+      '/food/add',
+      params
     )
   }
 
@@ -92,9 +98,10 @@ export function AddFood () {
  * @param {any} params
  * @returns
  */
-export function DelFood () {
+export function DelFood (params) {
     return http.post(
-      '/food/del'
+      '/food/del',
+      params
     )
   }
 
@@ -106,9 +113,10 @@ export function DelFood () {
  * @param {any} params
  * @returns
  */
-export function AddFoodCat () {
+export function AddFoodCat (params) {
     return http.post(
-      '/food/cat/add'
+      '/food/cat/add',
+      params
     )
   }
 
@@ -120,9 +128,10 @@ export function AddFoodCat () {
  * @param {any} params
  * @returns
  */
-export function EditFoodCat () {
+export function EditFoodCat (params) {
     return http.post(
-      '/food/cat/edit'
+      '/food/cat/edit',
+      params
     )
   }
 
@@ -133,9 +142,10 @@ export function EditFoodCat () {
  * @param {any} params
  * @returns
  */
-export function UpdateFoodCat () {
+export function UpdateFoodCat (params) {
     return http.post(
-      '/food/cat/update'
+      '/food/cat/update',
+      params
     )
   }
 
@@ -146,8 +156,9 @@ export function UpdateFoodCat () {
  * @param {any} params
  * @returns
  */
-export function DelFoodCat () {
+export function DelFoodCat (params) {
     return http.post(
-      '/food/cat/del'
+      '/food/cat/del',
+      params
     )
   }

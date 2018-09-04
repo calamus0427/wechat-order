@@ -4,9 +4,9 @@
           <Input v-model="search" @on-enter="searchAppList" @on-click="searchAppList" icon="ios-search" placeholder="搜索" style="width: 200px"></Input>
           <br/>
           <br/>
-          <Button type="primary" size="small" @click="addUser()" ><Icon type="ios-add" />添加人员分类</Button>
+          <Button type="primary" size="small" @click="addUser()" ><Icon type="ios-add" />添加人员</Button>
           <Button type="primary" size="small" @click="exportData(1)"><Icon type="ios-download-outline"></Icon> 导出数据</Button>
-          <Button type="warning" size="small" @click="refresh"><Icon type="ios-download-outline"></Icon> 刷新</Button>
+          <Button type="warning" size="small" @click="refresh"><Icon type="ios-aperture" /> 刷新</Button>
           <br>
           <br>
           <Table
@@ -29,14 +29,20 @@
               show-elevator
               show-sizer>
             </Page>
-    </Tabs>
+             <!-- add food -->
+            <add-user
+                :visible="addUserVisible"
+                @close="claseAdd">
+            </add-user>
     </div>
 </template>
 
 <script>
 import { getUserList } from '@/api/user'
+import addUser from './components/userAdd.vue';
 
 export default {
+  components: { addUser },
   data () {
     return {
       search:'',
@@ -44,6 +50,7 @@ export default {
       detailTitle:'',
       pageOptions:[10, 20, 50, 100],
       currentStatus:'all',
+      addUserVisible:false,
       page:{
           'total':0,
           'start':1,
@@ -107,8 +114,21 @@ export default {
                         "sortable": true
                     },
                     {
+                        "title": "状态",
+                        "key": "status",
+                        "width": 120,
+                        "sortable": true,
+                        render: (h, params) => {
+                            return h('Tag', {
+                                props: {
+                                    color: params.row.status== 1 ? 'green' :'red'
+                                }
+                            },params.row.status == 1 ? '正常' : '已禁用')
+                        }
+                    },
+                    {
                         "title": "创建时间",
-                        "key": "createTime",
+                        "key": "creat_date",
                         "width": 180,
                         "sortable": true
                     },
@@ -120,9 +140,33 @@ export default {
                         "title": "操作",
                         "key": "action",
                         'fixed': 'right',
-                        "width": 100,
+                        "width": 180,
                         render: (h, params) => {
                             return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small',
+                                        disabled: params.row.status == 1 ? true : false 
+                                    },
+                                    on: {
+                                        click: () => {
+                                           console.log("查看详情")
+                                        }
+                                    }
+                                }, '启用'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small',
+                                        disabled: params.row.status == 1 ? false : true 
+                                    },
+                                    on: {
+                                        click: () => {
+                                           console.log("查看详情")
+                                        }
+                                    }
+                                }, '禁用'),
                                 h('Button', {
                                     props: {
                                         type: 'text',
@@ -196,7 +240,12 @@ export default {
       this.showDetailFlag = true ;
     },
     addUser(){
-        
+        console.log("add food",this.addFoodVisible);
+        this.addUserVisible = true ;
+    },
+    claseAdd(){
+        console.log("close")
+        this.addUserVisible = false ;
     }
   }
 }

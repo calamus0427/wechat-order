@@ -9,7 +9,7 @@
             <Col span="24">{{data.name}}（id：{{data.id}}）</Col>
         </Row>
         <Row>
-            <Col span="24"><Icon type="clock" />{{data.update_date}}</Col>
+            <Col span="24"><Icon type="ios-time-outline" />{{data.update_date}}</Col>
         </Row>
         <Row>
             <Col span="24">备注：{{data.des}}</Col>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div v-if="type=='add'" class="cl-overview-add">
-      <Icon class="icon" type="plus-round" />
+      <Icon class="icon" type="md-add" />
       <span class="child">新建分类</span>
     </div>
   </div>

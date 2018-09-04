@@ -7,8 +7,9 @@ import http from '@/utils/http'
  * @param {any} params
  * @returns
  */
-export function getHospitalInfo () {
+export function getHospitalInfo (params) {
     return http.post(
-      '/get_info'
+      '/get_info',
+      params
     )
   }

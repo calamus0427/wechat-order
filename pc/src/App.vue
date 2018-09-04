@@ -29,6 +29,9 @@ export default {
 input{
   user-select: auto;
 }
+.ivu-modal-footer {
+    text-align: center !important;
+}
 #app {
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
