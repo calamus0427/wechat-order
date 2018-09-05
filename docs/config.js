@@ -1,8 +1,12 @@
 docute.init({
     //自定义sidebar
     // toc: './toc.md',
+    title:'医院食堂移动订餐平台',
     landing: "landing.html",
     home: './introduce.md',
+    plugins: [
+      evanyou()
+    ],
     vue:'/vue.md',
     announcement: {
         type: "danger", // warning | danger | success | primary
@@ -27,20 +31,25 @@ docute.init({
         source: 'introduce.md',
           }, 
           {
-        title: "搭建管理后台",
-        path: "/vue",
-        source: 'vue.md',
-          },    
+        title: "管理后台",
+        path: "/pc",
+        source: 'pc.md',
+          }, 
           {
-              title: '下拉菜单', 
-              type: 'dropdown', 
-          items: [
-                {type: 'label', title: "语言"},
-                {title: '中文', path: '/language/chinese'},
-                {title: '日文', path: '/language/japanese'},
-                {title: '英文', path: '/language/english'},
-                {type: 'sep'}
-                ]}],
+            title: "小程序端",
+            path: "/wechat",
+            source: 'wechat.md',
+              },
+              {
+                title: "java后台",
+                path: "/java",
+                source: 'java.md',
+                  },
+          {
+            title: "开发手册",
+            path: "/dev",
+            source: 'dev.md',
+              }],
    icons: [{
         icon: 'github',
         label: 'Fork me on GitHub',
