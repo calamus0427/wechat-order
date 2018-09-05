@@ -246,24 +246,10 @@
           wx.navigateTo({
               url: "/pages/submit?message=" + message + "&choosedTime=" + choosedTime +"&sumPrice=" + sumPrice + "&foodList=" + foodList +  "&list=" + list
           })
-          })
+          }
         }
-        
-      }
     }
-    nLoad() {
-    }
-
-    onReady() {
-
-    }
-
-    account(){
-      console.log("结算")
-    }
-
-
-  }
+}
 </script>
 
 <style type="less" scoped>

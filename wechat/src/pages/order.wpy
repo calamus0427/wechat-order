@@ -90,15 +90,21 @@
       },
       searchFood(res){
         if(res){
-          this.foodList = this.foodList.filter((item)=>{
-            return item.name.indexOf(res) > -1;
+           this.foodList.map((item)=>{
+             if(item.name.indexOf(res) > -1){
+               item.filter = false ;
+             }else{
+               item.filter = true ;
+             }
           });
         }else{
           this.getFoodList()
         }     
       },
       clearSearch(res){
-          this.getFoodList()
+          this.foodList.map((item)=>{
+             item.filter = false ;
+          });
       },
       clear(){
           this.getFoodList()
@@ -161,6 +167,7 @@
         console.log("food=>>",res.data);
         res.data.map((item)=>{
           item.sum = 0 ;
+          item.fliter = true ;
         })
         this.foodList = res.data
         this.foodList = this.foodList.sort((a,b)=>{

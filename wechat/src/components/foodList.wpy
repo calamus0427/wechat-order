@@ -1,5 +1,5 @@
 <template>
-  <view class="foodList" style="background-color:{{list.length > 0 ? 'white' : 'transparent'}}">
+  <view @touchstart="touchstart" @touchmove="touchmove" @touchcancel="touchcancel" class="foodList" style="background-color:{{list.length > 0 ? 'white' : 'transparent'}}">
     <block wx:if="{{list.length > 0}}">
           <scroll-view style="height: 100%;"
             scroll-y  
@@ -7,7 +7,7 @@
             bindscroll="scroll" 
             enable-back-to-top="{{enableBackToTop}}"
             scroll-into-view="{{toView}}">
-            <block wx:for="{{list}}" wx:key="index">
+            <block wx:for="{{list}}" wx:key="index" wx:if="{{!item.filter}}">
               <view id="{{'a'+item.id}}">
                 <view class="foodList-des">
                   <view class="foodList-item-image">
@@ -132,7 +132,19 @@
       icon_star: '/images/icon/icon-star@2x.png',
       icon_star_active: '/images/icon/icon-star-active@2x.png',
       animationScroll:true,
-      enableBackToTop:true
+      enableBackToTop:true,
+      scrollFlag:false
+    }
+
+    watch = {
+      toView(newView,oldView){
+        if(newView == oldView){
+          this.scrollFlag = true ;
+        }else{
+          this.scrollFlag = false ;
+        }
+        console.log("watch",newView,oldView);
+      }
     }
 
     computed = {
@@ -142,11 +154,26 @@
     }
 
     methods = {
+      touchstart(e){
+        console.log("start",e)
+        this.scrollFlag = true ;
+      },
+      touchmove(e){
+        console.log("move",e)
+      },
+      touchcancel(e){
+        this.scrollFlag = false ;
+     },
       scroll(e){
-          // console.log(e)
-          let sit = parseInt(e.detail.scrollTop / 180) ;
-        this.$emit('scroll', sit);
-          
+        // console.log("scroll",this.scrollFlag)
+          // this.scrollFlag = true ;
+        if(this.scrollFlag){
+          let sit = parseInt(e.detail.scrollTop / 185)+1 ;
+          this.$emit('scroll', sit);
+        }     
+        // console.log("e",e)    
+        // let sit = parseInt(e.detail.scrollTop / 183) ;
+        //   this.$emit('scroll', sit);
       },
       //减少商品
       subtract(index,item){
