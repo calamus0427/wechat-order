@@ -1,5 +1,5 @@
 ## 项目演示
-![img](./img/pcshow.gif)
+![img](http://pbsp6zdxi.bkt.clouddn.com/pcshow.gif)
 #### 部分页面截图
 ![img](./img/cat.png)
 ![img](./img/catadd.png)
