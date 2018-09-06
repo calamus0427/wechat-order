@@ -12,7 +12,7 @@
           </FormItem>
           <FormItem prop="password">
               <Input type="password" @keyup.enter.native="handleSubmit('form')" v-model="form.password" placeholder="Password">
-                  <Icon type="ios-locked-outline" slot="prepend"></Icon>
+                  <Icon type="md-eye" slot="prepend"></Icon>
               </Input>
           </FormItem>
           <FormItem>

@@ -11,7 +11,7 @@
           </FormItem>
           <FormItem prop="password">
               <Input type="password" v-model="formInline.password" placeholder="Password">
-                  <Icon type="ios-locked-outline" slot="prepend"></Icon>
+                  <Icon type="md-eye" slot="prepend"></Icon>
               </Input>
           </FormItem>
           <FormItem>
