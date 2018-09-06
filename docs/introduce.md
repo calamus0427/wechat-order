@@ -23,7 +23,7 @@
 
 
 ## 项目演示
-![img](http://pbsp6zdxi.bkt.clouddn.com/wechat.gif)
+![img](http://pbsp6zdxi.bkt.clouddn.com/wechatfinan.gif)
 ![img](http://pbsp6zdxi.bkt.clouddn.com/pcshow.gif)
 
 
