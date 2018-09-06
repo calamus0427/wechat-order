@@ -5,7 +5,7 @@
 ## 技术栈
 - java
 - mysql
-- Spring boots
+- Spring boot
 
 ## 优点
 1. yapi接口对接形式
