@@ -90,7 +90,6 @@
 
     computed = {
       star(){
-        console.log("1",this.getObject(this.getObject(this.userInfo).identity).collection)
         const title = this.getObject(this.getObject(this.userInfo).identity).collection
         return title;
       },

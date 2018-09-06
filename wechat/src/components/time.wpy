@@ -50,12 +50,9 @@
 
     methods = {
       choose(time){
-        console.log(time)
         this.currentTime = time ;
-        console.log(this.currentTime)
       },
       submitTime(){
-        console.log(this.currentTime) 
         this.flag = false
       },
       timeFormate(d){

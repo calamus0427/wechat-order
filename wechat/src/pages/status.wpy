@@ -61,7 +61,6 @@
     }
 
     onLoad(options) {
-      console.log("11",options)
       this.message = JSON.parse(options.message);
       this.time = JSON.parse(options.choosedTime);
       this.sumPrice = JSON.parse(options.sumPrice);

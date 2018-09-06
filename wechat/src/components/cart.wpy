@@ -118,7 +118,6 @@
         let len = this.chooseList.filter((item)=>{
           return item.cat != 2 ;
         }).length
-        console.log("1111",len)
         return len > 0
       },
        defaultList(){       
@@ -176,7 +175,6 @@
 
     methods = {
       showList(){
-        console.log("show");
         this.flag = !this.flag;
       },
       closeList(){
@@ -188,24 +186,27 @@
       },
             //减少商品
       subtract(index,item){
-        console.log("s",index,item);
-        var i = this.findElem(this.chooseList,"id",item.id);
-        var j = this.findElem(this.list,"id",item.id);
-        console.log("j",j)
-        if(j >= 0){
-          if(this.list[j].sum < 1){
-            this.list[j].sum == 0
-          }else{
-            this.list[i].sum -- ;
-          }
+       console.log("cartsubtract click","item=>",item,"foodList=>",this.list,"chooseList=>",this.chooseList)
+
+        const i = this.findElem(this.chooseList,"id",item.id);
+        const j = this.findElem(this.list,"id",item.id);
+
+        console.log("listj",j,"choose",i)
+
+        if(i > -1 && j > -1){
+              if(this.list[j].sum <= 1){
+                this.list[j].sum = 0;
+                this.chooseList.splice(i,1);
+              }else{
+                console.log("cart!<=1")
+
+                this.list[j].sum -- ;
+                this.chooseList[i].sum -- ;
+              }     
         }
-        if(i >= 0){
-          if(this.chooseList[i].sum == 1){
-            this.chooseList.splice(i,1);
-          }else{
-            this.chooseList[i].sum -- ;
-          }
-        }
+
+
+
       },
       //增加商品
       plus(index,item){
@@ -213,7 +214,6 @@
         item.sum = 1 ;
         var i = this.findElem(this.chooseList,"id",item.id);
         var j = this.findElem(this.list,"id",item.id);
-        console.log("j",j)
         if(j >= 0){
           this.list[j].sum ++
         }

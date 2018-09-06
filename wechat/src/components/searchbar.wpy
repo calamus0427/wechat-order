@@ -58,7 +58,6 @@
 
       },
       searchResult () {
-            console.log(this.inputVal);
             this.$emit('search', this.inputVal);
       },
       clearInput (cb) {
