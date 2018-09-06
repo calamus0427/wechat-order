@@ -41,6 +41,9 @@
   import foodList from '../components/foodList'
   import icon from '../components/icon'
 
+import { getStore } from 'wepy-redux'
+
+const store = getStore()
 
   export default class order extends wepy.page {
     mixins = [base, http]
@@ -149,7 +152,8 @@
         this.initPage()
       }
     }
-    onReady() {
+    onShow() {
+      console.log("user",store,"111",wepy.$instance.globalData)
     }
     initPage(){
       this.getFoodList();
