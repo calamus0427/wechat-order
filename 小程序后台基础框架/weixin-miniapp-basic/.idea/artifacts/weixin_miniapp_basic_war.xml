@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="weixin-miniapp-basic:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="miniap-basic.war">
-      <element id="artifact" artifact-name="weixin-miniapp-basic:war exploded" />
-    </root>
-  </artifact>
-</component>
