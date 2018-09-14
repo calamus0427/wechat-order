@@ -126,7 +126,7 @@
       })
     }
     async getHosipital(){
-      var url = "http://localhost:8080/get_info"
+      var url = "http://http://yapi.demo.qunar.com/mock/16780//get_info"
       wepy.request(url).then((res) => {
         this.hospital.name = res.data[0].resname
         this.$apply();

@@ -165,7 +165,7 @@ const store = getStore()
         })
     }
     async getFoodList(){
-      var url = "http://localhost:8080/food/get_food"
+      var url = "http://http://yapi.demo.qunar.com/mock/16780//food/get_food"
       wepy.request(url).then((res) => {
         res.data.map((item)=>{
           item.sum = 0 ;
@@ -180,7 +180,7 @@ const store = getStore()
       })
     }
     async getCat(){
-      var url = "http://localhost:8080/food/get_food_cat"
+      var url = "http://http://yapi.demo.qunar.com/mock/16780//food/get_food_cat"
       wepy.request(url).then((res) => {
         this.categories.list = res.data;
         this.categoriesList = res.data ;
