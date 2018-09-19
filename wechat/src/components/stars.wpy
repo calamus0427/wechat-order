@@ -9,7 +9,6 @@ text{
 </style>
 <template>
   <view class="stars">
-    --{{star}}--
     <image src="{{star >= 1 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
     <image src="{{star >= 2 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
     <image src="{{star >= 3 ? icon_star_active:icon_star}}" class="staricon" mode="aspectFit"/>
