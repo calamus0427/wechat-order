@@ -73,7 +73,7 @@
     }
 
     .tab-item-seleted{
-      background-color: #13BA84;
+      background-color: #fb7299;
       text{
         color: #fff;
         font-weight: bold;

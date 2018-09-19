@@ -5,7 +5,7 @@
 @import "./../components/imageList.wxss";
 @import "./../components/side_tab.wxss";
 .weui-search-bar {
-  background-color: #13BA84 !important;
+  background-color: #fb7299 !important;
 }
 .sort {
   height: 40px;
@@ -21,7 +21,7 @@
   box-sizing: border-box;
 }
 .sort .sort-item:first-child {
-  border-right: 1px solid #13BA84;
+  border-right: 1px solid #fb7299;
 }
 .main-box {
   display: flex;
@@ -35,5 +35,5 @@
   height: 100%;
 }
 .selectSort {
-  color: #13BA84;
+  color: #fb7299;
 }

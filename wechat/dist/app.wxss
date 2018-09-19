@@ -1133,7 +1133,7 @@ page {
   color: #049BFF !important;
 }
 .color-green {
-  color: #13BA84 !important;
+  color: #fb7299 !important;
 }
 .color-333 {
   color: #333 !important;

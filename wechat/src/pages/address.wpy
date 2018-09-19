@@ -118,7 +118,7 @@
 </script>
 <style lang="less">
 button{
-  background-color:#16cc80;
+  background-color:#ff8eb3;
   color:#fff;
   width:80%;
   margin-top:50px;

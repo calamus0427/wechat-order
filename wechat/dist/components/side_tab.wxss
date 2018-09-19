@@ -31,7 +31,7 @@
   top: 5px;
 }
 .side-tab .tab-item-seleted {
-  background-color: #13BA84;
+  background-color: #fb7299;
 }
 .side-tab .tab-item-seleted text {
   color: #fff;

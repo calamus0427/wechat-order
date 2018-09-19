@@ -87,7 +87,7 @@
   color: #049BFF !important;
 }
 .color-green{
-  color: #13BA84 !important;
+  color: #fb7299 !important;
 }
 .color-333{
   color: #333 !important;
@@ -147,15 +147,15 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/order', 
-      'pages/submit',        
-      'pages/address', 
+      'pages/order',
+      'pages/submit',
+      'pages/address',
       'pages/status'
     ],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#13BA84',
-      navigationBarTitleText: '医院订餐服务',
+      navigationBarBackgroundColor: '#fb7299',
+      navigationBarTitleText: '订餐小程序',
       navigationBarTextStyle: '#fff'
     }
   }
@@ -181,7 +181,7 @@ export default class extends wepy.app {
   async onLaunch() {
     this.loginwexin()
   }
-  
+
   async loginwexin(){
      wepy.login().then((res)=>{
       this.code = res.code ;
@@ -191,7 +191,7 @@ export default class extends wepy.app {
       })
      })
   }
-  
+
 }
 </script>
 

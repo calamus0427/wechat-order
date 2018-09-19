@@ -7,7 +7,7 @@ view._98dfdb1 {
   margin: 10px 15px;
 }
 button._98dfdb1 {
-  background-color: #16cc80;
+  background-color: #ff8eb3;
   color: #fff;
   width: 80%;
   margin-top: 50px;
@@ -33,7 +33,7 @@ button._98dfdb1 {
   padding: 10px;
 }
 .order-name view._98dfdb1 {
-  border-left: 4px solid #16cc80;
+  border-left: 4px solid #ff8eb3;
   padding-left: 10px;
 }
 .order-foodList .order-foodList-item._98dfdb1 {

@@ -38,7 +38,7 @@
         <view class="order-price _98dfdb1">小计：<text class="color-red _98dfdb1"><text class="iconfont icon-renminbi2 _98dfdb1"/>{{sumPrice}}</text></view>
       </view>
 
-      
+
       <button bindtap="submit" class="_98dfdb1" data-wpysubmit-a="">确定</button>
       
 <view class="sendTime _ce986dc _98dfdb1"  wx:if="{{$Time$flag}}">

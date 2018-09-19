@@ -12,12 +12,12 @@
       <!--主内容区域-->
         <view wx:if="{{init}}" class="main-box row">
           <SideTab :tab.sync="categories"  @change.user="switchTab"/>
-          <foodList 
-            :toView.sync="selectView" class="goods-box"   
-            :list.sync="foodList" 
+          <foodList
+            :toView.sync="selectView" class="goods-box"
+            :list.sync="foodList"
             @scroll.user="scrollSit"
-            :chooseList.sync="choosedList" 
-            :catList.sync="categoriesList" 
+            :chooseList.sync="choosedList"
+            :catList.sync="categoriesList"
             :dealList.sync="dealList">
           </foodList>
         </view>
@@ -86,7 +86,7 @@ const store = getStore()
       // 点击分类
       switchTab(selectedId) {
         this.selectedId = selectedId;
-        this.selectView =   'a'+selectedId 
+        this.selectView =   'a'+selectedId
       },
       scrollSit(res){
         this.categories.selectedId = this.foodList[res].cat;
@@ -102,7 +102,7 @@ const store = getStore()
           });
         }else{
           this.getFoodList()
-        }     
+        }
       },
       clearSearch(res){
           this.foodList.map((item)=>{
@@ -147,7 +147,7 @@ const store = getStore()
 
     onLoad(options) {
       if(options.list){
-        
+
       }else{
         this.initPage()
       }
@@ -165,8 +165,8 @@ const store = getStore()
         })
     }
     async getFoodList(){
-      var url = "http://http://yapi.demo.qunar.com/mock/16780//food/get_food"
-      wepy.request(url).then((res) => {
+      var url = "http://yapi.demo.qunar.com/mock/16780/food/get_food"
+      wepy.request({url:url,method: 'POST'}).then((res) => {
         res.data.map((item)=>{
           item.sum = 0 ;
           item.fliter = true ;
@@ -180,8 +180,8 @@ const store = getStore()
       })
     }
     async getCat(){
-      var url = "http://http://yapi.demo.qunar.com/mock/16780//food/get_food_cat"
-      wepy.request(url).then((res) => {
+      var url = "http://yapi.demo.qunar.com/mock/16780/food/get_food_cat"
+      wepy.request({url:url,method: 'POST'}).then((res) => {
         this.categories.list = res.data;
         this.categoriesList = res.data ;
         this.categories.selectedId = this.selectedId;
@@ -192,7 +192,7 @@ const store = getStore()
 </script>
 <style lang="less">
 .weui-search-bar{
-  background-color: #13BA84 !important;
+  background-color: #fb7299 !important;
 }
 .sort{
   height:40px;
@@ -207,7 +207,7 @@ const store = getStore()
     box-sizing:border-box;
   }
   .sort-item:first-child{
-    border-right:1px solid #13BA84;
+    border-right:1px solid #fb7299;
   }
 }
 .main-box{
@@ -222,7 +222,7 @@ const store = getStore()
   }
   }
 .selectSort{
-  color:#13BA84;
+  color:#fb7299;
 }
 </style>
 
