@@ -1,6 +1,6 @@
 # 微信订餐小程序
 
-[文档说明](https://calamus0427.github.io/wechat-order/#/)
+[文档说明](https://calamus0427.github.io/wechat-order/docs)
 [管理后台预览](https://calamus0427.github.io/wechat-order/pc/dist/index.html#/login)
 
 ## 代码说明
