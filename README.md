@@ -8,4 +8,6 @@
 - /pc 管理后代代码
 - /docs 文档说明源码（文档说明中的截图展示未更新，具体参考项目示例
 
-## 扫码体验
+## 截图
+<img src="https://233.calamus.xyz/wechat_order.png" style="width:400px" alt="snapshot">
+
