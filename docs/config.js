@@ -1,7 +1,7 @@
 docute.init({
     //自定义sidebar
     // toc: './toc.md',
-    title:'医院食堂移动订餐平台',
+    title:'移动订餐平台',
     landing: "landing.html",
     home: './introduce.md',
     plugins: [
