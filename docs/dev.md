@@ -1,7 +1,5 @@
 ## 管理后台开发
 
-![img](http://pbsp6zdxi.bkt.clouddn.com/pcshow.gif)
-
 - ### 安装依赖
     ```bash
     # npm install
@@ -31,9 +29,6 @@
     }
     }
 ```
-
-## 小程序开发
-![img](http://pbsp6zdxi.bkt.clouddn.com/wechatfinan.gif)
 
 - ### 安装依赖
     ```bash

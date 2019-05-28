@@ -17,8 +17,30 @@
 #### 服务端
 
 ## 项目演示
-![img](http://pbsp6zdxi.bkt.clouddn.com/wechatfinan.gif)
-![img](http://pbsp6zdxi.bkt.clouddn.com/pcshow.gif)
+### 小程序
+![img](./img/wechat1.png)
+![img](./img/wechat2.png)
+![img](./img/wechat3.png)
+![img](./img/wechat4.png)
+![img](./img/wechat5.png)
+![img](./img/wechat6.png)
+![img](./img/wechat33.png)
+
+### pc管理后台
+![img](./img/cat.png)
+![img](./img/catadd.png)
+![img](./img/catedit.png)
+![img](./img/update.png)
+![img](./img/user.png)
+![img](./img/usercat.png)
+![img](./img/pcshow1.png)
+![img](./img/pcshow2.png)
+![img](./img/pcshow3.png)
+![img](./img/pcshow4.png)
+![img](./img/pcshow5.png)
+![img](./img/info.png)
+![img](./img/statistics.png)
+
 
 
 ## 技术栈

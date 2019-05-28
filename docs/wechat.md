@@ -1,5 +1,4 @@
-## 项目演示
-![img](http://pbsp6zdxi.bkt.clouddn.com/wechat.gif)
+
 #### 部分页面截图
 ![img](./img/wechat1.png)
 ![img](./img/wechat2.png)
